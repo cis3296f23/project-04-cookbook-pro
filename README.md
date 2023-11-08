@@ -1,28 +1,12 @@
-# Project Name
-Put here a short paragraph describing your project. 
-Adding an screenshot or a mockup of your application in action would be nice.  
+# CookBook Pro
+For busy people who care about what they eat, CookBook Pro is the meal planner that puts them in complete control easier than ever before. Unlike other apps, our product provides the most utility and customization.
 
-![This is a screenshot.](images.png)
+![image](https://github.com/cis3296f23/project-04-cookbook-pro/assets/144166871/131e6701-35da-4180-b12f-281df782087d)
+
+# How to use
+Available at https://cookbookpro-b0ab9.web.app/
+Search for recipes by typing into the search box and hitting search. To limit results to only vegan options hit the checkbox labeled vegan.
+
 # How to run
-Provide here instructions on how to use your application.   
-- Download the latest binary from the Release section on the right on GitHub.  
-- On the command line uncompress using
-```
-tar -xzf  
-```
-- On the command line run with
-```
-./hello
-```
-- You will see Hello World! on your terminal. 
+Download the files and extract. Ensure index.html and app.js are in the same directory. Launch index.html using a browser.
 
-# How to contribute
-Follow this project board to know the latest status of the project: [http://...]([http://...])  
-
-### How to build
-- Use this github repository: ... 
-- Specify what branch to use for a more stable release or for cutting edge development.  
-- Use InteliJ 11
-- Specify additional library to download if needed 
-- What file and target to compile and run. 
-- What is expected to happen when the app start. 
