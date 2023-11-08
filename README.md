@@ -6,5 +6,5 @@ Available at https://cookbookpro-b0ab9.web.app/
 Search for recipes by typing into the search box and hitting search. To limit results to only vegan options hit the checkbox labeled vegan.
 
 # How to run
-Download the files extract. Ensure index.htmll and app.js are in the same directory. Launch index.html using a browser.
+Download the files and extract. Ensure index.html and app.js are in the same directory. Launch index.html using a browser.
 
