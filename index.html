@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles.scss">
     <title>Cookbook Pro</title>
-
-    <h1>Cookbook Pro</h1>
-
-
+</head>
+<body>
+    <h1 id="project-banner">Cookbook Pro</h1>
     <div>
         <label for="food">Search for food:</label>
         <input type="text" id="food" name="food" placeholder="pizza">
     </div>
-
     <br>
     <div>
         <label for="vegan">Vegan</label>
@@ -22,14 +21,11 @@
     <div>
         <button id="search">Search</button>
     </div>
-
+    <br>
     <div id="results">
         <!-- API data will be displayed here -->
     </div>
-        
 
-    <script src="app.js">
-
-    </script>
-  </body>
+    <script src="app.js"></script>
+</body>
 </html>
