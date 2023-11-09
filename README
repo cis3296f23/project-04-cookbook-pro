@@ -1,0 +1,4 @@
+this is an attempt at using reactstrap to create the front end
+To edit and use make sure node is installed
+download all files and in that downloaded directory run npm install
+Then run npm start which should launch a localhost which can be viewed
