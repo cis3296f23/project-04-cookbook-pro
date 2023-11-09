@@ -1,23 +1,38 @@
+import 'bootstrap/dist/css/bootstrap.css';
+import React, { StrictMode } from "react";
+import "./styles.css";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+//single page application stuff
+import { BrowserRouter as Router, Routes, Route }
+    from 'react-router-dom';
 
-import React from 'react';
-import { Button } from 'reactstrap';
+//import my header navbar
+import Navbar from "./components/header.js";
 
-export default (props) => {
-  return <Button color="danger">Danger!</Button>;
-};
+//pages
+import Home from './pages/home.js';
+import Search from './pages/search.js';
+import MealPlans from './pages/mealPlans.js';
+import Recipes from './pages/recipes.js';
+import ShoppingList from './pages/shoppingList.js';
 
 
+function App() {
+    return (
+        //a router watches the url for changes and will re-render the page
+        <Router>
+            <Navbar />
+            <Routes>
+            <Route path="/" exact element={<Home />} />
+            <Route path="/search" exact element={<Search />} />
+            <Route path="/meal-plans" exact element={<MealPlans />} />
+            <Route path="/recipes" exact element={<Recipes />} />
+            <Route path="/shopping-list" exact element={<ShoppingList />} />
 
-// React
-import { Modal, ModalBody, ModalHeader } from 'reactstrap';
+            </Routes>
+        </Router>
 
-<Modal isOpen={open} toggle={() => setOpen(false)}>
-  <ModalHeader>
-    Modal title
-  </ModalHeader>
-  <ModalBody>
-    Modal body text goes here.
-  </ModalBody>
-</Modal>
+    );
+}
+ 
+export default App;
