@@ -1,47 +1,42 @@
 
 import React from 'react';
-import { Card, ListInlineItem } from 'reactstrap';
+import {Row, Col, Container } from 'reactstrap';
 import MealCard from '../components/mealCard';
 import MealPlanBar from '../components/mealPlanBar';
 import SavedMeals from '../components/savedMeals';
  
 const SearchPage = () => {
 
-    const cardWidth = { width: '18rem' };
-
     return (
-        <>
+        <Container class="d-flex justify-content-center">
+            <Row>
+                <div class="d-flex justify-content-center"><h1>Search for recipes</h1></div>
+            </Row>
+            <Row>
+                {/* size adds up to 12 */}
+                <Col sm={{size:2}}><SavedMeals /></Col>
+                <Col sm={{size:8}}><SearchResults /></Col>
+                <Col sm={{size:2}}><MealPlanBar /></Col>
+            </Row>
 
-        <div class="d-flex flex-column justify-content-center">
-            <h1>Search for recipes</h1>
-        </div>
-        
-        <div class="d-flex justify-content-center">
-            
-            <div class="d-flex flex-column">
-                <div class="d-flex flex-row">
-                    <div class="p-2"><MealCard/></div>
-                    <div class="p-2"><MealCard/></div>
-                    <div class="p-2"><MealCard/></div>
-                </div>
-                <div class="d-flex flex-row">
-                    <div class="p-2"><MealCard/></div>
-                    <div class="p-2"><MealCard/></div>
-                    <div class="p-2"><MealCard/></div>
-                </div>
-                <div class="d-flex flex-row">
-                    <div class="p-2"><MealCard/></div>
-                    <div class="p-2"><MealCard/></div>
-                    <div class="p-2"><MealCard/></div>
-                </div>
-                
-            </div>
-        </div>
-
-            
-        </>
+        </Container>
         
     );
 };
+
+function SearchResults() {
+    return(
+        <Container>
+            <Row md="2">
+                <Col><MealCard/></Col>
+                <Col><MealCard/></Col>
+            </Row>
+            <Row md="2">
+                <Col><MealCard/></Col>
+                <Col><MealCard/></Col>
+            </Row>
+        </Container>
+    )
+}
  
 export default SearchPage;
