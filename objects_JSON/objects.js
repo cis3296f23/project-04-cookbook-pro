@@ -15,6 +15,35 @@ class Ingredients{
     }
 }
 
+// Firestore data converter for CustomMeal
+const customMealConverter = {
+    toFirestore: (customMeal) => {
+        return {
+            mealName: customMeal.mealName,
+            ingredients: customMeal.ingredients,
+            instructions: customMeal.instructions
+        };
+    },
+    fromFirestore: (snapshot, options) => {
+        const data = snapshot.data(options);
+        return new CustomMeal(data.mealName, data.ingredients, data.instructions);
+    }
+};
+
+// Firestore data converter for Ingredients
+const ingredientsConverter = {
+    toFirestore: (ingredients) => {
+        return {
+            name: ingredients.name,
+            quantity: ingredients.quantity,
+            unit: ingredients.unit
+        };
+    },
+    fromFirestore: (snapshot, options) => {
+        const data = snapshot.data(options);
+        return new Ingredients(data.name, data.quantity, data.unit);
+    }
+};
 
 // //TESTING
 // const readline = require('readline');
