@@ -1,6 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { StrictMode } from "react";
 import "./styles.css";
+import { initializeApp } from 'firebase/app';
+import firebaseConfig from './firebaseConfig'; // Your Firebase config file
+
+const app = initializeApp(firebaseConfig);
+
 
 //single page application stuff
 import { BrowserRouter as Router, Routes, Route }
@@ -15,7 +20,7 @@ import Search from './pages/search.js';
 import MealPlans from './pages/mealPlans.js';
 import Recipes from './pages/recipes.js';
 import ShoppingList from './pages/shoppingList.js';
-
+import SignIn from './pages/signin.js';
 
 function App() {
     return (
@@ -28,7 +33,7 @@ function App() {
             <Route path="/meal-plans" exact element={<MealPlans />} />
             <Route path="/recipes" exact element={<Recipes />} />
             <Route path="/shopping-list" exact element={<ShoppingList />} />
-
+            <Route path="/sign-in" exact element={<SignIn />} />
             </Routes>
         </Router>
 

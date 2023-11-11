@@ -16,8 +16,9 @@ export default () => {
             <div class="navbar-nav">
                 <a class="nav-link" href="\meal-plans">Meal Plans</a>
                 <a class="nav-link" href="\search">Search</a>
-                <a class="nav-link" href="\recipes">Recipes</a>
+                <a class="nav-link" href="\recipes">My Recipes</a>
                 <a class="nav-link" href="\shopping-list">Shopping List</a>
+                <a class="nav-link" href="\sign-in">Sign In</a>
             </div>
             </div>
         </div>
