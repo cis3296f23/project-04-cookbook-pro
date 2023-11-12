@@ -1,11 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { StrictMode } from "react";
 import "./styles.css";
-import { initializeApp } from 'firebase/app';
-import firebaseConfig from './firebaseConfig'; // Your Firebase config file
-
-const app = initializeApp(firebaseConfig);
-
 
 //single page application stuff
 import { BrowserRouter as Router, Routes, Route }
