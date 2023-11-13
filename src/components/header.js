@@ -5,6 +5,7 @@ import { Navbar } from 'reactstrap';
 export default () => {
 
     return (
+
         <nav class="navbar fixed-top navbar-expand-lg bg-light">
             <div class="container-fluid justify-content-start">
                 <a class="navbar-brand" href="/">CookBook Pro</a>
@@ -13,6 +14,7 @@ export default () => {
                     <a class="nav-link" href="/search">Search</a>
                     <a class="nav-link" href="/recipes">Recipes</a>
                     <a class="nav-link" href="/shopping-list">Shopping List</a>
+                    <a class="nav-link" href="\sign-in">Sign In</a>
                 </div>
             </div>
         </nav>
