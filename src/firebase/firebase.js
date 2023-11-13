@@ -14,10 +14,9 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
-  //init
+  //init firebase
+  
   const firebaseApp = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  export {auth, db};
-  export default firebaseApp;
+  const auth = getAuth(firebaseApp);
+  const db = getFirestore(firebaseApp);
+  export {firebaseApp, auth, db};

@@ -1,5 +1,5 @@
 import {useContext, createContext, useEffect, useState} from "react";
-import {GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged, getAuth} from 'firebase/auth';
+import {GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged} from 'firebase/auth';
 import {auth} from "../firebase/firebase";
 
 //THIS FILE IS NOT BEING USED YET.
