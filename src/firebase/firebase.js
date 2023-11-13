@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 // Follow this pattern to import other Firebase services
 // import { } from 'firebase/<service>';
 
@@ -16,6 +16,7 @@ const firebaseConfig = {
   };
 
 const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
 
-
+export { auth };
 export default firebaseApp;

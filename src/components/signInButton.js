@@ -1,19 +1,21 @@
 import React from 'react';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import firebaseApp from '../firebase/firebase.js';
+import {auth} from '../firebase/firebase.js';
 
 
 const SignInButton = () => {
 
   const handleGoogle = async (e) => {
-    const provider = await new GoogleAuthProvider();
-    return signInWithPopup(firebaseApp, provider)
-    .then((result) => {
-      const user = result.user;
-      const email = user.email;
-      console.log(email);
-    })
-  }
+    const provider = new GoogleAuthProvider();
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const email = user.email;
+        console.log(email);
+    } catch (error) {
+        console.error('Authentication error:', error);
+    }
+  };
 
 
   return (
