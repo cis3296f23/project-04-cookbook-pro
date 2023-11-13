@@ -1,32 +1,20 @@
 
 import React from 'react';
-import { Card } from 'reactstrap';
+import { Card, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, ListInlineItem } from 'reactstrap';
  
 const savedMeals = () => {
 
-    const cardWidth = { width: '15rem' };
-
     return (
-        <>
-        <div class="card" style={cardWidth}>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-            </ul>
-        </div>
-        </>
-        
+        <ListGroup>
+            <ListGroupItemHeading>My Recipes</ListGroupItemHeading>
+            <ListGroupItem>An item</ListGroupItem>
+            <ListGroupItem>An item</ListGroupItem>
+            <ListGroupItem>An item</ListGroupItem>
+            <ListGroupItem>An item</ListGroupItem>
+            <ListGroupItem>An item</ListGroupItem>
+        </ListGroup>
     );
 };
 
-function makeMeals (mealList){
-
-    mealList.map(() => {
-
-
-    })
-
-}
  
 export default savedMeals;
