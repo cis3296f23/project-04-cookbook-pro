@@ -33,6 +33,6 @@ const Home = () => {
         </Offcanvas>
         </div>
     );
-};
+}
  
 export default Home;
