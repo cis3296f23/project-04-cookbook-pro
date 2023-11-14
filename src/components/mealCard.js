@@ -1,18 +1,37 @@
-import React from 'react';
-import { Button, Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
+import React from "react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardImg,
+  CardText,
+  CardTitle,
+} from "reactstrap";
+import RecipeDetails from "./recipeDetails.js";
 
-const MealCard = ({ mealName, ingredients, instructions, mealImage }) => {
-    return (
-        <Card>
-            {/* <CardImg src={require(`./${mealImage}`)} alt={`${mealName} image`} /> */}
-            <CardBody>
-                <CardTitle>{mealName}</CardTitle>
-                <CardText>{ingredients}</CardText>
-                <CardText>{instructions}</CardText>
-                <Button href="/recipes">Recipe</Button>
-            </CardBody>
-        </Card>
-    );
+/*
+TODO: format to look nicer
+meal.ingredients and meal.instructions are objects that need to be mapped
+this should be done in objects.js i think
+*/
+
+const MealCard = ({ meal }) => {
+  return (
+    <Card className={"w-100"}>
+      <CardTitle>
+        <h5>{meal.mealName}</h5>
+      </CardTitle>
+      {/* <CardImg src={require(`${meal.mealImage}`)} alt={`${meal.mealName} image`} /> */}
+      <CardImg src={meal.mealImage} alt={`${meal.mealName} image`} />
+      <CardBody>
+        <CardText>{meal.summary}</CardText>
+        {/* <CardText>{meal.ingredients}</CardText>
+                <CardText>{meal.instructions}</CardText> */}
+        {/* <Button href="/recipes">Recipe</Button> */}
+        <RecipeDetails meal={meal} />
+      </CardBody>
+    </Card>
+  );
 };
 
 export default MealCard;
