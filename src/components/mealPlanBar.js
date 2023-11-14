@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ListGroup, ListGroupItemHeading, ListGroupItem } from 'reactstrap';
- 
+
 const MeanPlanBar = () => {
 
     const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];

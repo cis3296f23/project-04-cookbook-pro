@@ -23,16 +23,16 @@ function App() {
         <Router>
             <Navbar />
             <Routes>
-            <Route path="/" exact element={<Home />} />
-            <Route path="/search" exact element={<Search />} />
-            <Route path="/meal-plans" exact element={<MealPlans />} />
-            <Route path="/recipes" exact element={<Recipes />} />
-            <Route path="/shopping-list" exact element={<ShoppingList />} />
-            <Route path="/sign-in" exact element={<SignIn />} />
+                <Route path="/" exact element={<Home />} />
+                <Route path="/search" exact element={<Search />} />
+                <Route path="/meal-plans" exact element={<MealPlans />} />
+                <Route path="/recipes" exact element={<Recipes />} />
+                <Route path="/shopping-list" exact element={<ShoppingList />} />
+                <Route path="/sign-in" exact element={<SignIn />} />
             </Routes>
         </Router>
 
     );
 }
- 
+
 export default App;

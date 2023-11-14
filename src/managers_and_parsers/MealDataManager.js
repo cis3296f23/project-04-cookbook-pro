@@ -2,7 +2,7 @@
 // 1. The Spoonacular API
 // 2. The FirebaseDB
 // Ingredients as well as Meals will be handled by this manager (for now)
-import {PrefabMeal} from '../objects_JSON/objects.js';
+import { PrefabMeal } from '../objects_JSON/objects.js';
 class MealDataManager {
     // spoonacularParser = new SpoonacularParser();
     constructor() {
@@ -15,13 +15,13 @@ class MealDataManager {
         const searchQuery = new URLSearchParams();
         searchQuery.append('apiKey', this.spoonacularApi);
         searchQuery.append('query', query); // Assuming query is a string, adjust accordingly
-    
+
         const fullUrl = `${this.spoonacularURL}/complexSearch?${searchQuery.toString()}`;
-    
+
         try {
             const response = await fetch(fullUrl);
             const data = await response.json();
-    
+
             const searchResultsList = data.results.map(recipe => {
                 // Instantiate PrefabMeal for each result
                 const mappedResult = new PrefabMeal(
@@ -30,15 +30,15 @@ class MealDataManager {
                     recipe.instructions,
                     recipe.image
                 );
-    
+
                 return mappedResult;
             });
-    
+
             return searchResultsList;
         } catch (error) {
             console.error("Error fetching data:", error);
             throw error;
         }
     }
-}    
+}
 export default MealDataManager;

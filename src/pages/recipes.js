@@ -3,7 +3,7 @@ import React from 'react';
 import GetRecipes from '../firebase/getRecipes.js';
 
 const recipeJSON = GetRecipes();
- 
+
 const Recipes = () => {
 
     return (
@@ -13,5 +13,5 @@ const Recipes = () => {
         </div>
     );
 };
- 
+
 export default Recipes;

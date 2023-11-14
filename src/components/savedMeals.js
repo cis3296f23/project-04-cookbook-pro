@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, ListInlineItem } from 'reactstrap';
- 
+
 const savedMeals = () => {
 
     return (
@@ -16,5 +16,5 @@ const savedMeals = () => {
     );
 };
 
- 
+
 export default savedMeals;

@@ -1,13 +1,13 @@
-class CustomMeal{
-    constructor(mealName, ingredients, instructions){
+class CustomMeal {
+    constructor(mealName, ingredients, instructions) {
         this.mealName = mealName;
         this.ingredients = ingredients;
         this.instructions = instructions;
     }
 }
 
-class PrefabMeal{
-    constructor(mealName, ingredients, instructions, mealImage){
+class PrefabMeal {
+    constructor(mealName, ingredients, instructions, mealImage) {
         this.mealName = mealName;
         this.ingredients = ingredients;
         this.instructions = instructions;
@@ -15,15 +15,15 @@ class PrefabMeal{
     }
 }
 
-class Ingredient{
-    constructor(name, quantity, unit){
+class Ingredient {
+    constructor(name, quantity, unit) {
         this.name = name;
         this.quantity = quantity;
         this.unit = unit;
     }
 }
 
-export {CustomMeal,PrefabMeal,Ingredient};
+export { CustomMeal, PrefabMeal, Ingredient };
 
 // //TESTING
 // const readline = require('readline');

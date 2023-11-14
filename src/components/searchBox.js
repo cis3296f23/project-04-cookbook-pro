@@ -14,10 +14,7 @@ const SearchBox = ({ onSearch }) => {
     try {
       // Wait for the query to complete and get the results
       const spoonacularQueryResults = await mealDataManager.queryRecipeFromSpoonacular(query);
-  
-      // Log the results to the console
-      console.log(spoonacularQueryResults);
-  
+
       // Pass the search results to the parent component
       onSearch(spoonacularQueryResults);
     } catch (error) {
