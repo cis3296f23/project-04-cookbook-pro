@@ -1,8 +1,8 @@
 
 import React from 'react';
 import SignInButton from '../components/signInButton';
-import '../signin.css';
- 
+import '../styles.css';
+
 const signin = () => {
     return (
         <div className="signin-container">
@@ -11,5 +11,5 @@ const signin = () => {
         </div>
     );
 };
- 
+
 export default signin;
