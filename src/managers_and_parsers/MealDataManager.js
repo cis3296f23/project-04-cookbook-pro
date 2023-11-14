@@ -12,28 +12,49 @@ class MealDataManager {
   }
 
   async queryRecipeFromSpoonacular(query) {
+    //add in these parameters
+    /*
+        addRecipeInformation	boolean	false	If set to true, you get more information about the recipes returned.
+        offset                  number	0	    The number of results to skip (between 0 and 900).
+        number  	            number	10	    The number of expected results (between 1 and 100).
+        fillIngredients	        boolean	false	Add information about the ingredients and whether they are used or missing in relation to the query.
+        */
     const searchQuery = new URLSearchParams();
     searchQuery.append("apiKey", this.spoonacularApi);
     searchQuery.append("query", query); // Assuming query is a string, adjust accordingly
+    searchQuery.append("addRecipeInformation", true);
+    searchQuery.append("offset", 0); //increment offset to get more results of current query
+    searchQuery.append("number", 10); //ask for 100 recipes instead of 10
+    searchQuery.append("fillIngredients", true); //get ingredient info
 
     const fullUrl = `${
       this.spoonacularURL
     }/complexSearch?${searchQuery.toString()}`;
 
+    /*
+        using the search params from above we get these properities of a recipe
+        recipe keys=["vegetarian","vegan","glutenFree","dairyFree","veryHealthy","cheap","veryPopular","sustainable","lowFodmap","weightWatcherSmartPoints","gaps","preparationMinutes","cookingMinutes","aggregateLikes","healthScore","creditsText","sourceName","pricePerServing","extendedIngredients","id","title","readyInMinutes","servings","sourceUrl","image","imageType","summary","cuisines","dishTypes","diets","occasions","analyzedInstructions","spoonacularScore","spoonacularSourceUrl","usedIngredientCount","missedIngredientCount","missedIngredients","likes","usedIngredients","unusedIngredients"]
+        */
+
     try {
       const response = await fetch(fullUrl);
       const data = await response.json();
-
-      console.log(JSON.stringify(data));
-
       const searchResultsList = data.results.map((recipe) => {
-        // Instantiate Recipe for each result
+        // Instantiate PrefabMeal for each result
+
+        //const keys = JSON.stringify(Object.keys(recipe));
+        //console.log("recipe keys=" + keys);
+        // Need to change the order in which the Recipe is created
         const mappedResult = new Recipe(
+          recipe.cuisine,
+          recipe.dishType,
           recipe.id,
-          recipe.title,
+          recipe.image,
           recipe.extendedIngredients,
-          recipe.instructions,
-          recipe.image
+          recipe.analyzedInstructions,
+          recipe.title,
+          recipe.servings,
+          recipe.summary
         );
 
         return mappedResult;

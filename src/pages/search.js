@@ -39,19 +39,12 @@ function SearchResults({ results }) {
   if (!results || results.length === 0) {
     return <p>No results found.</p>;
   }
-
+  
   return (
-    <Container>
-      {results.map((recipe, index) => (
-        <div key={index}>
-          {/* Render a MealCard for each search result */}
-          <MealCard
-            id={recipe.id}
-            name={recipe.name}
-            ingredients={recipe.ingredients}
-            instructions={recipe.instructions}
-            image={recipe.image}
-          />
+    <Container className="m-0 p-0">
+      {results.map((meal, index) => (
+        <div className="py-2" key={index}>
+          <MealCard meal={meal} />
         </div>
       ))}
     </Container>

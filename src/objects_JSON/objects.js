@@ -1,24 +1,24 @@
 class Recipe {
   constructor(
+    cuisine,
+    dishType,
     id,
-    name,
+    image,
     ingredients,
     instructions,
-    image,
-    summary,
+    name,
     servings,
-    cuisine,
-    dishType
+    summary
   ) {
+    this.cuisine = cuisine;
+    this.dishType = dishType;
     this.id = id;
-    this.name = name;
     this.image = image;
     this.ingredients = ingredients;
     this.instructions = instructions;
-    this.summary = summary;
+    this.name = name;
     this.servings = servings;
-    this.cuisine = cuisine;
-    this.dishType = dishType;
+    this.summary = summary;
   }
 }
 
