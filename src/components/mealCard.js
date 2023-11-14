@@ -19,10 +19,10 @@ const MealCard = ({ meal }) => {
   return (
     <Card className={"w-100"}>
       <CardTitle>
-        <h5>{meal.mealName}</h5>
+        <h5>{meal.name}</h5>
       </CardTitle>
       {/* <CardImg src={require(`${meal.mealImage}`)} alt={`${meal.mealName} image`} /> */}
-      <CardImg src={meal.mealImage} alt={`${meal.mealName} image`} />
+      <CardImg src={meal.image} alt={`${meal.name} image`} />
       <CardBody>
         <CardText>{meal.summary}</CardText>
         {/* <CardText>{meal.ingredients}</CardText>
