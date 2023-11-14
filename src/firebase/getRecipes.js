@@ -1,5 +1,5 @@
 import { doc, getDoc ,getFirestore} from "firebase/firestore";
-import firebaseApp from './firebase.js';
+import {firebaseApp} from './firebaseConfig.js';
 
 const db = getFirestore(firebaseApp);
 const docRef = doc(db, "recipes", "716429");

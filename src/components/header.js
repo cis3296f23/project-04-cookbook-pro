@@ -6,15 +6,15 @@ export default () => {
 
     return (
 
-        <nav class="navbar fixed-top navbar-expand-lg bg-light">
-            <div class="container-fluid justify-content-start">
-                <a class="navbar-brand" href="/">CookBook Pro</a>
-                <div class="navbar-nav">
-                    <a class="nav-link" href="/meal-plans">Meal Plans</a>
-                    <a class="nav-link" href="/search">Search</a>
-                    <a class="nav-link" href="/recipes">Recipes</a>
-                    <a class="nav-link" href="/shopping-list">Shopping List</a>
-                    <a class="nav-link" href="\sign-in">Sign In</a>
+        <nav className="navbar fixed-top navbar-expand-lg bg-light">
+            <div className="container-fluid justify-content-start">
+                <a className="navbar-brand" href="/">CookBook Pro</a>
+                <div className="navbar-nav">
+                    <a className="nav-link" href="/meal-plans">Meal Plans</a>
+                    <a className="nav-link" href="/search">Search</a>
+                    <a className="nav-link" href="/recipes">Recipes</a>
+                    <a className="nav-link" href="/shopping-list">Shopping List</a>
+                    <a className="nav-link" href="\sign-in">Sign In</a>
                 </div>
             </div>
         </nav>
