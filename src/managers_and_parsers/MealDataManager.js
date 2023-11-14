@@ -2,7 +2,8 @@
 // 1. The Spoonacular API
 // 2. The FirebaseDB
 // Ingredients as well as Meals will be handled by this manager (for now)
-import { Recipe, Ingredient } from "../objects_JSON/objects.js";
+import { Recipe } from "../CustomObjects/Recipe.js";
+import { Ingredient } from "../CustomObjects/Ingredient.js";
 class MealDataManager {
   // spoonacularParser = new SpoonacularParser();
   constructor() {
