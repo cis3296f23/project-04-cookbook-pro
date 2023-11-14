@@ -13,7 +13,7 @@ function RecipeDetails(meal) {
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>{meal.meal.mealName}</ModalHeader>
-        <ModalBody>{meal.meal.mealID}</ModalBody>
+        <ModalBody>{meal.meal.summary}</ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>
             Save Recipe
@@ -28,3 +28,4 @@ function RecipeDetails(meal) {
 }
 
 export default RecipeDetails;
+

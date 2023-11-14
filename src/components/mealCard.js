@@ -17,14 +17,14 @@ this should be done in objects.js i think
 
 const MealCard = ({ meal }) => {
   return (
-    <Card className={"w-100"}>
+    <Card className={"w-100 p-3 shadow-sm"}>
       <CardTitle>
         <h5>{meal.mealName}</h5>
       </CardTitle>
       {/* <CardImg src={require(`${meal.mealImage}`)} alt={`${meal.mealName} image`} /> */}
       <CardImg src={meal.mealImage} alt={`${meal.mealName} image`} />
       <CardBody>
-        <CardText>{meal.summary}</CardText>
+        <CardText><div class="col-12 text-truncate">{meal.summary}</div></CardText>
         {/* <CardText>{meal.ingredients}</CardText>
                 <CardText>{meal.instructions}</CardText> */}
         {/* <Button href="/recipes">Recipe</Button> */}

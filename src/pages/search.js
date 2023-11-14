@@ -23,9 +23,13 @@ const SearchPage = () => {
         <Col sm={{ size: 2 }}>
           <SavedMeals />
         </Col>
-        <Col sm={{ size: 8 }}>
+        <Col sm={{ size: 4 }}>
           {/* Pass the search results to the SearchResults component */}
-          <SearchResults results={searchResults} />
+          <SearchResults results={searchResults.slice(0,(searchResults.length)/2)} />
+        </Col>
+        <Col sm={{ size: 4 }}>
+          {/* Pass the search results to the SearchResults component */}
+          <SearchResults results={searchResults.slice((searchResults.length)/2, searchResults.length)} />
         </Col>
 
         <Col sm={{ size: 2 }}>
@@ -45,7 +49,7 @@ function SearchResults({ results }) {
     <Container className="m-0 p-0">
       {results.map((meal, index) => (
         <div className="py-2" key={index}>
-          <MealCard meal={meal} />
+          <MealCard meal={meal}/>
         </div>
       ))}
     </Container>
