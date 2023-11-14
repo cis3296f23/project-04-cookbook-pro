@@ -6,6 +6,15 @@ import SavedMeals from "../components/savedMeals";
 import SearchBox from "../components/searchBox.js";
 import "../styles.css";
 
+/*
+TODO: view more recipes after the inital query
+we can do this with pagination or with infinte scroll.
+https://www.npmjs.com/package/react-infinite-scroll-component
+there's a library that makes infinite scroll pretty simple
+
+we should work on this after spoonacular api requests are moved to the backend
+*/
+
 const SearchPage = () => {
   const [searchResults, setSearchResults] = useState([]);
 

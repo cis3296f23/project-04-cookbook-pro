@@ -23,6 +23,11 @@ const SearchBox = ({ onSearch }) => {
     }
   };
 
+  /*
+    TODO: use reactstrap InputGroup to make the search bar
+    using reactstrap we can add additional search parameters like vegan or lactose free in a dropdown button 
+  */
+
   return (
     <div id="search-box">
       <input
