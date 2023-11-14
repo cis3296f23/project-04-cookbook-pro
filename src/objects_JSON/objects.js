@@ -6,12 +6,19 @@ class CustomMeal {
     }
 }
 
+/*
+TODO: format ingredients and instructions into parsable data
+meal.ingredients and meal.instructions are objects that need to be mapped
+parse summary to look nice and remove the bloat
+*/
 class PrefabMeal {
-    constructor(mealName, ingredients, instructions, mealImage) {
+    constructor(mealName, ingredients, instructions, mealImage, mealID, summary) {
         this.mealName = mealName;
         this.ingredients = ingredients;
         this.instructions = instructions;
         this.mealImage = mealImage;
+        this.mealID = mealID;
+        this.summary = summary;
     }
 }
 
