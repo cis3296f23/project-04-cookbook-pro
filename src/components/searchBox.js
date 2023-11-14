@@ -10,12 +10,19 @@ const SearchBox = ({ onSearch }) => {
     setQuery(e.target.value);
   };
 
-  const handleSearch = () => {
-    // Assuming you want to perform a search using MealDataManager here
-    var spoonacularQueryResults = mealDataManager.queryRecipeFromSpoonacular(query);
-    console.log(spoonacularQueryResults);
-    // Pass the search results to the parent component
-    onSearch(searchResults);
+  const handleSearch = async () => {
+    try {
+      // Wait for the query to complete and get the results
+      const spoonacularQueryResults = await mealDataManager.queryRecipeFromSpoonacular(query);
+  
+      // Log the results to the console
+      console.log(spoonacularQueryResults);
+  
+      // Pass the search results to the parent component
+      onSearch(spoonacularQueryResults);
+    } catch (error) {
+      console.error(error); // Handle errors if the Promise is rejected
+    }
   };
 
   return (
