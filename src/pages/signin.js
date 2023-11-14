@@ -1,7 +1,7 @@
 
 import React from 'react';
 import SignInButton from '../components/signInButton';
-import '../signin.css';
+import '../styles.css';
  
 const signin = () => {
     return (

@@ -1,20 +1,20 @@
-
 import React from 'react';
 import {Row, Col, Container } from 'reactstrap';
 import MealCard from '../components/mealCard';
 import MealPlanBar from '../components/mealPlanBar';
 import SavedMeals from '../components/savedMeals';
 import SearchBox from '../components/searchBox.js';
+import '../styles.css';
  
 const SearchPage = () => {
 
     return (
-        <Container className="d-flex justify-content-center">
-            <Row>
-                <div className="d-flex justify-content-center">
+        <Container id='content-container'>
+            <Row id='search-bar'>
+                {/* <div id='search-bar'> */}
                     <h1>Search for recipes:</h1>
                     <SearchBox onSearch={SearchResults} />
-                </div>
+                {/* </div> */}
             </Row>
             <Row>
                 {/* size adds up to 12 */}

@@ -13,7 +13,7 @@ const SearchBox = ({ onSearch }) => {
   const handleSearch = () => {
     // Assuming you want to perform a search using MealDataManager here
     var spoonacularQueryResults = mealDataManager.queryRecipeFromSpoonacular(query);
-
+    console.log(spoonacularQueryResults);
     // Pass the search results to the parent component
     onSearch(searchResults);
   };
