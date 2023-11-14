@@ -38,14 +38,15 @@ function SearchResults({ results }) {
 
     return (
         <Container>
-            {results.map((meal, index) => (
+            {results.map((recipe, index) => (
                 <div key={index}>
                     {/* Render a MealCard for each search result */}
                     <MealCard
-                        mealName={meal.mealName}
-                        ingredients={meal.ingredients}
-                        instructions={meal.instructions}
-                        mealImage={meal.mealImage}
+                        id={recipe.id}
+                        name={recipe.name}
+                        ingredients={recipe.ingredients}
+                        instructions={recipe.instructions}
+                        image={recipe.image}
                     />
                 </div>
             ))}

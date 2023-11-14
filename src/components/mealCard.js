@@ -1,12 +1,13 @@
 import React from 'react';
 import { Button, Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
 
-const MealCard = ({ mealName, ingredients, instructions, mealImage }) => {
+const MealCard = ({ id, name, ingredients, instructions, image }) => {
     return (
         <Card>
-            {/* <CardImg src={require(`./${mealImage}`)} alt={`${mealName} image`} /> */}
+            {/* <CardImg src={require(`./${image}`)} alt={`${image} image`} /> */}
             <CardBody>
-                <CardTitle>{mealName}</CardTitle>
+                <CardTitle>{name}</CardTitle>
+                <CardText>{id}</CardText>
                 <CardText>{ingredients}</CardText>
                 <CardText>{instructions}</CardText>
                 <Button href="/recipes">Recipe</Button>

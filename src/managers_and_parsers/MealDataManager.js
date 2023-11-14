@@ -2,7 +2,7 @@
 // 1. The Spoonacular API
 // 2. The FirebaseDB
 // Ingredients as well as Meals will be handled by this manager (for now)
-import { PrefabMeal } from '../objects_JSON/objects.js';
+import { Recipe, Ingredient } from '../objects_JSON/objects.js';
 class MealDataManager {
     // spoonacularParser = new SpoonacularParser();
     constructor() {
@@ -22,9 +22,12 @@ class MealDataManager {
             const response = await fetch(fullUrl);
             const data = await response.json();
 
+            console.log(JSON.stringify(data));
+
             const searchResultsList = data.results.map(recipe => {
-                // Instantiate PrefabMeal for each result
-                const mappedResult = new PrefabMeal(
+                // Instantiate Recipe for each result
+                const mappedResult = new Recipe(
+                    recipe.id,
                     recipe.title,
                     recipe.extendedIngredients,
                     recipe.instructions,
