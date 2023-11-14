@@ -40,7 +40,6 @@ const SearchPage = () => {
           {/* Pass the search results to the SearchResults component */}
           <SearchResults results={searchResults.slice((searchResults.length)/2, searchResults.length)} />
         </Col>
-
         <Col sm={{ size: 2 }}>
           <MealPlanBar />
         </Col>
@@ -53,7 +52,7 @@ function SearchResults({ results }) {
   if (!results || results.length === 0) {
     return <p>No results found.</p>;
   }
-
+  
   return (
     <Container className="m-0 p-0">
       {results.map((meal, index) => (
