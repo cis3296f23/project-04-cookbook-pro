@@ -22,12 +22,4 @@ class Recipe {
   }
 }
 
-class Ingredient {
-  constructor(id, name, amount, unit, measures, aisle) {
-    this.name = name;
-    this.quantity = quantity;
-    this.unit = unit;
-  }
-}
-
-export { Recipe, Ingredient };
+export {Recipe};
