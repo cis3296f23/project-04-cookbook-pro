@@ -1,6 +1,6 @@
 import React from 'react';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import {auth} from '../firebase/firebase.js';
+import {auth} from '../firebase/firebaseConfig.js';
 
 
 const SignInButton = () => {
