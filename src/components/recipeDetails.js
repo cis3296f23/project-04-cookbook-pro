@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-function RecipeDetails(meal) {
+function RecipeDetails({meal}) {
   const [modal, setModal] = useState(false);
 
   const toggle = () => {setModal(!modal)};
 
     function saveData() {
-        console.log("saving recipe "+meal.meal.mealName);
+        console.log("saving recipe "+meal.mealName);
         
         /*
         TODO: use firebase to store this recipe in the user's saved recipes collection
@@ -24,8 +24,8 @@ function RecipeDetails(meal) {
         Details
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>{meal.meal.mealName}</ModalHeader>
-        <ModalBody>{meal.meal.summary}</ModalBody>
+        <ModalHeader toggle={toggle}>{meal.mealName}</ModalHeader>
+        <ModalBody>{meal.summary}</ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={saveData}>
             Save Recipe
