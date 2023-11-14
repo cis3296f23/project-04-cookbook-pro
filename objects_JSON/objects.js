@@ -6,44 +6,24 @@ class CustomMeal{
     }
 }
 
-class Ingredients{
+class PrefabMeal{
+    constructor(mealName, ingredients, instructions, mealImage){
+        this.mealName = mealName;
+        this.ingredients = ingredients;
+        this.instructions = instructions;
+        this.mealImage = mealImage;
+    }
+}
+
+class Ingredient{
     constructor(name, quantity, unit){
         this.name = name;
         this.quantity = quantity;
         this.unit = unit;
-        
     }
 }
 
-// Firestore data converter for CustomMeal
-const customMealConverter = {
-    toFirestore: (customMeal) => {
-        return {
-            mealName: customMeal.mealName,
-            ingredients: customMeal.ingredients,
-            instructions: customMeal.instructions
-        };
-    },
-    fromFirestore: (snapshot, options) => {
-        const data = snapshot.data(options);
-        return new CustomMeal(data.mealName, data.ingredients, data.instructions);
-    }
-};
-
-// Firestore data converter for Ingredients
-const ingredientsConverter = {
-    toFirestore: (ingredients) => {
-        return {
-            name: ingredients.name,
-            quantity: ingredients.quantity,
-            unit: ingredients.unit
-        };
-    },
-    fromFirestore: (snapshot, options) => {
-        const data = snapshot.data(options);
-        return new Ingredients(data.name, data.quantity, data.unit);
-    }
-};
+export {CustomMeal,PrefabMeal,Ingredient};
 
 // //TESTING
 // const readline = require('readline');
