@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import MealDataManager from '../managers_and_parsers/MealDataManager.js';
+import React, { useState } from "react";
+import MealDataManager from "../managers_and_parsers/MealDataManager.js";
 
 const mealDataManager = new MealDataManager();
 
 const SearchBox = ({ onSearch }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
@@ -13,7 +13,8 @@ const SearchBox = ({ onSearch }) => {
   const handleSearch = async () => {
     try {
       // Wait for the query to complete and get the results
-      const spoonacularQueryResults = await mealDataManager.queryRecipeFromSpoonacular(query);
+      const spoonacularQueryResults =
+        await mealDataManager.queryRecipeFromSpoonacular(query);
 
       // Pass the search results to the parent component
       onSearch(spoonacularQueryResults);
