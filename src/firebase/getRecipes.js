@@ -1,5 +1,5 @@
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-import { firebaseApp } from './firebaseConfig.js';
+import { firebaseApp } from "./firebaseConfig.js";
 
 const db = getFirestore(firebaseApp);
 const docRef = doc(db, "recipes", "716429");
@@ -13,12 +13,9 @@ if (docSnap.exists()) {
 }
 
 function getRecipes() {
+  const jsonData = JSON.stringify(docSnap.data());
 
-  const jsonData = JSON.stringify(docSnap.data())
-
-  return (
-    jsonData
-  )
+  return jsonData;
 }
 
 export default getRecipes;
