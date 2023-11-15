@@ -8,12 +8,12 @@ function RecipeDetails({meal}) {
   const toggle = () => {setModal(!modal)};
 
     function saveData() {
-        console.log("saving recipe "+meal.mealName);
+        //console.log("saving recipe "+meal.mealName);
         
         /*
         TODO: save recipe into user's data
         */
-        PutRecipe("savedRecipe", meal);
+        PutRecipe("savedRecipes", meal);
 
         toggle(); //close modal
     }

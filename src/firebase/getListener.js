@@ -10,9 +10,11 @@ import { firebaseApp } from "./firebaseConfig.js";
 const db = getFirestore(firebaseApp);
 
 /**
- *
- * @param {Use state setter fucntion} setter
- * @returns firebase savedRecipes Listner
+ * needs a collection name and useState setter 
+ * returns an unsubscribe method to stop listening
+ * @param {ReactUseStateFunction} setter
+ * @param {String} collectionName
+ * @returns {Unsubscribe}
  */
 function getListener(collectionName, setter) {
 
