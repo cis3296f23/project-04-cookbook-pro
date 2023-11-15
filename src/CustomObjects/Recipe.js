@@ -1,3 +1,7 @@
+/**
+ * 
+ * 
+ */
 class Recipe {
   constructor(
     cuisine,
@@ -19,6 +23,18 @@ class Recipe {
     this.name = name;
     this.servings = servings;
     this.summary = summary;
+  }
+  toString() {
+    return
+    this.cuisine + ', '
+    this.dishType + ', '
+    this.id + ', '
+    this.image + ', '
+    this.ingredients + ', '
+    this.instructions + ', '
+    this.name + ', '
+    this.servings + ', '
+    this.summary;
   }
 }
 
