@@ -24,9 +24,14 @@ const SearchPage = () => {
 
   return (
     <Container id="content-container">
+        <h1 className="d-flex justify-content-center">Search for recipes</h1>
       <Row id="search-bar">
-        <h1>Search for recipes:</h1>
-        <SearchBox onSearch={handleSearchResults} />
+        <Container className="d-flex justify-content-center">
+            
+            <br></br>
+            <SearchBox onSearch={handleSearchResults} />
+
+        </Container>
       </Row>
       <Row>
         <Col sm={{ size: 2 }}>
@@ -50,7 +55,7 @@ const SearchPage = () => {
 
 function SearchResults({ results }) {
   if (!results || results.length === 0) {
-    return <p>No results found.</p>;
+    //return <p>No results found.</p>;
   }
   
   return (

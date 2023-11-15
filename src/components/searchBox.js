@@ -1,11 +1,31 @@
 import React, { useState } from "react";
 import MealDataManager from "../managers_and_parsers/MealDataManager.js";
+import {
+  Label,
+  FormGroup,
+  Form,
+  UncontrolledDropdown,
+  Dropdown,
+  DropdownMenu,
+  ButtonDropdown,
+  DropdownItem,
+  DropdownToggle,
+  Input,
+  InputGroup,
+  Button,
+  Container,
+} from "reactstrap";
 
 const mealDataManager = new MealDataManager();
 
 const SearchBox = ({ onSearch }) => {
+    
+  //state varibles
   const [query, setQuery] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  //state functions
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
   const handleInputChange = (e) => {
     setQuery(e.target.value);
   };
@@ -23,21 +43,39 @@ const SearchBox = ({ onSearch }) => {
     }
   };
 
-  /*
-    TODO: use reactstrap InputGroup to make the search bar
-    using reactstrap we can add additional search parameters like vegan or lactose free in a dropdown button 
-  */
-
   return (
-    <div id="search-box">
-      <input
+    <InputGroup className="w-50" id="search-box">
+      <Input
         type="text"
         placeholder="Enter your search"
         value={query}
         onChange={handleInputChange}
       />
-      <button onClick={handleSearch}>Search</button>
-    </div>
+
+      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+        <Button color="primary" onClick={handleSearch}>
+          Search
+        </Button>
+
+        <DropdownToggle caret color="primary" />
+
+        <DropdownMenu>
+          <DropdownItem header>Filter Results</DropdownItem>
+          <Container className="m-2">
+            <Form>
+              <FormGroup check>
+                <Input type="checkbox" />
+                <Label check>Vegan</Label>
+              </FormGroup>
+              <FormGroup check>
+                <Input type="checkbox" />
+                <Label check>Vegetarian</Label>
+              </FormGroup>
+            </Form>
+          </Container>
+        </DropdownMenu>
+      </Dropdown>
+    </InputGroup>
   );
 };
 
