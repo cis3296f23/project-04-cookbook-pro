@@ -26,8 +26,11 @@ const savedMeals = () => {
   return (
     <ListGroup>
       <ListGroupItemHeading>My Recipes</ListGroupItemHeading>
-      <ListGroupItem>{list}</ListGroupItem>
-
+      
+      {savedRecipes.map((element) =>
+        <ListGroupItem>{element}</ListGroupItem>
+      )}
+      
     </ListGroup>
   );
 };
