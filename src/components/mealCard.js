@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Container,
   Button,
   Card,
   CardBody,
@@ -24,7 +25,9 @@ const MealCard = ({ meal }) => {
       {/* <CardImg src={require(`${meal.mealImage}`)} alt={`${meal.mealName} image`} /> */}
       <CardImg src={meal.image} alt={`${meal.name} image`} />
       <CardBody>
-        <CardText><div class="col-12 text-truncate">{meal.summary}</div></CardText>
+        <CardText>
+          <Container className="col-12 text-truncate m-0 p-0">{meal.summary}</Container>
+        </CardText>
         {/* <CardText>{meal.ingredients}</CardText>
                 <CardText>{meal.instructions}</CardText> */}
         {/* <Button href="/recipes">Recipe</Button> */}
