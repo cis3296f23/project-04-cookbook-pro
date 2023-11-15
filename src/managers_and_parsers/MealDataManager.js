@@ -59,7 +59,7 @@ class MealDataManager {
           recipe.summary
         );
 
-        PutRecipe(mappedResult);
+        PutRecipe("recipes", mappedResult);
 
         return mappedResult;
       });

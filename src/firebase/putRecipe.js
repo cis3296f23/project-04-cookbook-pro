@@ -37,11 +37,12 @@ const recipeConverter = {
 
 
 /**
+ * @param {String} collection the collection to save into
+ * @param {Recipe} recipe the recipe/meal you want to save
  * 
- * @param {Recipe} recipe 
  */
-async function PutRecipe(recipe){
-    const ref = doc(db, "recipes", String(recipe.id)).withConverter(recipeConverter);
+async function PutRecipe(collection, recipe){
+    const ref = doc(db, collection, String(recipe.id)).withConverter(recipeConverter);
     await setDoc(ref, recipe);
 }
 

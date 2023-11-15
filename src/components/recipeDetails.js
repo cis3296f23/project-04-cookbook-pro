@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import PutRecipe from '../firebase/putRecipe.js'
 
 function RecipeDetails({meal}) {
   const [modal, setModal] = useState(false);
@@ -10,10 +11,9 @@ function RecipeDetails({meal}) {
         console.log("saving recipe "+meal.mealName);
         
         /*
-        TODO: use firebase to store this recipe in the user's saved recipes collection
-        get user state first and log user in
+        TODO: save recipe into user's data
         */
-
+        PutRecipe("savedRecipe", meal);
 
         toggle(); //close modal
     }
