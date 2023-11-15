@@ -4,6 +4,7 @@
 // Ingredients as well as Meals will be handled by this manager (for now)
 import { Recipe } from "../CustomObjects/Recipe.js";
 import { Ingredient } from "../CustomObjects/Ingredient.js";
+import PutRecipe from '../firebase/putRecipe.js'
 class MealDataManager {
   // spoonacularParser = new SpoonacularParser();
   constructor() {
@@ -47,8 +48,8 @@ class MealDataManager {
         //console.log("recipe keys=" + keys);
         // Need to change the order in which the Recipe is created
         const mappedResult = new Recipe(
-          recipe.cuisine,
-          recipe.dishType,
+          recipe.cuisines,
+          recipe.dishTypes,
           recipe.id,
           recipe.image,
           recipe.extendedIngredients,
@@ -57,6 +58,8 @@ class MealDataManager {
           recipe.servings,
           recipe.summary
         );
+
+        PutRecipe(mappedResult);
 
         return mappedResult;
       });
