@@ -23,6 +23,9 @@ function getListener(collectionName, setter) {
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     const recipes = [];
     querySnapshot.forEach((doc) => {
+        /**
+         * TODO: save recipe ID so we can do a lookup for the recipe
+         */
       recipes.push(doc.data().name);
     });
     setter(recipes);
