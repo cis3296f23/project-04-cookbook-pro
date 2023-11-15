@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect }  from "react";
+import getListener from "../firebase/getListener.js";
 import {
   Card,
   ListGroup,
@@ -8,22 +9,25 @@ import {
   ListInlineItem,
 } from "reactstrap";
 
-/*
-TODO: this component should have a firebase listner to the user's saved meals collection. 
-when the collection is updated the list will be updated to display up to date info.
-updated to the list will happen in recipeDeatils.js, which will give a popup to the user and have a button to save recipe
 
-*/
 
 const savedMeals = () => {
+    const [savedRecipes, setSavedRecipes] = useState([""]);
+
+
+    //important to only get 1 listener, so use this thingy
+    useEffect(()=>{
+        const unsubscibe = getListener("savedRecipes", setSavedRecipes);
+    }, [])
+
+    const list = savedRecipes.join(", ");
+
+
   return (
     <ListGroup>
       <ListGroupItemHeading>My Recipes</ListGroupItemHeading>
-      <ListGroupItem>An item</ListGroupItem>
-      <ListGroupItem>An item</ListGroupItem>
-      <ListGroupItem>An item</ListGroupItem>
-      <ListGroupItem>An item</ListGroupItem>
-      <ListGroupItem>An item</ListGroupItem>
+      <ListGroupItem>{list}</ListGroupItem>
+
     </ListGroup>
   );
 };
