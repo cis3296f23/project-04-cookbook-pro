@@ -4,7 +4,7 @@ import MealCard from "../components/mealCard";
 import MealPlanBar from "../components/mealPlanBar";
 import SavedMeals from "../components/savedMeals";
 import SearchBox from "../components/searchBox.js";
-import "../styles.css";
+
 
 /*
 TODO: view more recipes after the inital query
@@ -23,14 +23,12 @@ const SearchPage = () => {
   };
 
   return (
-    <Container id="content-container">
-        <h1 className="d-flex justify-content-center">Search for recipes</h1>
-      <Row id="search-bar">
+    <Container>
+      <h1 className="d-flex justify-content-center">Search for recipes</h1>
+      <Row>
         <Container className="d-flex justify-content-center">
-            
-            <br></br>
-            <SearchBox onSearch={handleSearchResults} />
-
+          <br></br>
+          <SearchBox onSearch={handleSearchResults} />
         </Container>
       </Row>
       <Row>
@@ -39,12 +37,22 @@ const SearchPage = () => {
         </Col>
         <Col sm={{ size: 4 }}>
           {/* Pass the search results to the SearchResults component */}
-          <SearchResults results={searchResults.slice(0,(searchResults.length)/2)} />
+          <SearchResults
+            results={searchResults.slice(0, searchResults.length / 2)}
+          />
         </Col>
         <Col sm={{ size: 4 }}>
           {/* Pass the search results to the SearchResults component */}
-          <SearchResults results={searchResults.slice((searchResults.length)/2, searchResults.length)} />
+          <SearchResults
+            results={searchResults.slice(
+              searchResults.length / 2,
+              searchResults.length
+            )}
+          />
         </Col>
+
+
+
         <Col sm={{ size: 2 }}>
           <MealPlanBar />
         </Col>
@@ -57,12 +65,12 @@ function SearchResults({ results }) {
   if (!results || results.length === 0) {
     //return <p>No results found.</p>;
   }
-  
+
   return (
     <Container className="m-0 p-0">
       {results.map((meal, index) => (
         <div className="py-2" key={index}>
-          <MealCard meal={meal}/>
+          <MealCard meal={meal} />
         </div>
       ))}
     </Container>
