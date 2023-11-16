@@ -1,43 +1,64 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import PutRecipe from '../firebase/putRecipe.js'
+import PutRecipe from "../firebase/putRecipe.js";
+import deleteRecipe from "../firebase/deleteRecipe.js";
 
-function RecipeDetails({meal}) {
-  const [modal, setModal] = useState(false);
-
-  const toggle = () => {setModal(!modal)};
-
-    function saveData() {
-        //console.log("saving recipe "+meal.mealName);
-        
-        /*
+/**
+ *
+ * @param {Recipe} meal
+ * @returns
+ */
+function RecipeDetails({ meal, showDetails, toggle }) {
+  function saveData() {
+    /*
         TODO: save recipe into user's data
         */
-        PutRecipe("savedRecipes", meal);
+    const savedMeal = meal;
+    savedMeal.isSaved = true;
+    PutRecipe("savedRecipes", savedMeal);
+    toggle(); //close modal
+  }
 
-        toggle(); //close modal
-    }
+  function unsaveRecipe() {
+    //close the modal and remove the recipe
+    toggle();
+    deleteRecipe("savedRecipes", String(meal.id));
+  }
+
+  let buttonOptions;
+
+  //conditionally render the buttons at the bottom of the modal depending on if the recipe is saved or not
+  if (meal.isSaved) {
+    buttonOptions = (
+      <>
+        <Button color="primary" onClick={unsaveRecipe}>
+          Unsave recipe
+        </Button>
+        <Button color="secondary" onClick={toggle}>
+          Cancel
+        </Button>
+      </>
+    );
+  } else {
+    buttonOptions = (
+      <>
+        <Button color="primary" onClick={saveData}>
+          Save Recipe
+        </Button>
+        <Button color="secondary" onClick={toggle}>
+          Close
+        </Button>
+      </>
+    );
+  }
 
   return (
-    <div>
-      <Button color="primary" onClick={toggle}>
-        Details
-      </Button>
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>{meal.mealName}</ModalHeader>
-        <ModalBody>{meal.summary}</ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={saveData}>
-            Save Recipe
-          </Button>{" "}
-          <Button color="secondary" onClick={toggle}>
-            Don't Save
-          </Button>
-        </ModalFooter>
-      </Modal>
-    </div>
+    <Modal isOpen={showDetails} toggle={toggle}>
+      <ModalHeader toggle={toggle}>{meal.name}</ModalHeader>
+      <ModalBody>{meal.summary}</ModalBody>
+      <ModalFooter>{buttonOptions}</ModalFooter>
+    </Modal>
   );
 }
 
 export default RecipeDetails;
-
