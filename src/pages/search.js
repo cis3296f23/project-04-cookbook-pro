@@ -15,8 +15,7 @@ we should work on this after spoonacular api requests are moved to the backend
 */
 
 const SearchPage = () => {
-
-    //searchResults will have 3 states we try to use, which is empty array, not an array, or array with results
+  //searchResults will have 3 states we try to use, which is empty array, not an array, or array with results
   const [searchResults, setSearchResults] = useState("initial page load");
 
   const handleSearchResults = (results) => {
@@ -27,13 +26,12 @@ const SearchPage = () => {
   let results;
 
   //if page loaded
-  if(searchResults == "initial page load"){
+  if (searchResults == "initial page load") {
     results = (
-        <Col className="d-flex m-5 p-0 justify-content-center">
-          <p>search something</p>
-        </Col>
-
-    )
+      <Col className="d-flex m-5 p-0 justify-content-center">
+        <p>search something</p>
+      </Col>
+    );
     //if there are results then put it into results varible to render
   } else if (Array.isArray(searchResults)) {
     results = (
@@ -54,15 +52,15 @@ const SearchPage = () => {
           />
         </Col>
       </>
-    ); 
+    );
     //if there are no results then we want to render a spinner :D
   } else if (!Array.isArray(searchResults)) {
     results = (
-        <Col className="d-flex m-5 p-0 justify-content-center">
-          <Spinner>Loading</Spinner>
-        </Col>
+      <Col className="d-flex m-5 p-0 justify-content-center">
+        <Spinner>Loading</Spinner>
+      </Col>
     );
-  } 
+  }
 
   return (
     <Container>
