@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import React from "react";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Container,
+} from "reactstrap";
 import PutRecipe from "../firebase/putRecipe.js";
 import deleteRecipe from "../firebase/deleteRecipe.js";
 
@@ -56,7 +63,11 @@ function RecipeDetails({ meal, showDetails, toggle }) {
   return (
     <Modal isOpen={showDetails} toggle={toggle}>
       <ModalHeader toggle={toggle}>{meal.name}</ModalHeader>
-      <ModalBody>{meal.summary}</ModalBody>
+      <Container className="d-flex justify-content-center">
+        <img src={meal.image} />
+      </Container>
+
+      <ModalBody>{String(meal.summary).replace(/<[^>]*>/g, "")}</ModalBody>
       <ModalFooter>{buttonOptions}</ModalFooter>
     </Modal>
   );

@@ -8,6 +8,8 @@ import {
   InputGroup,
   Button,
   Container,
+  Row,
+  Col,
 } from "reactstrap";
 
 import SearchBoxFilter from "./searchBoxFilter.js";
@@ -23,14 +25,10 @@ const mealDataManager = new MealDataManager();
 const SearchBox = ({ onSearch }) => {
   //state varibles
   const [query, setQuery] = useState("");
-  const [intoleranceDropdownOpen, setIntoleranceDropdownOpen] = useState(false);
   const [dietDropdownOpen, setDietDropdownOpen] = useState(false);
 
   //state functions
   const dietToggle = () => setDietDropdownOpen((prevState) => !prevState);
-
-  const intoleranceToggle = () =>
-    setIntoleranceDropdownOpen((prevState) => !prevState);
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
@@ -49,7 +47,7 @@ const SearchBox = ({ onSearch }) => {
 
   //https://spoonacular.com/food-api/docs#Intolerances
   const [intoleranceFilterOptions, setIntoleranceFilterOptions] = useState({
-    diary: false,
+    Diary: false,
     Egg: false,
     Gluten: false,
     Grain: false,
@@ -85,6 +83,30 @@ const SearchBox = ({ onSearch }) => {
 
   return (
     <InputGroup className="w-50 min-width: 300px; shadow-lg" id="search-box">
+      <Dropdown isOpen={dietDropdownOpen} toggle={dietToggle}>
+        <DropdownToggle caret>Filter </DropdownToggle>
+        <DropdownMenu>
+          <Container className="m-2">
+            <Row>
+              <Col>
+                <h6>Diet filter</h6>
+                <SearchBoxFilter
+                  setfilterOptions={setDietFilterOptions}
+                  filterOptions={dietFilterOptions}
+                />
+              </Col>
+              <Col>
+                <h6>Allergy filter</h6>
+                <SearchBoxFilter
+                  setfilterOptions={setIntoleranceFilterOptions}
+                  filterOptions={intoleranceFilterOptions}
+                />
+              </Col>
+            </Row>
+          </Container>
+        </DropdownMenu>
+      </Dropdown>
+
       <Input
         type="text"
         placeholder="Enter your search"
@@ -96,30 +118,6 @@ const SearchBox = ({ onSearch }) => {
       <Button color="primary" onClick={handleSearch}>
         Search🔍
       </Button>
-
-      <Dropdown isOpen={dietDropdownOpen} toggle={dietToggle}>
-        <DropdownToggle caret>Diet </DropdownToggle>
-        <DropdownMenu>
-          <Container className="m-2">
-            <SearchBoxFilter
-              setfilterOptions={setDietFilterOptions}
-              filterOptions={dietFilterOptions}
-            />
-          </Container>
-        </DropdownMenu>
-      </Dropdown>
-
-      <Dropdown isOpen={intoleranceDropdownOpen} toggle={intoleranceToggle}>
-        <DropdownToggle caret>Allergy </DropdownToggle>
-        <DropdownMenu>
-          <Container className="m-2">
-            <SearchBoxFilter
-              setfilterOptions={setIntoleranceFilterOptions}
-              filterOptions={intoleranceFilterOptions}
-            />
-          </Container>
-        </DropdownMenu>
-      </Dropdown>
     </InputGroup>
   );
 };
