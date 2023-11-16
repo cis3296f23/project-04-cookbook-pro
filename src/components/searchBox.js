@@ -18,8 +18,13 @@ import {
 
 const mealDataManager = new MealDataManager();
 
+/**
+ *
+ * @param {function} param0
+ * @param {function} param1
+ * @returns
+ */
 const SearchBox = ({ onSearch }) => {
-    
   //state varibles
   const [query, setQuery] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -32,6 +37,9 @@ const SearchBox = ({ onSearch }) => {
 
   const handleSearch = async () => {
     try {
+      //clear search results
+      onSearch("yayspin!");
+
       // Wait for the query to complete and get the results
       const spoonacularQueryResults =
         await mealDataManager.queryRecipeFromSpoonacular(query);
@@ -44,12 +52,13 @@ const SearchBox = ({ onSearch }) => {
   };
 
   return (
-    <InputGroup className="w-50" id="search-box">
+    <InputGroup className="w-50 shadow-lg" id="search-box">
       <Input
         type="text"
         placeholder="Enter your search"
         value={query}
         onChange={handleInputChange}
+        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
 
       <Dropdown isOpen={dropdownOpen} toggle={toggle}>
@@ -57,7 +66,7 @@ const SearchBox = ({ onSearch }) => {
           Search
         </Button>
 
-        <DropdownToggle caret color="primary" />
+        <DropdownToggle caret color="danger" />
 
         <DropdownMenu>
           <DropdownItem header>Filter Results</DropdownItem>
