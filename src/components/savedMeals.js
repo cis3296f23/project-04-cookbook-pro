@@ -21,14 +21,13 @@ const savedMeals = () => {
     }, [])
 
 
-
   return (
     <ListGroup>
-      <ListGroupItemHeading>My Recipes</ListGroupItemHeading>
+      <ListGroupItemHeading >My Recipes</ListGroupItemHeading>
       
-      {savedRecipes.map((element) =>
-        <ListGroupItem>{element}</ListGroupItem>
-      )}
+      { Object.entries(savedRecipes).map(([key, value]) => {
+        return <ListGroupItem key={key}>{value}</ListGroupItem>
+    })}
       
     </ListGroup>
   );
