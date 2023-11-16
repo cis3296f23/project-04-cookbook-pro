@@ -1,22 +1,4 @@
-import React, { useState } from "react";
-import MealDataManager from "../managers_and_parsers/MealDataManager.js";
-import {
-  ListGroupItem,
-  Label,
-  FormGroup,
-  Form,
-  UncontrolledDropdown,
-  Dropdown,
-  DropdownMenu,
-  ButtonDropdown,
-  DropdownItem,
-  DropdownToggle,
-  Input,
-  InputGroup,
-  Button,
-  Container,
-  List,
-} from "reactstrap";
+import { Label, FormGroup, Form, Input } from "reactstrap";
 
 const SearchBox = ({ setfilterOptions, filterOptions }) => {
   const checkBoxChecked = (key) => {
@@ -29,7 +11,11 @@ const SearchBox = ({ setfilterOptions, filterOptions }) => {
       {Object.entries(filterOptions).map(([key, value]) => {
         return (
           <FormGroup key={key} check>
-            <Input type="checkbox" checked={value} onChange={() => checkBoxChecked(key)} />
+            <Input
+              type="checkbox"
+              checked={value}
+              onChange={() => checkBoxChecked(key)}
+            />
             <Label check>{key}</Label>
           </FormGroup>
         );

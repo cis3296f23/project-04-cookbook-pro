@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import MealDataManager from "../managers_and_parsers/MealDataManager.js";
 import {
-  Label,
-  FormGroup,
-  Form,
-  UncontrolledDropdown,
   Dropdown,
   DropdownMenu,
-  ButtonDropdown,
-  DropdownItem,
   DropdownToggle,
   Input,
   InputGroup,
@@ -31,12 +25,42 @@ const SearchBox = ({ onSearch }) => {
   const [query, setQuery] = useState("");
 
   //true/false search parameters, we can add as many as we want
-  const [filterOptions, setfilterOptions] = useState({vegan: false, vegetarian: false, glutenFree: false});
+  //https://spoonacular.com/food-api/docs#Diets
+  const [dietFilterOptions, setDietFilterOptions] = useState({
+    "Vegan": false,
+    "Vegetarian": false,
+    "Gluten Free": false,
+    "Ketogenic": false,
+    "Pescetarian": false,
+    "Paleo": false,
+  });
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dietDropdownOpen, setDietDropdownOpen] = useState(false);
 
   //state functions
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const dietToggle = () => setDietDropdownOpen((prevState) => !prevState);
+
+  const [intoleranceFilterOptions, setIntoleranceFilterOptions] = useState({
+    "diary": false,
+    "Egg": false,
+    "Gluten": false,
+    "Grain": false,
+    "Peanut": false,
+    "Seafood": false,
+    "Sesame": false,
+    "Shellfish": false,
+    "Soy": false,
+    "Sulfite": false,
+    "Tree Nut": false,
+    "Wheat": false,
+  });
+
+  const [intoleranceDropdownOpen, setIntoleranceDropdownOpen] = useState(false);
+
+  //state functions
+  const intoleranceToggle = () =>
+    setIntoleranceDropdownOpen((prevState) => !prevState);
+
   const handleInputChange = (e) => {
     setQuery(e.target.value);
   };
@@ -59,10 +83,10 @@ const SearchBox = ({ onSearch }) => {
 
   const handleClick = () => {
     console.log("clicked");
-  }
+  };
 
   return (
-    <InputGroup className="w-50 shadow-lg" id="search-box">
+    <InputGroup className="w-50 min-width: 300px; shadow-lg" id="search-box">
       <Input
         type="text"
         placeholder="Enter your search"
@@ -71,16 +95,30 @@ const SearchBox = ({ onSearch }) => {
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
 
-      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-        <Button color="primary" onClick={handleSearch}>
+      <Button color="primary" onClick={handleSearch}>
         Search🔍
-        </Button>
+      </Button>
 
-        <DropdownToggle caret>Filter </DropdownToggle>
-
+      <Dropdown isOpen={dietDropdownOpen} toggle={dietToggle}>
+        <DropdownToggle caret>Diet </DropdownToggle>
         <DropdownMenu>
           <Container className="m-2">
-            <SearchBoxFilter setfilterOptions={setfilterOptions} filterOptions={filterOptions}/>
+            <SearchBoxFilter
+              setfilterOptions={setDietFilterOptions}
+              filterOptions={dietFilterOptions}
+            />
+          </Container>
+        </DropdownMenu>
+      </Dropdown>
+
+      <Dropdown isOpen={intoleranceDropdownOpen} toggle={intoleranceToggle}>
+        <DropdownToggle caret>Allergy </DropdownToggle>
+        <DropdownMenu>
+          <Container className="m-2">
+            <SearchBoxFilter
+              setfilterOptions={setIntoleranceFilterOptions}
+              filterOptions={intoleranceFilterOptions}
+            />
           </Container>
         </DropdownMenu>
       </Dropdown>
