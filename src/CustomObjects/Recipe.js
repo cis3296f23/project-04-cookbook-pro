@@ -12,7 +12,8 @@ class Recipe {
     instructions,
     name,
     servings,
-    summary
+    summary,
+    
   ) {
     this.cuisine = cuisine;
     this.dishType = dishType;
@@ -23,6 +24,7 @@ class Recipe {
     this.name = name;
     this.servings = servings;
     this.summary = summary;
+    this.isSaved = false;
   }
   toString() {
     return
