@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from "react";
-import getListener from "../firebase/getListener.js";
+import getListener from "../firebase/setListener.js";
 import {
   Card,
   ListGroup,
@@ -20,7 +20,6 @@ const savedMeals = () => {
         const unsubscibe = getListener("savedRecipes", setSavedRecipes);
     }, [])
 
-    const list = savedRecipes.join(", ");
 
 
   return (
