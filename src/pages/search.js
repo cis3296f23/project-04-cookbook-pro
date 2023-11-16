@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Row, Col, Container } from "reactstrap";
+import { Row, Col, Container, Spinner } from "reactstrap";
 import MealCard from "../components/mealCard";
 import MealPlanBar from "../components/mealPlanBar";
 import SavedMeals from "../components/savedMeals";
 import SearchBox from "../components/searchBox.js";
-
 
 /*
 TODO: view more recipes after the inital query
@@ -22,19 +21,15 @@ const SearchPage = () => {
     setSearchResults(results);
   };
 
-  return (
-    <Container>
-      <h1 className="d-flex justify-content-center">Search for recipes</h1>
-      <Row>
-        <Container className="d-flex justify-content-center">
-          <br></br>
-          <SearchBox onSearch={handleSearchResults} />
-        </Container>
-      </Row>
-      <Row>
-        <Col sm={{ size: 2 }}>
-          <SavedMeals />
-        </Col>
+  let results;
+
+  if(searchResults == []){
+    results = (
+        <p>search something already</p>
+    )
+  } else if (Array.isArray(searchResults)) {
+    results = (
+      <>
         <Col sm={{ size: 4 }}>
           {/* Pass the search results to the SearchResults component */}
           <SearchResults
@@ -50,8 +45,31 @@ const SearchPage = () => {
             )}
           />
         </Col>
+      </>
+    ); 
+  } else if (!Array.isArray(searchResults)) {
+    results = (
+        <Col className="d-flex m-5 p-0 justify-content-center">
+          <Spinner>Loading</Spinner>
+        </Col>
+    );
+  } 
 
+  return (
+    <Container>
+      <h1 className="d-flex justify-content-center">Search for recipes</h1>
+      <Row>
+        <Container className="d-flex justify-content-center">
+          <br></br>
+          <SearchBox onSearch={handleSearchResults} />
+        </Container>
+      </Row>
+      <Row>
+        <Col sm={{ size: 2 }}>
+          <SavedMeals />
+        </Col>
 
+        {results}
 
         <Col sm={{ size: 2 }}>
           <MealPlanBar />
@@ -62,19 +80,19 @@ const SearchPage = () => {
 };
 
 function SearchResults({ results }) {
-  if (!results || results.length === 0) {
-    //return <p>No results found.</p>;
+  if (!Array.isArray(results)) {
+    return;
+  } else {
+    return (
+      <Container className="m-0 p-0">
+        {results.map((meal, index) => (
+          <div className="py-2" key={index}>
+            <MealCard meal={meal} />
+          </div>
+        ))}
+      </Container>
+    );
   }
-
-  return (
-    <Container className="m-0 p-0">
-      {results.map((meal, index) => (
-        <div className="py-2" key={index}>
-          <MealCard meal={meal} />
-        </div>
-      ))}
-    </Container>
-  );
 }
 
 export default SearchPage;
