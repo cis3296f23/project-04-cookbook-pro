@@ -20,6 +20,7 @@ function RecipeDetails({ meal, showDetails, toggle }) {
   }
 
   function unsaveRecipe() {
+    meal.isSaved = false;
     //close the modal and remove the recipe
     toggle();
     deleteRecipe("savedRecipes", String(meal.id));
