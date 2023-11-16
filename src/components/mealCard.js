@@ -26,17 +26,14 @@ const MealCard = ({ meal }) => {
   return (
     <Card className={"w-100 p-3 shadow-sm"}>
       <CardTitle>
-        <h5>{meal.name}</h5>
+        <h5 className="col-11 text-truncate m-2 p-0">{meal.name}</h5>
       </CardTitle>
       {/* <CardImg src={require(`${meal.mealImage}`)} alt={`${meal.mealName} image`} /> */}
-      <CardImg src={meal.image} alt={`${meal.name} image`} />
+      <CardImg className="m-0 border" src={meal.image} alt={`${meal.name} image`} />
       <CardBody>
-        <CardText className="col-12 text-truncate m-0 p-0">
+        <CardText className="col-12 text-truncate m-2 p-0">
           {meal.summary}
         </CardText>
-        {/* <CardText>{meal.ingredients}</CardText>
-                <CardText>{meal.instructions}</CardText> */}
-        {/* <Button href="/recipes">Recipe</Button> */}
         <Button color="primary" onClick={toggle}>Details</Button>
         <RecipeDetails meal={meal} showDetails={showDetails} toggle={toggle} />
       </CardBody>
