@@ -28,8 +28,8 @@ function getListener(collectionName, setter) {
          */
       recipes.push(doc.data().name);
     });
-    setter(recipes);
-    console.log("recipes: ", recipes.join(", "));
+    setter(recipes.sort());
+    //console.log("recipes: ", recipes.join(", "));
   });
   return unsubscribe;
 }
