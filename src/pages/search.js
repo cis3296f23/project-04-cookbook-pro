@@ -15,7 +15,7 @@ we should work on this after spoonacular api requests are moved to the backend
 */
 
 const SearchPage = () => {
-  //searchResults will have 3 states we try to use, which is empty array, not an array, or array with results
+  //searchResults will have 3 states we try to use, which is "initial page load", not an array, or array with results
   const [searchResults, setSearchResults] = useState("initial page load");
 
   const handleSearchResults = (results) => {
@@ -29,7 +29,7 @@ const SearchPage = () => {
   if (searchResults == "initial page load") {
     results = (
       <Col className="d-flex m-5 p-0 justify-content-center">
-        <p>search something</p>
+        <p className="text-secondary">search something</p>
       </Col>
     );
     //if there are results then put it into results varible to render
