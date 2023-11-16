@@ -26,13 +26,11 @@ function getListener(collectionName, setter) {
 
         //console.log("id="+doc.data().id)
         if(doc.data().id != 0){
-            recipes[doc.data().id] = doc.data().name;
+            recipes.push(doc.data());
         }
       
     });
     setter(recipes);
-    //console.log("name="+recipes[75081])
-    //console.log("recipes: ", recipes.join(", "));
   });
   return unsubscribe;
 }
