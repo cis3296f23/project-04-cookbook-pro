@@ -16,6 +16,8 @@ import {
   Container,
 } from "reactstrap";
 
+import SearchBoxFilter from "./searchBoxFilter.js";
+
 const mealDataManager = new MealDataManager();
 
 /**
@@ -27,6 +29,10 @@ const mealDataManager = new MealDataManager();
 const SearchBox = ({ onSearch }) => {
   //state varibles
   const [query, setQuery] = useState("");
+
+  //true/false search parameters, we can add as many as we want
+  const [filterOptions, setfilterOptions] = useState({vegan: false, vegetarian: false, glutenFree: false});
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   //state functions
@@ -38,7 +44,7 @@ const SearchBox = ({ onSearch }) => {
   const handleSearch = async () => {
     try {
       //clear search results
-      onSearch("yayspin!");
+      onSearch("yayspin! :D this string doesn't mean anything");
 
       // Wait for the query to complete and get the results
       const spoonacularQueryResults =
@@ -50,6 +56,10 @@ const SearchBox = ({ onSearch }) => {
       console.error(error); // Handle errors if the Promise is rejected
     }
   };
+
+  const handleClick = () => {
+    console.log("clicked");
+  }
 
   return (
     <InputGroup className="w-50 shadow-lg" id="search-box">
@@ -63,24 +73,14 @@ const SearchBox = ({ onSearch }) => {
 
       <Dropdown isOpen={dropdownOpen} toggle={toggle}>
         <Button color="primary" onClick={handleSearch}>
-          Search
+        Search🔍
         </Button>
 
-        <DropdownToggle caret color="danger" />
+        <DropdownToggle caret>Filter </DropdownToggle>
 
         <DropdownMenu>
-          <DropdownItem header>Filter Results</DropdownItem>
           <Container className="m-2">
-            <Form>
-              <FormGroup check>
-                <Input type="checkbox" />
-                <Label check>Vegan</Label>
-              </FormGroup>
-              <FormGroup check>
-                <Input type="checkbox" />
-                <Label check>Vegetarian</Label>
-              </FormGroup>
-            </Form>
+            <SearchBoxFilter setfilterOptions={setfilterOptions} filterOptions={filterOptions}/>
           </Container>
         </DropdownMenu>
       </Dropdown>
