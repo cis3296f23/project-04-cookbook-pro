@@ -23,47 +23,45 @@ const mealDataManager = new MealDataManager();
 const SearchBox = ({ onSearch }) => {
   //state varibles
   const [query, setQuery] = useState("");
-
-  //true/false search parameters, we can add as many as we want
-  //https://spoonacular.com/food-api/docs#Diets
-  const [dietFilterOptions, setDietFilterOptions] = useState({
-    "Vegan": false,
-    "Vegetarian": false,
-    "Gluten Free": false,
-    "Ketogenic": false,
-    "Pescetarian": false,
-    "Paleo": false,
-  });
-
+  const [intoleranceDropdownOpen, setIntoleranceDropdownOpen] = useState(false);
   const [dietDropdownOpen, setDietDropdownOpen] = useState(false);
 
   //state functions
   const dietToggle = () => setDietDropdownOpen((prevState) => !prevState);
 
-  const [intoleranceFilterOptions, setIntoleranceFilterOptions] = useState({
-    "diary": false,
-    "Egg": false,
-    "Gluten": false,
-    "Grain": false,
-    "Peanut": false,
-    "Seafood": false,
-    "Sesame": false,
-    "Shellfish": false,
-    "Soy": false,
-    "Sulfite": false,
-    "Tree Nut": false,
-    "Wheat": false,
-  });
-
-  const [intoleranceDropdownOpen, setIntoleranceDropdownOpen] = useState(false);
-
-  //state functions
   const intoleranceToggle = () =>
     setIntoleranceDropdownOpen((prevState) => !prevState);
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
   };
+
+  //true/false search parameters, we can add as many as we want
+  //https://spoonacular.com/food-api/docs#Diets
+  const [dietFilterOptions, setDietFilterOptions] = useState({
+    Vegan: false,
+    Vegetarian: false,
+    "Gluten Free": false,
+    Ketogenic: false,
+    Pescetarian: false,
+    Paleo: false,
+  });
+
+  //https://spoonacular.com/food-api/docs#Intolerances
+  const [intoleranceFilterOptions, setIntoleranceFilterOptions] = useState({
+    diary: false,
+    Egg: false,
+    Gluten: false,
+    Grain: false,
+    Peanut: false,
+    Seafood: false,
+    Sesame: false,
+    Shellfish: false,
+    Soy: false,
+    Sulfite: false,
+    "Tree Nut": false,
+    Wheat: false,
+  });
 
   const handleSearch = async () => {
     try {
