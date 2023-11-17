@@ -20,35 +20,51 @@ const SearchPage = () => {
   //searchResults will have 3 states we try to use, which is "initial page load", not an array, or array with results
   const [searchResults, setSearchResults] = useState("initial page load");
   const [query, setQuery] = useState("");
-  const [moreResults, setMoreResults] = useState(false);
+  const [moreResults, setMoreResults] = useState(-1);
 
   const handleSearchResults = (results) => {
+    setMoreResults(results.totalResults);
     setSearchResults(results);
   };
 
   const mealDataManager = new MealDataManager();
 
-  const spinner = (
-    <Col className="d-flex m-5 p-0 justify-content-center">
-      <Spinner>Loading</Spinner>
-    </Col>
-  );
+  let spinner;
+  if (moreResults - searchResults.length == 0) {
+    spinner = (
+      <Col className="d-flex m-5 p-0 justify-content-center">
+        <p className="text-secondary">Total {searchResults.length} results</p>
+      </Col>
+    );
+
+    console.log(
+      "done loading moreResults=" +
+        moreResults +
+        " searchResults.length=" +
+        searchResults.length
+    );
+  } else {
+    spinner = (
+      <Col className="d-flex m-5 p-0 justify-content-center">
+        <Spinner>Loading</Spinner>
+      </Col>
+    );
+    console.log("loading");
+  }
 
   //for infinte scroll
   const fetchMoreResults = async () => {
     try {
       setMoreResults(true);
-
       // Wait for the query to complete and get the results
       const spoonacularQueryResults =
         await mealDataManager.queryRecipeFromSpoonacular(
           query,
           searchResults.length
         );
-      setMoreResults(false);
+
       setSearchResults(searchResults.concat(spoonacularQueryResults));
     } catch (error) {
-      setMoreResults(false);
       console.error("error: " + error); // Handle errors if the Promise is rejected
     }
   };
@@ -66,23 +82,18 @@ const SearchPage = () => {
     //if there are results then put it into results varible to render
   } else if (Array.isArray(searchResults)) {
     results = (
-      <Container className="col-8">
-        <InfiniteScroll
-          dataLength={searchResults.length}
-          next={fetchMoreResults}
-          hasMore={moreResults}
-          loader={spinner}
-          endMessage={<Col className="d-flex m-5 p-0 justify-content-center">
-          <p className="text-secondary">Total {searchResults.length} results</p>
-        </Col>}
-        >
-          <Container className="d-flex col-12 flex-wrap">
-            {searchResults.map((meal, index) => (
-              <MealCard key={index} meal={meal} />
-            ))}
-          </Container>
-        </InfiniteScroll>
-      </Container>
+      <InfiniteScroll
+        dataLength={searchResults.length}
+        next={fetchMoreResults}
+        hasMore={true}
+        loader={spinner}
+      >
+        <Container className="d-flex col-12 flex-wrap">
+          {searchResults.map((meal, index) => (
+            <MealCard key={index} meal={meal} />
+          ))}
+        </Container>
+      </InfiniteScroll>
     );
 
     //if there are no results then we want to render a spinner :D
@@ -107,8 +118,7 @@ const SearchPage = () => {
         <Col className="col-2">
           <SavedMeals />
         </Col>
-
-        {results}
+        <Container className="col-8">{results}</Container>
 
         <Col className="col-2">
           <MealPlanBar />

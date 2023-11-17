@@ -47,6 +47,7 @@ class MealDataManager {
     try {
       const response = await fetch(fullUrl);
       const data = await response.json();
+      //console.log("data.totalResults="+data.totalResults)
       const searchResultsList = data.results.map((recipe) => {
         // Instantiate PrefabMeal for each result
 

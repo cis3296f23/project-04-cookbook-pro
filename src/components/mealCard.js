@@ -28,13 +28,13 @@ const MealCard = ({ meal }) => {
   return (
     <Card className={"m-2 p-3 flex-fill shadow-sm"} style={width}>
       <CardTitle>
-        <h5 className="col-11 text-truncate m-2 p-0">{meal.name}</h5>
+        <h5 className="text-truncate m-2 p-0">{meal.name}</h5>
       </CardTitle>
       {/* <CardImg src={require(`${meal.mealImage}`)} alt={`${meal.mealName} image`} /> */}
       <CardImg className="m-0 border" src={meal.image} alt={`${meal.name} image`} />
       <CardBody>
-        <CardText className="col-12 text-truncate m-2 p-0">
-          {meal.summary}
+        <CardText className="text-truncate m-2 p-0">
+        {String(meal.summary).replace(/<[^>]*>/g, "")}
         </CardText>
         <Button color="primary" onClick={toggle}>Details</Button>
         <RecipeDetails meal={meal} showDetails={showDetails} toggle={toggle} />
