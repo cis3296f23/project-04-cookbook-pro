@@ -23,8 +23,10 @@ const MealCard = ({ meal }) => {
         setShowDetails(!showDetails);
     };
 
+    const width={width: "18rem"};
+
   return (
-    <Card className={"w-100 p-3 shadow-sm"}>
+    <Card className={"m-2 p-3 flex-fill shadow-sm"} style={width}>
       <CardTitle>
         <h5 className="col-11 text-truncate m-2 p-0">{meal.name}</h5>
       </CardTitle>
