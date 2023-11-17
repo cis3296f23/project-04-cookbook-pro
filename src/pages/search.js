@@ -74,8 +74,8 @@ const SearchPage = () => {
           loader={spinner}
         >
           <Container className="d-flex col-12 flex-wrap">
-            {searchResults.map((meal) => (
-              <MealCard meal={meal} />
+            {searchResults.map((meal, index) => (
+              <MealCard key={index} meal={meal} />
             ))}
           </Container>
         </InfiniteScroll>
