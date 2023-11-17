@@ -24,10 +24,10 @@ const mealDataManager = new MealDataManager();
  */
 const SearchBox = ({ onSearch, query, setQuery }) => {
   //state varibles
-  const [dietDropdownOpen, setDietDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   //state functions
-  const dietToggle = () => setDietDropdownOpen((prevState) => !prevState);
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
@@ -78,7 +78,7 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
 
   return (
     <InputGroup className="w-50 min-width: 300px; shadow-lg" id="search-box">
-      <Dropdown isOpen={dietDropdownOpen} toggle={dietToggle}>
+      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
         <DropdownToggle caret>Filter </DropdownToggle>
         <DropdownMenu>
           <Container className="m-2">
