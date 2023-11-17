@@ -36,7 +36,7 @@ const SearchPage = () => {
   //for infinte scroll
   const fetchMoreResults = async () => {
     try {
-        console.log("fetching more data")
+      console.log("fetching more data");
       // Wait for the query to complete and get the results
       const spoonacularQueryResults =
         await mealDataManager.queryRecipeFromSpoonacular(
@@ -44,7 +44,7 @@ const SearchPage = () => {
           searchResults.length
         );
 
-        setSearchResults(searchResults.concat(spoonacularQueryResults));
+      setSearchResults(searchResults.concat(spoonacularQueryResults));
     } catch (error) {
       console.error(error); // Handle errors if the Promise is rejected
     }
@@ -63,16 +63,23 @@ const SearchPage = () => {
     //if there are results then put it into results varible to render
   } else if (Array.isArray(searchResults)) {
     results = (
-      <InfiniteScroll
-        dataLength={searchResults.length}
-        next={fetchMoreResults}
-        hasMore={true}
-        loader={spinner}
-      >
-        {searchResults.map((meal) => (
-          <MealCard meal={meal} />
-        ))}
-      </InfiniteScroll>
+      // searchResults.map((meal) => (
+      //     <MealCard meal={meal} />
+      // ))
+      <Container className="col-8">
+        <InfiniteScroll
+          dataLength={searchResults.length}
+          next={fetchMoreResults}
+          hasMore={true}
+          loader={spinner}
+        >
+          <Container className="d-flex col-12 flex-wrap">
+            {searchResults.map((meal) => (
+              <MealCard meal={meal} />
+            ))}
+          </Container>
+        </InfiniteScroll>
+      </Container>
     );
 
     //if there are no results then we want to render a spinner :D
@@ -98,7 +105,7 @@ const SearchPage = () => {
           <SavedMeals />
         </Col>
 
-        <Container className="d-flex col-8 flex-wrap">{results}</Container>
+        {results}
 
         <Col className="col-2">
           <MealPlanBar />
