@@ -23,20 +23,19 @@ const MealCard = ({ meal }) => {
         setShowDetails(!showDetails);
     };
 
+    const width={width: "18rem"};
+
   return (
-    <Card className={"w-100 p-3 shadow-sm"}>
+    <Card className={"m-2 p-3 flex-fill shadow-sm"} style={width}>
       <CardTitle>
-        <h5>{meal.name}</h5>
+        <h5 className="text-truncate m-2 p-0">{meal.name}</h5>
       </CardTitle>
       {/* <CardImg src={require(`${meal.mealImage}`)} alt={`${meal.mealName} image`} /> */}
-      <CardImg src={meal.image} alt={`${meal.name} image`} />
+      <CardImg className="m-0 border" src={meal.image} alt={`${meal.name} image`} />
       <CardBody>
-        <CardText className="col-12 text-truncate m-0 p-0">
-          {meal.summary}
+        <CardText className="text-truncate m-2 p-0">
+        {String(meal.summary).replace(/<[^>]*>/g, "")}
         </CardText>
-        {/* <CardText>{meal.ingredients}</CardText>
-                <CardText>{meal.instructions}</CardText> */}
-        {/* <Button href="/recipes">Recipe</Button> */}
         <Button color="primary" onClick={toggle}>Details</Button>
         <RecipeDetails meal={meal} showDetails={showDetails} toggle={toggle} />
       </CardBody>

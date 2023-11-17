@@ -22,13 +22,12 @@ const mealDataManager = new MealDataManager();
  * @param {function} param1
  * @returns
  */
-const SearchBox = ({ onSearch }) => {
+const SearchBox = ({ onSearch, query, setQuery }) => {
   //state varibles
-  const [query, setQuery] = useState("");
-  const [dietDropdownOpen, setDietDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   //state functions
-  const dietToggle = () => setDietDropdownOpen((prevState) => !prevState);
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
@@ -68,7 +67,7 @@ const SearchBox = ({ onSearch }) => {
 
       // Wait for the query to complete and get the results
       const spoonacularQueryResults =
-        await mealDataManager.queryRecipeFromSpoonacular(query);
+        await mealDataManager.queryRecipeFromSpoonacular(query, 0);
 
       // Pass the search results to the parent component
       onSearch(spoonacularQueryResults);
@@ -77,13 +76,9 @@ const SearchBox = ({ onSearch }) => {
     }
   };
 
-  const handleClick = () => {
-    console.log("clicked");
-  };
-
   return (
     <InputGroup className="w-50 min-width: 300px; shadow-lg" id="search-box">
-      <Dropdown isOpen={dietDropdownOpen} toggle={dietToggle}>
+      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
         <DropdownToggle caret>Filter </DropdownToggle>
         <DropdownMenu>
           <Container className="m-2">

@@ -4,6 +4,8 @@ import MealCard from "../components/mealCard";
 import MealPlanBar from "../components/mealPlanBar";
 import SavedMeals from "../components/savedMeals";
 import SearchBox from "../components/searchBox.js";
+import MealDataManager from "../managers_and_parsers/MealDataManager.js";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 /*
 TODO: view more recipes after the inital query
@@ -17,9 +19,54 @@ we should work on this after spoonacular api requests are moved to the backend
 const SearchPage = () => {
   //searchResults will have 3 states we try to use, which is "initial page load", not an array, or array with results
   const [searchResults, setSearchResults] = useState("initial page load");
+  const [query, setQuery] = useState("");
+  const [moreResults, setMoreResults] = useState(-1);
 
   const handleSearchResults = (results) => {
+    setMoreResults(results.totalResults);
     setSearchResults(results);
+  };
+
+  const mealDataManager = new MealDataManager();
+
+  let spinner;
+  if (moreResults - searchResults.length == 0) {
+    spinner = (
+      <Col className="d-flex m-5 p-0 justify-content-center">
+        <p className="text-secondary">Total {searchResults.length} results</p>
+      </Col>
+    );
+
+    console.log(
+      "done loading moreResults=" +
+        moreResults +
+        " searchResults.length=" +
+        searchResults.length
+    );
+  } else {
+    spinner = (
+      <Col className="d-flex m-5 p-0 justify-content-center">
+        <Spinner>Loading</Spinner>
+      </Col>
+    );
+    console.log("loading");
+  }
+
+  //for infinte scroll
+  const fetchMoreResults = async () => {
+    try {
+      setMoreResults(true);
+      // Wait for the query to complete and get the results
+      const spoonacularQueryResults =
+        await mealDataManager.queryRecipeFromSpoonacular(
+          query,
+          searchResults.length
+        );
+
+      setSearchResults(searchResults.concat(spoonacularQueryResults));
+    } catch (error) {
+      console.error("error: " + error); // Handle errors if the Promise is rejected
+    }
   };
 
   //conditionally render the results
@@ -35,31 +82,23 @@ const SearchPage = () => {
     //if there are results then put it into results varible to render
   } else if (Array.isArray(searchResults)) {
     results = (
-      <>
-        <Col sm={{ size: 4 }}>
-          {/* Pass the search results to the SearchResults component */}
-          <SearchResults
-            results={searchResults.slice(0, searchResults.length / 2)}
-          />
-        </Col>
-        <Col sm={{ size: 4 }}>
-          {/* Pass the search results to the SearchResults component */}
-          <SearchResults
-            results={searchResults.slice(
-              searchResults.length / 2,
-              searchResults.length
-            )}
-          />
-        </Col>
-      </>
+      <InfiniteScroll
+        dataLength={searchResults.length}
+        next={fetchMoreResults}
+        hasMore={true}
+        loader={spinner}
+      >
+        <Container className="d-flex col-12 flex-wrap">
+          {searchResults.map((meal, index) => (
+            <MealCard key={index} meal={meal} />
+          ))}
+        </Container>
+      </InfiniteScroll>
     );
+
     //if there are no results then we want to render a spinner :D
   } else if (!Array.isArray(searchResults)) {
-    results = (
-      <Col className="d-flex m-5 p-0 justify-content-center">
-        <Spinner>Loading</Spinner>
-      </Col>
-    );
+    results = spinner;
   }
 
   return (
@@ -68,38 +107,25 @@ const SearchPage = () => {
       <Row>
         <Container className="d-flex justify-content-center">
           <br></br>
-          <SearchBox onSearch={handleSearchResults} />
+          <SearchBox
+            onSearch={handleSearchResults}
+            query={query}
+            setQuery={setQuery}
+          />
         </Container>
       </Row>
       <Row>
-        <Col sm={{ size: 2 }}>
+        <Col className="col-2">
           <SavedMeals />
         </Col>
+        <Container className="col-8">{results}</Container>
 
-        {results}
-
-        <Col sm={{ size: 2 }}>
+        <Col className="col-2">
           <MealPlanBar />
         </Col>
       </Row>
     </Container>
   );
 };
-
-function SearchResults({ results }) {
-  if (!Array.isArray(results)) {
-    return;
-  } else {
-    return (
-      <Container className="m-0 p-0">
-        {results.map((meal, index) => (
-          <div className="py-2" key={index}>
-            <MealCard meal={meal} />
-          </div>
-        ))}
-      </Container>
-    );
-  }
-}
 
 export default SearchPage;

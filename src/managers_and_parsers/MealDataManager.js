@@ -4,7 +4,7 @@
 // Ingredients as well as Meals will be handled by this manager (for now)
 import { Recipe } from "../CustomObjects/Recipe.js";
 import { Ingredient } from "../CustomObjects/Ingredient.js";
-import PutRecipe from '../firebase/putRecipe.js'
+import PutRecipe from "../firebase/putRecipe.js";
 class MealDataManager {
   // spoonacularParser = new SpoonacularParser();
   constructor() {
@@ -13,7 +13,13 @@ class MealDataManager {
     this.spoonacularApi = process.env.REACT_APP_SPOONACULAR_API_KEY;
   }
 
-  async queryRecipeFromSpoonacular(query) {
+  /**
+   *
+   * @param {String} query what was entered in the search bar (food)
+   * @param {Number} offset used for infinite scroll
+   * @returns
+   */
+  async queryRecipeFromSpoonacular(query, offset) {
     //add in these parameters
     /*
         addRecipeInformation	boolean	false	If set to true, you get more information about the recipes returned.
@@ -25,8 +31,8 @@ class MealDataManager {
     searchQuery.append("apiKey", this.spoonacularApi);
     searchQuery.append("query", query); // Assuming query is a string, adjust accordingly
     searchQuery.append("addRecipeInformation", true);
-    searchQuery.append("offset", 0); //increment offset to get more results of current query
-    searchQuery.append("number", 10); //ask for 100 recipes instead of 10
+    searchQuery.append("offset", offset); //use this offset for infinite scrolling
+    searchQuery.append("number", 20); //ask for 100 recipes instead of 10
     searchQuery.append("fillIngredients", true); //get ingredient info
 
     const fullUrl = `${
@@ -41,6 +47,7 @@ class MealDataManager {
     try {
       const response = await fetch(fullUrl);
       const data = await response.json();
+      //console.log("data.totalResults="+data.totalResults)
       const searchResultsList = data.results.map((recipe) => {
         // Instantiate PrefabMeal for each result
 
