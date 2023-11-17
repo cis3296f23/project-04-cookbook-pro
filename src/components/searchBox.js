@@ -22,9 +22,8 @@ const mealDataManager = new MealDataManager();
  * @param {function} param1
  * @returns
  */
-const SearchBox = ({ onSearch }) => {
+const SearchBox = ({ onSearch, query, setQuery }) => {
   //state varibles
-  const [query, setQuery] = useState("");
   const [dietDropdownOpen, setDietDropdownOpen] = useState(false);
 
   //state functions
@@ -68,17 +67,13 @@ const SearchBox = ({ onSearch }) => {
 
       // Wait for the query to complete and get the results
       const spoonacularQueryResults =
-        await mealDataManager.queryRecipeFromSpoonacular(query);
+        await mealDataManager.queryRecipeFromSpoonacular(query, 0);
 
       // Pass the search results to the parent component
       onSearch(spoonacularQueryResults);
     } catch (error) {
       console.error(error); // Handle errors if the Promise is rejected
     }
-  };
-
-  const handleClick = () => {
-    console.log("clicked");
   };
 
   return (

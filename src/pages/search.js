@@ -5,6 +5,7 @@ import MealPlanBar from "../components/mealPlanBar";
 import SavedMeals from "../components/savedMeals";
 import SearchBox from "../components/searchBox.js";
 import MealDataManager from "../managers_and_parsers/MealDataManager.js";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 /*
 TODO: view more recipes after the inital query
@@ -26,16 +27,24 @@ const SearchPage = () => {
 
   const mealDataManager = new MealDataManager();
 
-  const handleNewSearch = async () => {
+  const spinner = (
+    <Col className="d-flex m-5 p-0 justify-content-center">
+      <Spinner>Loading</Spinner>
+    </Col>
+  );
+
+  //for infinte scroll
+  const fetchMoreResults = async () => {
     try {
+        console.log("fetching more data")
       // Wait for the query to complete and get the results
       const spoonacularQueryResults =
         await mealDataManager.queryRecipeFromSpoonacular(
           query,
-          oldResults.length
+          searchResults.length
         );
 
-      onSearch(searchResults.concat(spoonacularQueryResults));
+        setSearchResults(searchResults.concat(spoonacularQueryResults));
     } catch (error) {
       console.error(error); // Handle errors if the Promise is rejected
     }
@@ -53,14 +62,22 @@ const SearchPage = () => {
     );
     //if there are results then put it into results varible to render
   } else if (Array.isArray(searchResults)) {
-    results = <SearchResults results={searchResults} />;
+    results = (
+      <InfiniteScroll
+        dataLength={searchResults.length}
+        next={fetchMoreResults}
+        hasMore={true}
+        loader={spinner}
+      >
+        {searchResults.map((meal) => (
+          <MealCard meal={meal} />
+        ))}
+      </InfiniteScroll>
+    );
+
     //if there are no results then we want to render a spinner :D
   } else if (!Array.isArray(searchResults)) {
-    results = (
-      <Col className="d-flex m-5 p-0 justify-content-center">
-        <Spinner>Loading</Spinner>
-      </Col>
-    );
+    results = spinner;
   }
 
   return (
@@ -90,19 +107,5 @@ const SearchPage = () => {
     </Container>
   );
 };
-
-function SearchResults({ results }) {
-  if (!Array.isArray(results)) {
-    return;
-  } else {
-    return (
-      <>
-        {results.map((meal) => (
-          <MealCard meal={meal} />
-        ))}
-      </>
-    );
-  }
-}
 
 export default SearchPage;
