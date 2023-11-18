@@ -60,6 +60,24 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
     Wheat: false,
   });
 
+
+  const [mealTypes, setMealTypes] = useState({
+    "Main Course": false,
+    "Side Dish": false,
+    Dessert: false,
+    Appetizer: false,
+    Salad: false,
+    Bread: false,
+    Breakfast: false,
+    Soup: false,
+    Beverage: false,
+    Sauce: false,
+    Marinade: false,
+    Fingerfood: false,
+    Snack: false,
+    Drink: false
+  })
+
   const handleSearch = async () => {
     try {
       //clear search results
@@ -84,17 +102,24 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
           <Container className="m-2">
             <Row>
               <Col>
-                <h6>Diet filter</h6>
+                <h6>Diets</h6>
                 <SearchBoxFilter
                   setfilterOptions={setDietFilterOptions}
                   filterOptions={dietFilterOptions}
                 />
               </Col>
               <Col>
-                <h6>Allergy filter</h6>
+                <h6>Allergys</h6>
                 <SearchBoxFilter
                   setfilterOptions={setIntoleranceFilterOptions}
                   filterOptions={intoleranceFilterOptions}
+                />
+              </Col>
+              <Col>
+                <h6>Type</h6>
+                <SearchBoxFilter
+                  setfilterOptions={setMealTypes}
+                  filterOptions={mealTypes}
                 />
               </Col>
             </Row>
