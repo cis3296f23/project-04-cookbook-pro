@@ -20,42 +20,24 @@ const SearchPage = () => {
   //searchResults will have 3 states we try to use, which is "initial page load", not an array, or array with results
   const [searchResults, setSearchResults] = useState("initial page load");
   const [query, setQuery] = useState("");
-  const [moreResults, setMoreResults] = useState(-1);
+  const [numResults, setNumResults] = useState(-1);
 
   const handleSearchResults = (results) => {
-    setMoreResults(results.totalResults);
-    setSearchResults(results);
+    setSearchResults(results.resultsList);
+    setNumResults(results.totalResults);
   };
 
   const mealDataManager = new MealDataManager();
 
-  let spinner;
-  if (moreResults - searchResults.length == 0) {
-    spinner = (
-      <Col className="d-flex m-5 p-0 justify-content-center">
-        <p className="text-secondary">Total {searchResults.length} results</p>
-      </Col>
-    );
-
-    console.log(
-      "done loading moreResults=" +
-        moreResults +
-        " searchResults.length=" +
-        searchResults.length
-    );
-  } else {
-    spinner = (
-      <Col className="d-flex m-5 p-0 justify-content-center">
-        <Spinner>Loading</Spinner>
-      </Col>
-    );
-    console.log("loading");
-  }
-
+  const spinner = (
+    <Col className="d-flex m-5 p-0 justify-content-center">
+      <Spinner>Loading</Spinner>
+    </Col>
+  );
   //for infinte scroll
   const fetchMoreResults = async () => {
     try {
-      setMoreResults(true);
+      //setMoreResults(true);
       // Wait for the query to complete and get the results
       const spoonacularQueryResults =
         await mealDataManager.queryRecipeFromSpoonacular(
@@ -63,7 +45,12 @@ const SearchPage = () => {
           searchResults.length
         );
 
-      setSearchResults(searchResults.concat(spoonacularQueryResults));
+      setSearchResults(searchResults.concat(spoonacularQueryResults.resultsList));
+      //spoonacular caps results to 1000
+      if (searchResults.length >= numResults || searchResults.length >= 999) {
+        console.log("searchResults.length=" + searchResults.length+ " numResults="+numResults)
+        setNumResults(false);
+      }
     } catch (error) {
       console.error("error: " + error); // Handle errors if the Promise is rejected
     }
@@ -85,8 +72,13 @@ const SearchPage = () => {
       <InfiniteScroll
         dataLength={searchResults.length}
         next={fetchMoreResults}
-        hasMore={true}
+        hasMore={numResults}
         loader={spinner}
+        endMessage={
+          <Col className="d-flex m-5 p-0 justify-content-center">
+            <p className="text-secondary">Total {searchResults.length} results</p>
+          </Col>
+        }
       >
         <Container className="d-flex col-12 flex-wrap">
           {searchResults.map((meal, index) => (

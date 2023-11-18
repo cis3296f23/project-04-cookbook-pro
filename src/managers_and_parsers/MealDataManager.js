@@ -71,7 +71,11 @@ class MealDataManager {
         return mappedResult;
       });
 
-      return searchResultsList;
+      //i want the number of matching meals from spoonacular so infinite scroll knows when to stop
+      return {
+        resultsList: searchResultsList,
+        totalResults: data.totalResults,
+      };
     } catch (error) {
       console.error("Error fetching data:", error);
       throw error;
