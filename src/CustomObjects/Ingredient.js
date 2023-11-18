@@ -1,8 +1,23 @@
 class Ingredient {
-  constructor(id, name, amount, unit, measures, aisle) {
-    this.name = name;
-    this.quantity = quantity;
-    this.unit = unit;
+  constructor(
+    amount,
+    id,
+    name,
+    units
+  ) {
+    this.amount = amount,
+    this.id = id,
+    this.name = name,
+    this.units = units,
+    this.isSaved = false;
+  }
+  toString() {
+    return (
+      this.amount + ', ' +
+      this.id + ', ' +
+      this.name + ', ' +
+      this.units
+    )
   }
 }
 

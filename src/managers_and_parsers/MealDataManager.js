@@ -6,7 +6,6 @@ import { Recipe } from "../CustomObjects/Recipe.js";
 import { Ingredient } from "../CustomObjects/Ingredient.js";
 import PutRecipe from "../firebase/putRecipe.js";
 class MealDataManager {
-  // spoonacularParser = new SpoonacularParser();
   constructor() {
     // https://spoonacular.com/food-api/console#Dashboard
     this.spoonacularURL = new URL("https://api.spoonacular.com/recipes");
@@ -47,25 +46,31 @@ class MealDataManager {
     try {
       const response = await fetch(fullUrl);
       const data = await response.json();
-      //console.log("data.totalResults="+data.totalResults)
       const searchResultsList = data.results.map((recipe) => {
-        // Instantiate PrefabMeal for each result
+        // Parse each ingredient to fit out custom ingredient object
+        const mappedIngredients = recipe.extendedIngredients.map((ingredient) => {
+          const ing = new Ingredient(
+            ingredient.amount,
+            ingredient.id,
+            ingredient.nameClean ? ingredient.nameClean : ingredient.name,
+            ingredient.units
+          );
+              return ing;
+        });
 
-        //const keys = JSON.stringify(Object.keys(recipe));
-        //console.log("recipe keys=" + keys);
-        // Need to change the order in which the Recipe is created
         const mappedResult = new Recipe(
           recipe.cuisines,
           recipe.dishTypes,
           recipe.id,
           recipe.image,
-          recipe.extendedIngredients,
+          mappedIngredients,
           recipe.analyzedInstructions,
           recipe.title,
           recipe.servings,
           recipe.summary
         );
 
+        // console.log(mappedResult);
         PutRecipe("recipes", mappedResult);
 
         return mappedResult;
@@ -77,9 +82,10 @@ class MealDataManager {
         totalResults: data.totalResults,
       };
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching Recipe data:", error);
       throw error;
     }
   }
 }
+
 export default MealDataManager;

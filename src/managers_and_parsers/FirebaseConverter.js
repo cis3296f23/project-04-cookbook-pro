@@ -3,22 +3,29 @@
  */
 
 import { Recipe } from "../CustomObjects/Recipe.js";
+import { Ingredient } from "../CustomObjects/Ingredient.js";
 
 class FirebaseConverter {
   constructor() {}
 
   // Firestore data converter for Ingredients
   ingredientsConverter = {
-    toFirestore: (ingredients) => {
+    toFirestore: (ingredient) => {
       return {
-        name: ingredients.name,
-        quantity: ingredients.quantity,
-        unit: ingredients.unit,
+        amount: ingredient.amount,
+        id: ingredient.id,
+        name: ingredient.name,
+        unit: ingredient.units,
       };
     },
     fromFirestore: (snapshot, options) => {
       const data = snapshot.data(options);
-      return new Ingredients(data.name, data.quantity, data.unit);
+      return new Ingredient(
+        data.amount, 
+        data.id,
+        data.name,
+        data.unit
+      );
     },
   };
 
@@ -40,7 +47,7 @@ class FirebaseConverter {
         name: recipe.name,
         servings: recipe.servings,
         summary: recipe.summary,
-        isSaved: recipe.isSaved
+        isSaved: recipe.isSaved,
       };
     },
 
