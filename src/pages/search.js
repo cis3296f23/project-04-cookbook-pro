@@ -1,40 +1,31 @@
 import React, { useState } from "react";
 import { Row, Col, Container, Spinner } from "reactstrap";
 import MealCard from "../components/mealCard";
-import MealPlanBar from "../components/mealPlanBar";
+import QuickOrder from "../components/quickOrder.js";
 import SavedMeals from "../components/savedMeals";
 import SearchBox from "../components/searchBox.js";
 import MealDataManager from "../managers_and_parsers/MealDataManager.js";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-/*
-TODO: view more recipes after the inital query
-we can do this with pagination or with infinte scroll.
-https://www.npmjs.com/package/react-infinite-scroll-component
-there's a library that makes infinite scroll pretty simple
-
-we should work on this after spoonacular api requests are moved to the backend
-*/
-
 const SearchPage = () => {
-  //searchResults will have 3 states we try to use, which is "initial page load", not an array, or array with results
   const [searchResults, setSearchResults] = useState("initial page load");
   const [query, setQuery] = useState("");
   const [numResults, setNumResults] = useState(-1);
-
+  const [recipes, setRecipes] = useState([]);
+  
   const handleSearchResults = (results) => {
     setSearchResults(results.resultsList);
     setNumResults(results.totalResults);
-  };
+      };
 
   const mealDataManager = new MealDataManager();
 
   const spinner = (
-    <Col className="d-flex m-5 p-0 justify-content-center">
-      <Spinner>Loading</Spinner>
-    </Col>
-  );
-  //for infinte scroll
+      <Col className="d-flex m-5 p-0 justify-content-center">
+        <Spinner>Loading</Spinner>
+      </Col>
+    );
+    //for infinte scroll
   const fetchMoreResults = async () => {
     try {
       //setMoreResults(true);
@@ -46,7 +37,7 @@ const SearchPage = () => {
         );
 
       setSearchResults(searchResults.concat(spoonacularQueryResults.resultsList));
-      //spoonacular caps results to 1000
+//spoonacular caps results to 1000
       if (searchResults.length >= numResults || searchResults.length >= 999) {
         console.log("searchResults.length=" + searchResults.length+ " numResults="+numResults)
         setNumResults(false);
@@ -58,6 +49,15 @@ const SearchPage = () => {
 
   //conditionally render the results
   let results;
+
+  // Adding recipes to QuickOrder component
+  const addRecipe = (meal) => {
+    setRecipes([...recipes, meal]);
+  };
+
+  const clearOrder = () => {
+    setRecipes([]); // Clear the recipes array
+  };
 
   //if page loaded
   if (searchResults == "initial page load") {
@@ -74,7 +74,7 @@ const SearchPage = () => {
         next={fetchMoreResults}
         hasMore={numResults}
         loader={spinner}
-        endMessage={
+endMessage={
           <Col className="d-flex m-5 p-0 justify-content-center">
             <p className="text-secondary">Total {searchResults.length} results</p>
           </Col>
@@ -82,7 +82,7 @@ const SearchPage = () => {
       >
         <Container className="d-flex col-12 flex-wrap">
           {searchResults.map((meal, index) => (
-            <MealCard key={index} meal={meal} />
+            <MealCard key={index} meal={meal} addRecipe={addRecipe} />
           ))}
         </Container>
       </InfiniteScroll>
@@ -113,7 +113,11 @@ const SearchPage = () => {
         <Container className="col-8">{results}</Container>
 
         <Col className="col-2">
-          <MealPlanBar />
+          <QuickOrder
+            recipes={recipes}
+            addRecipe={addRecipe}
+            clearOrder={clearOrder}
+          />
         </Col>
       </Row>
     </Container>
