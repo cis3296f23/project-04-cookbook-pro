@@ -3,12 +3,12 @@ class Ingredient {
     amount,
     id,
     name,
-    units
+    unit
   ) {
     this.amount = amount,
     this.id = id,
     this.name = name,
-    this.units = units,
+    this.unit = unit,
     this.isSaved = false;
   }
   toString() {
@@ -16,7 +16,7 @@ class Ingredient {
       this.amount + ', ' +
       this.id + ', ' +
       this.name + ', ' +
-      this.units
+      this.unit
     )
   }
 }

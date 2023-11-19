@@ -11,11 +11,16 @@ class FirebaseConverter {
   // Firestore data converter for Ingredients
   ingredientsConverter = {
     toFirestore: (ingredient) => {
+      if (!ingredient) {
+        console.error("Ingredient is undefined or null");
+        return null;
+      }
+      
       return {
         amount: ingredient.amount,
         id: ingredient.id,
         name: ingredient.name,
-        unit: ingredient.units,
+        unit: ingredient.unit,
       };
     },
     fromFirestore: (snapshot, options) => {
@@ -37,6 +42,10 @@ class FirebaseConverter {
    */
   recipeConverter = {
     toFirestore: (recipe) => {
+      if (!recipe) {
+        console.error("Recipe is undefined or null");
+        return null;
+      }
       return {
         cuisine: recipe.cuisine,
         dishType: recipe.dishType,

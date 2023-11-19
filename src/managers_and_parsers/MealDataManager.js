@@ -53,7 +53,7 @@ class MealDataManager {
             ingredient.amount,
             ingredient.id,
             ingredient.nameClean ? ingredient.nameClean : ingredient.name,
-            ingredient.units
+            ingredient.unit
           );
               return ing;
         });
@@ -70,7 +70,6 @@ class MealDataManager {
           recipe.summary
         );
 
-        // console.log(mappedResult);
         PutRecipe("recipes", mappedResult);
 
         return mappedResult;
