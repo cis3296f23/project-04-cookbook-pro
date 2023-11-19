@@ -16,14 +16,18 @@ meal.ingredients and meal.instructions are objects that need to be mapped
 this should be done in objects.js i think
 */
 
-const MealCard = ({ meal }) => {
+const MealCard = ({ meal, addRecipe }) => {
+  const [showDetails, setShowDetails] = useState(false);
+  const toggle = () => {
+    setShowDetails(!showDetails);
+  };
 
-    const [showDetails, setShowDetails] = useState(false);
-    const toggle = () => {
-        setShowDetails(!showDetails);
-    };
+  const handleAddRecipeClick = (meal) => {
+    // Call the addRecipe function with the new meal data
+    addRecipe(meal);
+  };
 
-    const width={width: "18rem"};
+  const width = { width: "18rem" };
 
   return (
     <Card className={"m-2 p-3 flex-fill shadow-sm"} style={width}>
@@ -31,13 +35,22 @@ const MealCard = ({ meal }) => {
         <h5 className="text-truncate m-2 p-0">{meal.name}</h5>
       </CardTitle>
       {/* <CardImg src={require(`${meal.mealImage}`)} alt={`${meal.mealName} image`} /> */}
-      <CardImg className="m-0 border" src={meal.image} alt={`${meal.name} image`} />
+      <CardImg
+        className="m-0 border"
+        src={meal.image}
+        alt={`${meal.name} image`}
+      />
       <CardBody>
         <CardText className="text-truncate m-2 p-0">
-        {String(meal.summary).replace(/<[^>]*>/g, "")}
+          {String(meal.summary).replace(/<[^>]*>/g, "")}
         </CardText>
-        <Button color="primary" onClick={toggle}>Details</Button>
+        <Button color="primary" onClick={toggle}>
+          Details
+        </Button>
         <RecipeDetails meal={meal} showDetails={showDetails} toggle={toggle} />
+        <Button onClick={() => handleAddRecipeClick(meal)}>
+          Add to Quick Order
+        </Button>
       </CardBody>
     </Card>
   );
