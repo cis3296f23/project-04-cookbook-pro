@@ -3,22 +3,34 @@
  */
 
 import { Recipe } from "../CustomObjects/Recipe.js";
+import { Ingredient } from "../CustomObjects/Ingredient.js";
 
 class FirebaseConverter {
   constructor() {}
 
   // Firestore data converter for Ingredients
   ingredientsConverter = {
-    toFirestore: (ingredients) => {
+    toFirestore: (ingredient) => {
+      if (!ingredient) {
+        console.error("Ingredient is undefined or null");
+        return null;
+      }
+      
       return {
-        name: ingredients.name,
-        quantity: ingredients.quantity,
-        unit: ingredients.unit,
+        amount: ingredient.amount,
+        id: ingredient.id,
+        name: ingredient.name,
+        unit: ingredient.unit,
       };
     },
     fromFirestore: (snapshot, options) => {
       const data = snapshot.data(options);
-      return new Ingredients(data.name, data.quantity, data.unit);
+      return new Ingredient(
+        data.amount, 
+        data.id,
+        data.name,
+        data.unit
+      );
     },
   };
 
@@ -30,6 +42,10 @@ class FirebaseConverter {
    */
   recipeConverter = {
     toFirestore: (recipe) => {
+      if (!recipe) {
+        console.error("Recipe is undefined or null");
+        return null;
+      }
       return {
         cuisine: recipe.cuisine,
         dishType: recipe.dishType,
@@ -40,7 +56,7 @@ class FirebaseConverter {
         name: recipe.name,
         servings: recipe.servings,
         summary: recipe.summary,
-        isSaved: recipe.isSaved
+        isSaved: recipe.isSaved,
       };
     },
 

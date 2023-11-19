@@ -27,16 +27,17 @@ class Recipe {
     this.isSaved = false;
   }
   toString() {
-    return
-    this.cuisine + ', '
-    this.dishType + ', '
-    this.id + ', '
-    this.image + ', '
-    this.ingredients + ', '
-    this.instructions + ', '
-    this.name + ', '
-    this.servings + ', '
-    this.summary;
+    return (
+      this.cuisine + ', ' +
+      this.dishType + ', ' +
+      this.id + ', '  +
+      this.image + ', ' +
+      this.ingredients + ', ' +
+      this.instructions + ', ' +
+      this.name + ', ' +
+      this.servings + ', ' +
+      this.summary
+    )
   }
 }
 
