@@ -52,9 +52,7 @@ class MealDataManager {
 
       try {
         const response = await fetch(fullUrl);
-        console.log(response);
         const data = await response.json();
-        console.log(data);
         const searchResultsList = data.results.map((recipe) => {
           // Parse each ingredient to fit out custom ingredient object
           const mappedIngredients = recipe.extendedIngredients.map(
