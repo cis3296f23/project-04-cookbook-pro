@@ -28,7 +28,7 @@ const quickOrder = () => {
         //body += JSON.stringify(recipe.ingredients)
 
         recipe.ingredients.forEach((recipe) => {
-          body += "%09" + recipe.name + "%0D%0A";
+          body += "-" + recipe.name + "%0D%0A";
         });
 
         body += "%0D%0A";
