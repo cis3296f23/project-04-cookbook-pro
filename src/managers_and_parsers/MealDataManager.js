@@ -9,9 +9,11 @@ class MealDataManager {
   constructor() {
     // https://spoonacular.com/food-api/console#Dashboard
     this.spoonacularURL = new URL("https://api.spoonacular.com/recipes");
-    this.spoonacularApi1 = process.env.REACT_APP_SPOONACULAR_API_KEY_1;
-    this.spoonacularApi2 = process.env.REACT_APP_SPOONACULAR_API_KEY_2;
-    this.keys = [this.spoonacularApi1, this.spoonacularApi2];
+    this.spoonacularApiKeys = [
+      process.env.REACT_APP_SPOONACULAR_API_KEY_1,
+      process.env.REACT_APP_SPOONACULAR_API_KEY_2,
+      process.env.REACT_APP_SPOONACULAR_API_KEY_3,
+    ];
   }
 
   /**
@@ -22,7 +24,7 @@ class MealDataManager {
    */
   async queryRecipeFromSpoonacular(query, offset) {
     // Get an accessable API key first
-    const readyApiKey = await this.getValidAPIKey(this.keys);
+    const readyApiKey = await this.getValidAPIKey(this.spoonacularApiKeys);
 
     if (readyApiKey) {
       const searchQuery = new URLSearchParams();
@@ -107,7 +109,9 @@ class MealDataManager {
       testQuery.append("number", 1);
       testQuery.append("fillIngredients", false);
 
-      const testUrl = `${this.spoonacularURL}/complexSearch?${testQuery.toString()}`;
+      const testUrl = `${
+        this.spoonacularURL
+      }/complexSearch?${testQuery.toString()}`;
       const testResponse = await fetch(testUrl);
       if (testResponse.status == 200) {
         return key;
