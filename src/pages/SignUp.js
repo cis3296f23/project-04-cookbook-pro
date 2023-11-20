@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import '../index.js'
 import './LoginSignUp.css';
@@ -11,7 +10,6 @@ var SignUp=()=>{
   const[userEmail, isUserEmail] = useState("");
   const[userPassword, isUserPassword] = useState("");
   const auth = getAuth();
-  const navigate = useNavigate();
   useEffect(()=>{
     document.title = 'CookBook-Pro: SignUp';
     document.body.style.backgroundColor="#CFDEF3"
@@ -21,7 +19,7 @@ var SignUp=()=>{
     await createUserWithEmailAndPassword(auth, userEmail, userPassword)
     .then((userCredential)=>{
       const user = userCredential.user;
-      navigate("/");
+      document.location.href = "/";
     })
     .catch((error)=>{
       const errorCode = error.code;
