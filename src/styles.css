@@ -1,5 +1,7 @@
 body {
-  padding-top: 65px;
+  padding-right: 0px !important;
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
 }
 
 .content-container {

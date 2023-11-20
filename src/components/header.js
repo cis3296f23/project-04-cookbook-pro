@@ -4,7 +4,7 @@ import { Navbar } from "reactstrap";
 
 export default () => {
   return (
-    <nav className="navbar fixed-top navbar-expand-lg bg-light">
+    <nav className="navbar navbar-expand-lg bg-light" style={{ height:"7vh", width: "100%", overflowY: "auto" }}>
       <div className="container-fluid justify-content-start">
         <a className="navbar-brand" href="/">
           CookBook Pro
