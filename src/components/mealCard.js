@@ -9,25 +9,43 @@ import {
   CardTitle,
 } from "reactstrap";
 import RecipeDetails from "./recipeDetails.js";
-
+import PutRecipe from "../firebase/putRecipe.js";
 /*
 TODO: format to look nicer
 meal.ingredients and meal.instructions are objects that need to be mapped
 this should be done in objects.js i think
 */
 
-const MealCard = ({ meal, addRecipe }) => {
+const MealCard = ({ meal }) => {
   const [showDetails, setShowDetails] = useState(false);
   const toggle = () => {
     setShowDetails(!showDetails);
   };
 
-  const handleAddRecipeClick = (meal) => {
-    // Call the addRecipe function with the new meal data
-    addRecipe(meal);
-  };
+  function saveData() {
+    /*
+        TODO: save recipe into user's data
+        TODO: also refactor to remove showDetails and replace the toggle function
+        they are extra and we can achive the same functionality by checking if meal is null or not
+        */
+    const savedMeal = meal;
+    savedMeal.isSaved = true;
+    PutRecipe("savedRecipes", savedMeal);
+    toggle(); //close modal
+  }
 
   const width = { width: "18rem" };
+
+  const buttonOptions = (
+    <>
+      <Button color="primary" onClick={saveData}>
+        Save Recipe
+      </Button>
+      <Button color="secondary" onClick={toggle}>
+        Close
+      </Button>
+    </>
+  );
 
   return (
     <Card className={"m-2 p-3 flex-fill shadow-sm"} style={width}>
@@ -47,8 +65,13 @@ const MealCard = ({ meal, addRecipe }) => {
         <Button color="primary" onClick={toggle}>
           Details
         </Button>
-        <RecipeDetails meal={meal} showDetails={showDetails} toggle={toggle} />
-        <Button onClick={() => handleAddRecipeClick(meal)}>
+        <RecipeDetails
+          meal={meal}
+          showDetails={showDetails}
+          toggle={toggle}
+          buttonOptions={buttonOptions}
+        />
+        <Button onClick={() => PutRecipe("quickOrder", meal)}>
           Add to Quick Order
         </Button>
       </CardBody>

@@ -7,9 +7,11 @@ import {
   ListGroupItemHeading,
   ListGroupItemText,
   ListInlineItem,
+  Button,
 } from "reactstrap";
 
 import RecipeDetails from "./recipeDetails.js";
+import deleteRecipe from "../firebase/deleteRecipe.js";
 
 const savedMeals = () => {
   const [savedRecipes, setSavedRecipes] = useState([""]);
@@ -26,11 +28,34 @@ const savedMeals = () => {
     const unsubscibe = getListener("savedRecipes", setSavedRecipes);
   }, []);
 
+  function unsaveRecipe() {
+    meal.isSaved = false;
+    //close the modal and remove the recipe
+    toggle();
+    deleteRecipe("savedRecipes", String(meal.id));
+  }
+
   let recipeDetails;
+
+  const buttonOptions = (
+    <>
+      <Button color="primary" onClick={unsaveRecipe}>
+        Unsave recipe
+      </Button>
+      <Button color="secondary" onClick={toggle}>
+        Cancel
+      </Button>
+    </>
+  );
 
   if (showDetails) {
     recipeDetails = (
-      <RecipeDetails meal={meal} showDetails={showDetails} toggle={toggle} />
+      <RecipeDetails
+        meal={meal}
+        showDetails={showDetails}
+        toggle={toggle}
+        buttonOptions={buttonOptions}
+      />
     );
   }
 

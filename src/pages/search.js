@@ -11,7 +11,6 @@ const SearchPage = () => {
   const [searchResults, setSearchResults] = useState("initial page load");
   const [query, setQuery] = useState("");
   const [numResults, setNumResults] = useState(-1);
-  const [recipes, setRecipes] = useState([]);
   
   const handleSearchResults = (results) => {
     setSearchResults(results.resultsList);
@@ -50,15 +49,6 @@ const SearchPage = () => {
   //conditionally render the results
   let results;
 
-  // Adding recipes to QuickOrder component
-  const addRecipe = (meal) => {
-    setRecipes([...recipes, meal]);
-  };
-
-  const clearOrder = () => {
-    setRecipes([]); // Clear the recipes array
-  };
-
   //if page loaded
   if (searchResults == "initial page load") {
     results = (
@@ -82,7 +72,7 @@ endMessage={
       >
         <Container className="d-flex col-12 flex-wrap">
           {searchResults.map((meal, index) => (
-            <MealCard key={index} meal={meal} addRecipe={addRecipe} />
+            <MealCard key={index} meal={meal}/>
           ))}
         </Container>
       </InfiniteScroll>
@@ -114,9 +104,6 @@ endMessage={
 
         <Col className="col-2">
           <QuickOrder
-            recipes={recipes}
-            addRecipe={addRecipe}
-            clearOrder={clearOrder}
           />
         </Col>
       </Row>
