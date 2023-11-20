@@ -12,23 +12,23 @@ const SearchPage = () => {
   const [query, setQuery] = useState("");
   const [numResults, setNumResults] = useState(-1);
   const [recipes, setRecipes] = useState([]);
-  
+
   const handleSearchResults = (results) => {
     setSearchResults(results.resultsList);
     setNumResults(results.totalResults);
-      };
+  };
 
   const mealDataManager = new MealDataManager();
 
   const spinner = (
-      <Col className="d-flex m-5 p-0 justify-content-center">
-        <Spinner>Loading</Spinner>
-      </Col>
-    );
-    //for infinte scroll
+    <Col className="d-flex m-5 p-0 justify-content-center">
+      <Spinner>Loading</Spinner>
+    </Col>
+  );
+  //for infinte scroll
   const fetchMoreResults = async () => {
     try {
-      //setMoreResults(true);
+      // setNumResults(true);
       // Wait for the query to complete and get the results
       const spoonacularQueryResults =
         await mealDataManager.queryRecipeFromSpoonacular(
@@ -36,19 +36,23 @@ const SearchPage = () => {
           searchResults.length
         );
 
-      setSearchResults(searchResults.concat(spoonacularQueryResults.resultsList));
-//spoonacular caps results to 1000
+      setSearchResults(
+        searchResults.concat(spoonacularQueryResults.resultsList)
+      );
+      //spoonacular caps results to 1000
       if (searchResults.length >= numResults || searchResults.length >= 999) {
-        console.log("searchResults.length=" + searchResults.length+ " numResults="+numResults)
+        console.log(
+          "searchResults.length=" +
+            searchResults.length +
+            " numResults=" +
+            numResults
+        );
         setNumResults(false);
       }
     } catch (error) {
       console.error("error: " + error); // Handle errors if the Promise is rejected
     }
   };
-
-  //conditionally render the results
-  let results;
 
   // Adding recipes to QuickOrder component
   const addRecipe = (meal) => {
@@ -58,6 +62,9 @@ const SearchPage = () => {
   const clearOrder = () => {
     setRecipes([]); // Clear the recipes array
   };
+
+  //conditionally render the results
+  let results;
 
   //if page loaded
   if (searchResults == "initial page load") {
@@ -69,23 +76,30 @@ const SearchPage = () => {
     //if there are results then put it into results varible to render
   } else if (Array.isArray(searchResults)) {
     results = (
-      <InfiniteScroll
-        dataLength={searchResults.length}
-        next={fetchMoreResults}
-        hasMore={numResults}
-        loader={spinner}
-endMessage={
-          <Col className="d-flex m-5 p-0 justify-content-center">
-            <p className="text-secondary">Total {searchResults.length} results</p>
-          </Col>
-        }
+      <Container
+        className="col-8"
+        style={{ height: "500px", width: "100%", overflowY: "auto" }}
       >
-        <Container className="d-flex col-12 flex-wrap">
-          {searchResults.map((meal, index) => (
-            <MealCard key={index} meal={meal} addRecipe={addRecipe} />
-          ))}
-        </Container>
-      </InfiniteScroll>
+        <InfiniteScroll
+          dataLength={searchResults.length}
+          next={fetchMoreResults}
+          hasMore={numResults}
+          loader={spinner}
+          endMessage={
+            <Col className="d-flex m-5 p-0 justify-content-center">
+              <p className="text-secondary">
+                Total {searchResults.length} results
+              </p>
+            </Col>
+          }
+        >
+          <Container className="d-flex col-12 flex-wrap">
+            {searchResults.map((meal, index) => (
+              <MealCard key={index} meal={meal} addRecipe={addRecipe} />
+            ))}
+          </Container>
+        </InfiniteScroll>
+      </Container>
     );
 
     //if there are no results then we want to render a spinner :D
@@ -97,7 +111,7 @@ endMessage={
     <Container>
       <h1 className="d-flex justify-content-center">Search for recipes</h1>
       <Row>
-        <Container className="d-flex justify-content-center">
+        <Container className="d-flex justify-content-center marginBottom">
           <br></br>
           <SearchBox
             onSearch={handleSearchResults}

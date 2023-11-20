@@ -27,3 +27,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.marginBottom {
+  margin-bottom: 10px !important;
+}
