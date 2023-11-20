@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import {useNavigate} from 'react-router-dom';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import '../index.js'
 import './LoginSignUp.css';
@@ -11,7 +10,6 @@ var Login=()=>{
   const[userEmail, isUserEmail] = useState("");
   const[userPassword, isUserPassword] = useState("");
   const auth = getAuth();
-  const navigate = useNavigate();
   useEffect(()=>{
     document.title = 'CookBook-Pro: Login';
     document.body.style.backgroundColor="#E0EAFC";
@@ -21,8 +19,8 @@ var Login=()=>{
     signInWithEmailAndPassword(auth, userEmail, userPassword)
     .then((userCredential)=>{
       const user = userCredential.user;
-      navigate("/");
-    })
+      document.location.href = "/";
+    }) 
     .catch((error)=>{
       const errorCode = error.code;
       const errorMessage = error.message;
