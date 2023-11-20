@@ -19,17 +19,30 @@ const SearchPage = () => {
 
   const mealDataManager = new MealDataManager();
 
-  const spinner = (
-    <>
-      <Row style={{ height: "15vh" }}></Row>
+  let spinner;
+  if (typeof searchResults === "string") {
+    console.log("string");
+    spinner = (
+      <>
+        <Row style={{ height: "20vh" }}></Row>
+        <Col className="d-flex m-5 p-0 justify-content-center">
+          <Spinner>Loading</Spinner>
+        </Col>
+      </>
+    );
+  } else {
+    console.log("not string");
+    spinner = (
       <Col className="d-flex m-5 p-0 justify-content-center">
         <Spinner>Loading</Spinner>
       </Col>
-    </>
-  );
+    );
+  }
   //for infinte scroll
-  const fetchMoreResults = async () => {
+  async function fetchMoreResults() {
+    console.log("fetching more");
     try {
+      
       //setMoreResults(true);
       // Wait for the query to complete and get the results
       const spoonacularQueryResults =
@@ -41,16 +54,7 @@ const SearchPage = () => {
       setSearchResults(
         searchResults.concat(spoonacularQueryResults.resultsList)
       );
-      //spoonacular caps results to 1000
-      if (searchResults.length >= numResults || searchResults.length >= 999) {
-        console.log(
-          "searchResults.length=" +
-            searchResults.length +
-            " numResults=" +
-            numResults
-        );
-        setNumResults(false);
-      }
+
     } catch (error) {
       console.error("error: " + error); // Handle errors if the Promise is rejected
     }
@@ -82,9 +86,8 @@ const SearchPage = () => {
             overflowX: "hidden",
           }}
           dataLength={searchResults.length}
-          next={fetchMoreResults}
-          hasMore={numResults}
-          loader={spinner}
+          next={fetchMoreResults()}
+          hasMore={true}
           endMessage={
             <Col className="d-flex m-5 p-0 justify-content-center">
               <p className="text-secondary">
@@ -111,28 +114,47 @@ const SearchPage = () => {
   ///, linearGradient: "(to bottom, rgba(255,0,0,0), rgba(255,0,0,1));"
   //background-color: rgba(255,0,0,0.1);
   //bg-primary bg-gradient
+  //style={{
+  //     height: "25vh",
+  //     backgroundImage:
+  //       "linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0))",
+  //   }}
 
   return (
     <Container>
-        
-      <Container
-        className="position-fixed z-1 "
-        style={{
-          height: "25vh",
-          backgroundImage:
-            "linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0))",
-        }}
-      >
-        <h1 className="d-flex justify-content-center">Search for recipes</h1>
-        <Row>
-          <Container className="d-flex justify-content-center">
-            <br></br>
-            <SearchBox
-              onSearch={handleSearchResults}
-              query={query}
-              setQuery={setQuery}
-            />
-          </Container>
+      <Container className="position-fixed z-1">
+        <Container
+          className=""
+          style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
+        >
+          <h1 className="d-flex justify-content-center">Search for recipes</h1>
+          <Row>
+            <Container className="d-flex justify-content-center">
+              <br></br>
+              <SearchBox
+                onSearch={handleSearchResults}
+                query={query}
+                setQuery={setQuery}
+              />
+            </Container>
+          </Row>
+        </Container>
+        <Row
+          className=""
+          style={{
+            height: "1vh",
+            backgroundColor: "rgba(255,255,255,0.9)",
+          }}
+        ></Row>
+        <Row className="d-flex justify-content-center">
+          <Col
+            className="col-8"
+            style={{
+              height: "3vh",
+              backgroundImage:
+                "linear-gradient(to bottom, rgba(255,255,255,.9), rgba(255,255,255,0))",
+            }}
+          ></Col>
         </Row>
       </Container>
 
