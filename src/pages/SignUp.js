@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
+import {getAuth, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
+import {getFirestore} from "firebase/firestore";
+import {collection, doc, getDoc, setDoc} from "firebase/firestore";
+import {firebaseApp} from '../firebase/firebaseConfig.js';
 import '../index.js'
 import './LoginSignUp.css';
-import '../firebase/firebaseConfig.js';
 import './home.js'
 
 var SignUp=()=>{
@@ -10,6 +12,7 @@ var SignUp=()=>{
   const[userEmail, isUserEmail] = useState("");
   const[userPassword, isUserPassword] = useState("");
   const auth = getAuth();
+  const firebaseDB = getFirestore(firebaseApp);
   useEffect(()=>{
     document.title = 'CookBook-Pro: SignUp';
     document.body.style.backgroundColor="#CFDEF3"
@@ -17,8 +20,22 @@ var SignUp=()=>{
   const inputCredentials=async(e)=>{
     e.preventDefault();
     await createUserWithEmailAndPassword(auth, userEmail, userPassword)
-    .then((userCredential)=>{
+    .then (async (userCredential)=>{
       const user = userCredential.user;
+      const isUID = user.uid;
+      const docSnap = await getDoc(doc(firebaseDB, "Users", isUID));
+      if(!docSnap.exists()){
+        await setDoc(doc(firebaseDB, "Users", isUID), {recipeID:[""]});
+      }
+    })
+    .catch((error)=>{
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
+    await updateProfile(auth.currentUser, {displayName: document.getElementById("isName").value})
+    .then(()=>{
+      console.log(auth.currentUser);
       document.location.href = "/";
     })
     .catch((error)=>{

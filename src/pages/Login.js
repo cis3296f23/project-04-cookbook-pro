@@ -14,9 +14,9 @@ var Login=()=>{
     document.title = 'CookBook-Pro: Login';
     document.body.style.backgroundColor="#E0EAFC";
   }, []);
-  const checkInput=(e)=>{
+  const checkInput=async(e)=>{
     e.preventDefault();
-    signInWithEmailAndPassword(auth, userEmail, userPassword)
+    await signInWithEmailAndPassword(auth, userEmail, userPassword)
     .then((userCredential)=>{
       const user = userCredential.user;
       document.location.href = "/";
