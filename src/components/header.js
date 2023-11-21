@@ -1,6 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
-import { Navbar } from "reactstrap";
 
 export default () => {
   return (
@@ -9,7 +8,7 @@ export default () => {
         <a className="navbar-brand" href="/">
           CookBook Pro
         </a>
-        <div className="navbar-nav">
+        <div className="navbar-nav mr-auto">
           <a className="nav-link" href="/meal-plans">
             Meal Plans
           </a>
@@ -22,8 +21,14 @@ export default () => {
           <a className="nav-link" href="/shopping-list">
             Shopping List
           </a>
-          <a className="nav-link" href="\sign-in">
-            Sign In
+          <a id={"buffer"} style={{width:"950px"}}></a>
+          <a className="nav-link" href="/Login">
+            <input
+              className="getLogin"
+              type="button"
+              id="isValid"
+              value={"Log In"}
+            />
           </a>
         </div>
       </div>
