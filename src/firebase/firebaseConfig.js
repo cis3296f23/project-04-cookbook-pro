@@ -4,13 +4,13 @@ import { getAuth } from "firebase/auth";
 
 //Web app firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyDHk1uxWffMlx5GxMSs3xBAPROK_jSfoUQ",
-  authDomain: "cookbook-pro-49b95.firebaseapp.com",
-  projectId: "cookbook-pro-49b95",
-  storageBucket: "cookbook-pro-49b95.appspot.com",
-  messagingSenderId: "736357828051",
-  appId: "1:736357828051:web:13ab244e0091e572e0db26",
-  measurementId: "G-W0JYCB6Z35"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 //init firebase
