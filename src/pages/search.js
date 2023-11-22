@@ -12,12 +12,11 @@ const facade = new recipeDataFacade();
 const SearchPage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState("");
-  const [resultStatus, setresultStatus] = useState("no results");
-  const scrollTarget = useRef();
+  const [resultStatus, setresultStatus] = useState("no results or query");
 
   let oldQuery = query;
   let spinner;
-  if (false) {
+  if (resultStatus == "loading results") {
     spinner = (
       <>
         <Row style={{ height: "20vh" }}></Row>
@@ -34,16 +33,21 @@ const SearchPage = () => {
     );
   }
 
+  const clearResults = () => {
+    setresultStatus("loading results");
+    setSearchResults([]);
+  };
+
   //for infinte scroll
   const search = async () => {
-    setresultStatus("searching");
-    console.log("seraching");
     //setSearchResults("no results");
     const data = await facade.search(query);
+    console.log("data length=" + data.length);
     if (data == "no more results") {
       console.log("no reulst");
       setresultStatus(false);
     } else {
+      setresultStatus("got results");
       setSearchResults(searchResults.concat(data));
     }
   };
@@ -52,7 +56,7 @@ const SearchPage = () => {
   let results;
 
   //if page loaded
-  if (searchResults == "initial page load") {
+  if (resultStatus == "no results or query") {
     results = (
       <>
         <Row style={{ height: "15vh" }}></Row>
@@ -62,22 +66,21 @@ const SearchPage = () => {
       </>
     );
     //if there are results then put it into results varible to render
-  } else if (searchResults == "no results") {
+  } else if (resultStatus == "loading results") {
     results = spinner;
-  } else if (Array.isArray(searchResults)) {
+  } else if (resultStatus == "got results") {
     //nasty way to remove the scroll bar
     results = (
-      <Container ref={scrollTarget} className="" style={{ overflow: "hidden" }}>
+      <Container id="scrollTarget" className="" style={{ overflow: "hidden" }}>
         <InfiniteScroll
           style={{
-            height: "93vh",
             width: "104%",
             overflowY: "visible",
             overflowX: "hidden",
           }}
           loader={spinner}
           height={"100vh"}
-          scrollableTarget={scrollTarget}
+          scrollableTarget={"scrollTarget"}
           dataLength={searchResults.length}
           next={search}
           hasMore={resultStatus}
@@ -111,7 +114,12 @@ const SearchPage = () => {
           <Row>
             <Container className="d-flex justify-content-center">
               <br></br>
-              <SearchBox search={search} query={query} setQuery={setQuery} />
+              <SearchBox
+                search={search}
+                query={query}
+                setQuery={setQuery}
+                clearResults={clearResults}
+              />
             </Container>
           </Row>
         </Container>

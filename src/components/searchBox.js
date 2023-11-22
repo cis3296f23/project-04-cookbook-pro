@@ -19,7 +19,7 @@ import SearchBoxFilter from "./searchBoxFilter.js";
  * @param {function} param1
  * @returns
  */
-const SearchBox = ({ search, query, setQuery }) => {
+const SearchBox = ({ search, query, setQuery, clearResults }) => {
   //state varibles
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -112,10 +112,21 @@ const SearchBox = ({ search, query, setQuery }) => {
         placeholder="Enter your search"
         value={query}
         onChange={handleInputChange}
-        onKeyDown={(e) => e.key === "Enter" && search()}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            clearResults();
+            search();
+          }
+        }}
       />
 
-      <Button color="primary" onClick={() => search()}>
+      <Button
+        color="primary"
+        onClick={() => {
+          clearResults();
+          search();
+        }}
+      >
         Search🔍
       </Button>
     </InputGroup>

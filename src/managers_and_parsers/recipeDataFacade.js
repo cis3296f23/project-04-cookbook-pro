@@ -4,6 +4,7 @@ import putRecipeFirestore from "./../firebase/putRecipe.js";
 import getListenerFirestore from "./../firebase/setListener.js";
 import FirebaseConverter from "./FirebaseConverter.js";
 import PutRecipe from "./../firebase/putRecipe.js";
+import MealDataManager from "./MealDataManager.js";
 
 import {
   query,
@@ -22,6 +23,7 @@ const db = getFirestore(firebaseApp);
 const fb = new FirebaseConverter();
 const recipeConverter = fb.recipeConverter;
 const ingredientsConverter = fb.ingredientsConverter;
+const mealDataManager = new MealDataManager();
 
 class RecipeDataFacade {
   constructor() {
@@ -31,6 +33,19 @@ class RecipeDataFacade {
     this.recipeTitles;
     this.results = [];
     this.resultSliceSize = 10;
+    this.offset;
+  }
+
+  async searchSpoonacular(query, offset) {
+    try {
+      // Wait for the query to complete and get the results
+      const spoonacularQueryResults =
+        await mealDataManager.queryRecipeFromSpoonacular(query, offset);
+
+      return spoonacularQueryResults;
+    } catch (error) {
+      console.error(error); // Handle errors if the Promise is rejected
+    }
   }
 
   /**
@@ -46,6 +61,7 @@ class RecipeDataFacade {
     }
 
     this.recipeTitles = Object.keys(await this.searchList);
+    this.offset = 0;
   }
 
   /**
@@ -78,10 +94,13 @@ class RecipeDataFacade {
     }
     //return a slice of the results
 
-    //if there were no results
+    //if there were no results in database
     if (this.results.length == 0) {
       console.log("this is where we get spoonacular data");
-      return "no more results";
+      const spoonData = await this.searchSpoonacular(queryString, this.offset);
+      this.offset += 20;
+      console.log(spoonData);
+      return spoonData;
     }
 
     //slice our results
@@ -109,6 +128,8 @@ class RecipeDataFacade {
       recipeData.push(fb.recipeConverter.fromFirestore(recipe));
     });
 
+    console.log("recipeData=" + recipeData);
+
     return recipeData;
   }
 
@@ -119,12 +140,6 @@ class RecipeDataFacade {
     );
     await setDoc(ref, titleList);
   }
-
-  //do regex on a big string of recipe titles
-  //get the associated recipe ids for each title
-  //when we get a batch of 20 matches grab those from firebase to go to infinite scroll
-  //trim the big string down
-  //prepare next batch of 20 matches
 }
 
 export default RecipeDataFacade;
