@@ -16,7 +16,16 @@ const db = getFirestore(firebaseApp);
  * @param {String} collectionName
  * @returns {Unsubscribe}
  */
-function getListener(collectionName, setter) {
+
+
+function getListener(collectionName, setter, queryString) {
+    //https://firebase.google.com/docs/firestore/query-data/queries#in_and_array-contains-any
+
+    // if(typeof query === 'string'){
+    //     try {
+    //         var q = query(collection(db, collectionName)), where(query);
+    //     }
+    // }
 
   var q = query(collection(db, collectionName));
 

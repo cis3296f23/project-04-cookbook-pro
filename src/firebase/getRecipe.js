@@ -19,7 +19,13 @@ async function GetRecipes(collection, recipeID) {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    const data = recipeConverter.fromFirestore(docSnap);
+    let data;
+    if (collection == "recipes") {
+      data = recipeConverter.fromFirestore(docSnap);
+    } else if (collection == "queryData") {
+      data = fb.queryConverter.fromFirestore(docSnap);
+    }
+
     return data;
   } else {
     // docSnap.data() will be undefined in this case

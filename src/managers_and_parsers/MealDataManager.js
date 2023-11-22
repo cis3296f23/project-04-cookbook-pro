@@ -5,6 +5,11 @@
 import { Recipe } from "../CustomObjects/Recipe.js";
 import { Ingredient } from "../CustomObjects/Ingredient.js";
 import PutRecipe from "../firebase/putRecipe.js";
+import GetRecipes from "../firebase/getRecipe.js";
+import recipeDataFacade from "./recipeDataFacade.js";
+
+const facade = new recipeDataFacade();
+
 class MealDataManager {
   constructor() {
     // https://spoonacular.com/food-api/console#Dashboard
@@ -24,7 +29,7 @@ class MealDataManager {
    */
   async queryRecipeFromSpoonacular(query, offset) {
     // Get an accessable API key first
-    const readyApiKey = await this.getValidAPIKey(this.spoonacularApiKeys);
+    const readyApiKey = process.env.REACT_APP_SPOONACULAR_API_KEY_4; //await this.getValidAPIKey(this.spoonacularApiKeys);
 
     if (readyApiKey) {
       const searchQuery = new URLSearchParams();
@@ -38,7 +43,7 @@ class MealDataManager {
       searchQuery.append("query", query); // Assuming query is a string, adjust accordingly
       searchQuery.append("addRecipeInformation", true);
       searchQuery.append("offset", offset); //use this offset for infinite scrolling
-      searchQuery.append("number", 100); //ask for 100 recipes instead of 10
+      searchQuery.append("number", 20); //ask for 100 recipes instead of 10
       searchQuery.append("fillIngredients", true); //get ingredient info
 
       const fullUrl = `${
@@ -48,11 +53,15 @@ class MealDataManager {
       /*
         using the search params from above we get these properities of a recipe
         recipe keys=["vegetarian","vegan","glutenFree","dairyFree","veryHealthy","cheap","veryPopular","sustainable","lowFodmap","weightWatcherSmartPoints","gaps","preparationMinutes","cookingMinutes","aggregateLikes","healthScore","creditsText","sourceName","pricePerServing","extendedIngredients","id","title","readyInMinutes","servings","sourceUrl","image","imageType","summary","cuisines","dishTypes","diets","occasions","analyzedInstructions","spoonacularScore","spoonacularSourceUrl","usedIngredientCount","missedIngredientCount","missedIngredients","likes","usedIngredients","unusedIngredients"]
-        */
-
-      try {
+        */ try {
         const response = await fetch(fullUrl);
         const data = await response.json();
+
+        const newRecipes = [];
+        const queryData = await GetRecipes("queryData", "recipeTitles");
+        const IDlist = Object.values(queryData);
+        console.log(IDlist);
+
         const searchResultsList = data.results.map((recipe) => {
           // Parse each ingredient to fit out custom ingredient object
           const mappedIngredients = recipe.extendedIngredients.map(
@@ -79,10 +88,17 @@ class MealDataManager {
             recipe.summary
           );
 
+          console.log(queryData);
+
+          if (!IDlist.includes(String(recipe.id))) {
+            queryData[recipe.title]= recipe.id;
+          }
           PutRecipe("recipes", mappedResult);
 
           return mappedResult;
         });
+
+        facade.putQuery("queryData", queryData);
 
         //i want the number of matching meals from spoonacular so infinite scroll knows when to stop
         return {
@@ -98,26 +114,26 @@ class MealDataManager {
     }
   }
 
-  async getValidAPIKey(keys) {
-    for (let key of keys) {
-      const testQuery = new URLSearchParams();
-      testQuery.append("apiKey", key);
-      testQuery.append("query", "A");
-      testQuery.append("addRecipeInformation", false);
-      testQuery.append("number", 1);
-      testQuery.append("fillIngredients", false);
+  //   async getValidAPIKey(keys) {
+  //     for (let key of keys) {
+  //       const testQuery = new URLSearchParams();
+  //       testQuery.append("apiKey", key);
+  //       testQuery.append("query", "A");
+  //       testQuery.append("addRecipeInformation", false);
+  //       testQuery.append("number", 1);
+  //       testQuery.append("fillIngredients", false);
 
-      const testUrl = `${
-        this.spoonacularURL
-      }/complexSearch?${testQuery.toString()}`;
-      const testResponse = await fetch(testUrl);
-      if (testResponse.status == 200) {
-        return key;
-      } else {
-        continue;
-      }
-    }
-  }
+  //       const testUrl = `${
+  //         this.spoonacularURL
+  //       }/complexSearch?${testQuery.toString()}`;
+  //       const testResponse = await fetch(testUrl);
+  //       if (testResponse.status == 200) {
+  //         return key;
+  //       } else {
+  //         continue;
+  //       }
+  //     }
+  //   }
 }
 
 export default MealDataManager;

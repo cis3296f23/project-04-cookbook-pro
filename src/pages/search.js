@@ -4,24 +4,69 @@ import MealCard from "../components/mealCard";
 import QuickOrder from "../components/quickOrder.js";
 import SavedMeals from "../components/savedMeals";
 import SearchBox from "../components/searchBox.js";
-import MealDataManager from "../managers_and_parsers/MealDataManager.js";
 import InfiniteScroll from "react-infinite-scroll-component";
+import recipeDataFacade from "../managers_and_parsers/recipeDataFacade.js";
+
+const facade = new recipeDataFacade();
+
+class InfiniteScollWithNoScollBar extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.searchResults = props.searchResults;
+    this.search = props.search;
+    this.resultStatus = props.resultStatus;
+    this.scrollRef = React.createRef();
+  }
+
+  render() {
+    return (
+      <>
+        <Container
+          ref={this.scrollRef}
+          className=""
+          style={{ overflow: "hidden" }}
+        >
+          <InfiniteScroll
+            style={{
+              height: "93vh",
+              width: "104%",
+              overflowY: "visible",
+              overflowX: "hidden",
+            }}
+            scrollableTarget={this.scrollRef}
+            dataLength={this.searchResults.length}
+            next={this.search}
+            hasMore={this.resultStatus}
+            endMessage={
+              <Col className="d-flex m-5 p-0 justify-content-center">
+                <p className="text-secondary">
+                  Total {this.searchResults.length} results
+                </p>
+              </Col>
+            }
+          >
+            <Row style={{ height: "15vh" }}></Row>
+            <Container className="d-flex col-12 flex-wrap m-0">
+              {this.searchResults.map((meal, index) => (
+                <MealCard key={index} meal={meal} />
+              ))}
+            </Container>
+          </InfiniteScroll>
+        </Container>
+      </>
+    );
+  }
+}
 
 const SearchPage = () => {
-  const [searchResults, setSearchResults] = useState("initial page load");
+  const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState("");
-  const [numResults, setNumResults] = useState(-1);
+  const [resultStatus, setresultStatus] = useState("no results");
 
-  const handleSearchResults = (results) => {
-    setSearchResults(results.resultsList);
-    setNumResults(results.totalResults);
-  };
-
-  const mealDataManager = new MealDataManager();
-
+  let oldQuery = query;
   let spinner;
-  if (typeof searchResults === "string") {
-    console.log("string");
+  if (resultStatus == "no results") {
     spinner = (
       <>
         <Row style={{ height: "20vh" }}></Row>
@@ -31,32 +76,24 @@ const SearchPage = () => {
       </>
     );
   } else {
-    console.log("not string");
     spinner = (
       <Col className="d-flex m-5 p-0 justify-content-center">
         <Spinner>Loading</Spinner>
       </Col>
     );
   }
+
   //for infinte scroll
-  async function fetchMoreResults() {
-    console.log("fetching more");
-    try {
-      
-      //setMoreResults(true);
-      // Wait for the query to complete and get the results
-      const spoonacularQueryResults =
-        await mealDataManager.queryRecipeFromSpoonacular(
-          query,
-          searchResults.length
-        );
-
-      setSearchResults(
-        searchResults.concat(spoonacularQueryResults.resultsList)
-      );
-
-    } catch (error) {
-      console.error("error: " + error); // Handle errors if the Promise is rejected
+  const search = async () => {
+    setresultStatus("searching");
+    console.log("seraching");
+    //setSearchResults("no results");
+    const data = await facade.search(query);
+    if (data == "no more results") {
+      console.log("no reulst");
+      setresultStatus(false);
+    } else {
+      setSearchResults(searchResults.concat(data));
     }
   };
 
@@ -74,51 +111,18 @@ const SearchPage = () => {
       </>
     );
     //if there are results then put it into results varible to render
+  } else if (searchResults == "no results") {
+    results = spinner;
   } else if (Array.isArray(searchResults)) {
     //nasty way to remove the scroll bar
     results = (
-      <Container className="" style={{ overflow: "hidden" }}>
-        <InfiniteScroll
-          style={{
-            height: "93vh",
-            width: "104%",
-            overflowY: "visible",
-            overflowX: "hidden",
-          }}
-          dataLength={searchResults.length}
-          next={fetchMoreResults()}
-          hasMore={true}
-          endMessage={
-            <Col className="d-flex m-5 p-0 justify-content-center">
-              <p className="text-secondary">
-                Total {searchResults.length} results
-              </p>
-            </Col>
-          }
-        >
-          <Row style={{ height: "15vh" }}></Row>
-          <Container className="d-flex col-12 flex-wrap m-0">
-            {searchResults.map((meal, index) => (
-              <MealCard key={index} meal={meal} />
-            ))}
-          </Container>
-        </InfiniteScroll>
-      </Container>
+      <InfiniteScollWithNoScollBar
+        searchResults={searchResults}
+        search={search}
+        resultStatus={resultStatus}
+      ></InfiniteScollWithNoScollBar>
     );
-
-    //if there are no results then we want to render a spinner :D
-  } else if (!Array.isArray(searchResults)) {
-    results = spinner;
   }
-
-  ///, linearGradient: "(to bottom, rgba(255,0,0,0), rgba(255,0,0,1));"
-  //background-color: rgba(255,0,0,0.1);
-  //bg-primary bg-gradient
-  //style={{
-  //     height: "25vh",
-  //     backgroundImage:
-  //       "linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0))",
-  //   }}
 
   return (
     <Container>
@@ -131,11 +135,7 @@ const SearchPage = () => {
           <Row>
             <Container className="d-flex justify-content-center">
               <br></br>
-              <SearchBox
-                onSearch={handleSearchResults}
-                query={query}
-                setQuery={setQuery}
-              />
+              <SearchBox search={search} query={query} setQuery={setQuery} />
             </Container>
           </Row>
         </Container>

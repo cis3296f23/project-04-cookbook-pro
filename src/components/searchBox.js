@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import MealDataManager from "../managers_and_parsers/MealDataManager.js";
 import {
   Dropdown,
   DropdownMenu,
@@ -14,15 +13,13 @@ import {
 
 import SearchBoxFilter from "./searchBoxFilter.js";
 
-const mealDataManager = new MealDataManager();
-
 /**
  *
  * @param {function} param0
  * @param {function} param1
  * @returns
  */
-const SearchBox = ({ onSearch, query, setQuery }) => {
+const SearchBox = ({ search, query, setQuery }) => {
   //state varibles
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -60,7 +57,6 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
     Wheat: false,
   });
 
-
   const [mealTypes, setMealTypes] = useState({
     "Main Course": false,
     "Side Dish": false,
@@ -75,24 +71,8 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
     Marinade: false,
     Fingerfood: false,
     Snack: false,
-    Drink: false
-  })
-
-  const handleSearch = async () => {
-    try {
-      //clear search results
-      onSearch("yayspin! :D this string doesn't mean anything");
-
-      // Wait for the query to complete and get the results
-      const spoonacularQueryResults =
-        await mealDataManager.queryRecipeFromSpoonacular(query, 0);
-
-      // Pass the search results to the parent component
-      onSearch(spoonacularQueryResults);
-    } catch (error) {
-      console.error(error); // Handle errors if the Promise is rejected
-    }
-  };
+    Drink: false,
+  });
 
   return (
     <InputGroup className="w-50 min-width: 300px; shadow-lg" id="search-box">
@@ -132,10 +112,10 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
         placeholder="Enter your search"
         value={query}
         onChange={handleInputChange}
-        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        onKeyDown={(e) => e.key === "Enter" && search()}
       />
 
-      <Button color="primary" onClick={handleSearch}>
+      <Button color="primary" onClick={() => search()}>
         Search🔍
       </Button>
     </InputGroup>

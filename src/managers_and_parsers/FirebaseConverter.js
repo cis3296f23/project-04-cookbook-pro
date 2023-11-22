@@ -8,6 +8,16 @@ import { Ingredient } from "../CustomObjects/Ingredient.js";
 class FirebaseConverter {
   constructor() {}
 
+  queryConverter = {
+    toFirestore: (queryData) => {
+      return { json: queryData };
+    },
+    fromFirestore: (snapshot, options) => {
+      const data = snapshot.data(options);
+      return data.json;
+    },
+  };
+
   // Firestore data converter for Ingredients
   ingredientsConverter = {
     toFirestore: (ingredient) => {
@@ -15,7 +25,7 @@ class FirebaseConverter {
         console.error("Ingredient is undefined or null");
         return null;
       }
-      
+
       return {
         amount: ingredient.amount,
         id: ingredient.id,
@@ -25,12 +35,7 @@ class FirebaseConverter {
     },
     fromFirestore: (snapshot, options) => {
       const data = snapshot.data(options);
-      return new Ingredient(
-        data.amount, 
-        data.id,
-        data.name,
-        data.unit
-      );
+      return new Ingredient(data.amount, data.id, data.name, data.unit);
     },
   };
 
