@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Row, Col, Container, Spinner } from "reactstrap";
 import MealCard from "../components/mealCard";
 import QuickOrder from "../components/quickOrder.js";
@@ -9,64 +9,15 @@ import recipeDataFacade from "../managers_and_parsers/recipeDataFacade.js";
 
 const facade = new recipeDataFacade();
 
-class InfiniteScollWithNoScollBar extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.searchResults = props.searchResults;
-    this.search = props.search;
-    this.resultStatus = props.resultStatus;
-    this.scrollRef = React.createRef();
-  }
-
-  render() {
-    return (
-      <>
-        <Container
-          ref={this.scrollRef}
-          className=""
-          style={{ overflow: "hidden" }}
-        >
-          <InfiniteScroll
-            style={{
-              height: "93vh",
-              width: "104%",
-              overflowY: "visible",
-              overflowX: "hidden",
-            }}
-            scrollableTarget={this.scrollRef}
-            dataLength={this.searchResults.length}
-            next={this.search}
-            hasMore={this.resultStatus}
-            endMessage={
-              <Col className="d-flex m-5 p-0 justify-content-center">
-                <p className="text-secondary">
-                  Total {this.searchResults.length} results
-                </p>
-              </Col>
-            }
-          >
-            <Row style={{ height: "15vh" }}></Row>
-            <Container className="d-flex col-12 flex-wrap m-0">
-              {this.searchResults.map((meal, index) => (
-                <MealCard key={index} meal={meal} />
-              ))}
-            </Container>
-          </InfiniteScroll>
-        </Container>
-      </>
-    );
-  }
-}
-
 const SearchPage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState("");
   const [resultStatus, setresultStatus] = useState("no results");
+  const scrollTarget = useRef();
 
   let oldQuery = query;
   let spinner;
-  if (resultStatus == "no results") {
+  if (false) {
     spinner = (
       <>
         <Row style={{ height: "20vh" }}></Row>
@@ -116,11 +67,36 @@ const SearchPage = () => {
   } else if (Array.isArray(searchResults)) {
     //nasty way to remove the scroll bar
     results = (
-      <InfiniteScollWithNoScollBar
-        searchResults={searchResults}
-        search={search}
-        resultStatus={resultStatus}
-      ></InfiniteScollWithNoScollBar>
+      <Container ref={scrollTarget} className="" style={{ overflow: "hidden" }}>
+        <InfiniteScroll
+          style={{
+            height: "93vh",
+            width: "104%",
+            overflowY: "visible",
+            overflowX: "hidden",
+          }}
+          loader={spinner}
+          height={"100vh"}
+          scrollableTarget={scrollTarget}
+          dataLength={searchResults.length}
+          next={search}
+          hasMore={resultStatus}
+          endMessage={
+            <Col className="d-flex m-5 p-0 justify-content-center">
+              <p className="text-secondary">
+                Total {searchResults.length} results
+              </p>
+            </Col>
+          }
+        >
+          <Row style={{ height: "15vh" }}></Row>
+          <Container className="d-flex col-12 flex-wrap m-0">
+            {searchResults.map((meal, index) => (
+              <MealCard key={index} meal={meal} />
+            ))}
+          </Container>
+        </InfiniteScroll>
+      </Container>
     );
   }
 
