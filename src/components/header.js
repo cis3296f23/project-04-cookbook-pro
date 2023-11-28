@@ -12,7 +12,12 @@ export default () => {
   useEffect(()=>{
     document.title = 'Home';
     onAuthStateChanged(auth, (isUser)=>{
-      (isUser)?(isLoggedIn(true), isUserDisplayName(isUser.displayName)):(isLoggedIn(false));
+      if(isUser){
+        isLoggedIn(true);
+        isUserDisplayName(isUser.displayName);
+      } else{
+        isLoggedIn(false);
+      }
     });
     if(isLogIn){
       const isUserFullName = userDisplayName.split(' ');
