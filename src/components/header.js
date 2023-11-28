@@ -7,14 +7,15 @@ import './header.css';
 export default () => {
   const [isLogIn, isLoggedIn] = useState(false);
   const [userCredential, isUserCredential] = useState("");
+  const [userDisplayName, isUserDisplayName] = useState("");
   const auth = getAuth();
   useEffect(()=>{
     document.title = 'Home';
     onAuthStateChanged(auth, (isUser)=>{
-      (isUser) ? isLoggedIn(true) : isLoggedIn(false);
+      (isUser)?(isLoggedIn(true), isUserDisplayName(isUser.displayName)):(isLoggedIn(false));
     });
     if(isLogIn){
-      const isUserFullName = auth.currentUser.displayName.split(' ');
+      const isUserFullName = userDisplayName.split(' ');
       const displayUserName = (isUserFullName.length < 2)?isUserFullName[0]:
        (isUserFullName.length == 2)?isUserFullName[0]+" "+ isUserFullName[1]:isUserFullName[0]+" "+isUserFullName[1].charAt(0).concat('. ')+isUserFullName[isUserFullName.length - 1];
       isUserCredential(displayUserName);
