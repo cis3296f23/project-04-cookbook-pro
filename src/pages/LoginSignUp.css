@@ -52,7 +52,7 @@
     cursor: pointer;
 }
 
-.googleSignInButton {
+.googleSignInButton{
     background-color: #4285F4;
     color: #ffffff;
     border: none;
@@ -62,7 +62,7 @@
     display: inline-block;
     cursor: pointer;
     border-radius: 5px;
-  }
+}
   
 .googleSignInButton:hover{
     background-color: #2d76e2;
@@ -71,4 +71,4 @@
 body.loginPage{
     background: url('./imgs/istockphoto-1155240408-1024x1024.png') center center no-repeat fixed;
     background-size: cover;
-  }
+}

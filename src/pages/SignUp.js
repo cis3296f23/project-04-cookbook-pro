@@ -15,6 +15,7 @@ var SignUp=()=>{
   const firebaseDB = getFirestore(firebaseApp);
   useEffect(()=>{
     document.title = 'CookBook-Pro: SignUp';
+    document.body.classList.add('loginPage');
     document.body.style.backgroundColor="#CFDEF3"
   }, []);
   const inputCredentials=async(e)=>{
