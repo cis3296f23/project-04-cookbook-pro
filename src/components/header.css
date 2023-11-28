@@ -51,3 +51,23 @@
     margin-top: 5px;
     margin-left: 950px;
 }
+
+@font-face {
+    font-family: 'Ingrid Darling';
+    src: url('../fonts/Ingrid_Darling/IngridDarling-Regular.ttf');
+    font-size: normal;
+}
+.cookbookPro{
+    color: black;
+    font-family: 'Ingrid Darling';
+    font-size: 35px;
+    word-wrap: break-word;
+  }
+
+.navbar{
+    background-color: #FFA6A6 !important; 
+}
+
+body {
+    margin-top: 40px; 
+}

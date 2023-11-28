@@ -13,7 +13,7 @@ export default () => {
       (isUser) ? isLoggedIn(true) : isLoggedIn(false);
     });
     if(isLogIn){
-      console.log("Signed IN");
+      console.log("Signed In");
       window.onclick = function(event){
         if(!event.target.matches('.userDropDown')){
           var dropdowns = document.getElementsByClassName("getDropDown");
@@ -45,8 +45,11 @@ export default () => {
   return(
     <div>
     <nav className="navbar fixed-top navbar-expand-lg bg-light">
+      <nav className="navbar-navbar">
+        
+      </nav>
       <div className="container-fluid justify-content-start" style={{ overflowWrap: "anywhere" }}>
-        <a className="navbar-brand" href="/">CookBook Pro</a>
+      <a className="navbar-brand cookbookPro" href="/">CookBook Pro</a>
         <div className="navbar-nav">
           <a className="nav-link" href="/meal-plans">Meal Plans</a>
           <a className="nav-link" href="/search">Search</a>
