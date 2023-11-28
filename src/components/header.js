@@ -45,9 +45,6 @@ export default () => {
   return(
     <div>
     <nav className="navbar fixed-top navbar-expand-lg bg-light">
-      <nav className="navbar-navbar">
-        
-      </nav>
       <div className="container-fluid justify-content-start" style={{ overflowWrap: "anywhere" }}>
       <a className="navbar-brand cookbookPro" href="/">CookBook Pro</a>
         <div className="navbar-nav">
@@ -65,7 +62,7 @@ export default () => {
               </div>
             </div>
             ):
-            <a className="isLogin" href="/Login"><input className="getLogin" type="button" id="isValid" value={"Log In"}/></a>}
+            <a className="isLogin" href="/Login"><input className="getLogin loginButton" type="button" id="isValid" value={"Log In"}/></a>}
         </div>
       </div>
     </nav>

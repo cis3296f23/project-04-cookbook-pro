@@ -71,3 +71,15 @@
 body {
     margin-top: 40px; 
 }
+
+.getLogin{
+    background-color: #4285F4;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 5px;
+}
