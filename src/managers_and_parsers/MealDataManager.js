@@ -9,6 +9,9 @@ class MealDataManager {
   constructor() {
     // https://spoonacular.com/food-api/console#Dashboard
     this.spoonacularURL = new URL("https://api.spoonacular.com/recipes");
+    this.spoonacularFreeURL = new URL(
+      "https://api.spoonacular.com/recipes/visualizeIngredients"
+    );
     this.spoonacularApiKeys = [
       process.env.REACT_APP_SPOONACULAR_API_KEY_1,
       process.env.REACT_APP_SPOONACULAR_API_KEY_2,
@@ -38,7 +41,7 @@ class MealDataManager {
       searchQuery.append("query", query); // Assuming query is a string, adjust accordingly
       searchQuery.append("addRecipeInformation", true);
       searchQuery.append("offset", offset); //use this offset for infinite scrolling
-      searchQuery.append("number", 100); //ask for 100 recipes instead of 10
+      searchQuery.append("number", 20); //ask for 100 recipes instead of 10
       searchQuery.append("fillIngredients", true); //get ingredient info
 
       const fullUrl = `${
@@ -114,6 +117,7 @@ class MealDataManager {
       if (testResponse.status == 200) {
         return key;
       } else {
+        console.log(testResponse);
         continue;
       }
     }
