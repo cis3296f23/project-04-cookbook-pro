@@ -1,6 +1,6 @@
 .LogIn, .SignUp{
     width: 350px;
-    height: 350px;
+    height: 380px;
     border: 2px lightgrey;
     border-style:solid;
     border-radius: 15px;
@@ -51,3 +51,24 @@
     box-shadow: 2px 5px 4px rgba(0, 0, 0, 0.5);
     cursor: pointer;
 }
+
+.googleSignInButton {
+    background-color: #4285F4;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+.googleSignInButton:hover{
+    background-color: #2d76e2;
+}
+
+body.loginPage{
+    background: url('./imgs/istockphoto-1155240408-1024x1024.png') center center no-repeat fixed;
+    background-size: cover;
+  }
