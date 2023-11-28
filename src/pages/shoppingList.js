@@ -31,8 +31,8 @@ const ShoppingList = () => {
           onChange={handleInputChange}
           required
         />
-
-        <Button href={mailLink}>send an email to {email}</Button>
+        
+        <Button href={mailLink} className="mt-3">send an email to {email}</Button>
       </Container>
     </>
   );
