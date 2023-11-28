@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Row, Col, Container, Spinner } from "reactstrap";
 import MealCard from "../components/mealCard";
 import QuickOrder from "../components/quickOrder.js";
@@ -7,12 +7,16 @@ import SearchBox from "../components/searchBox.js";
 import InfiniteScroll from "react-infinite-scroll-component";
 import recipeDataFacade from "../managers_and_parsers/recipeDataFacade.js";
 
-const facade = new recipeDataFacade();
-
 const SearchPage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState("");
   const [resultStatus, setresultStatus] = useState("no results or query");
+
+  const facade = new recipeDataFacade();
+
+  useEffect(() => {
+    () => setSearchResults([]);
+  }, [searchResults]);
 
   let oldQuery = query;
   let spinner;
@@ -34,6 +38,7 @@ const SearchPage = () => {
   }
 
   const clearResults = () => {
+    console.log("clearing results for new query");
     setresultStatus("loading results");
     setSearchResults([]);
   };
@@ -47,8 +52,9 @@ const SearchPage = () => {
       console.log("no reulst");
       setresultStatus(false);
     } else {
-      setresultStatus("got results");
+      console.log("searchResults=" + searchResults);
       setSearchResults(searchResults.concat(data));
+      setresultStatus("got results");
     }
   };
 
