@@ -6,14 +6,25 @@ import '../css/header.css';
 
 export default () => {
   const [isLogIn, isLoggedIn] = useState(false);
+  const [userCredential, isUserCredential] = useState("");
+  const [userDisplayName, isUserDisplayName] = useState("");
   const auth = getAuth();
   useEffect(()=>{
     document.title = 'Home';
     onAuthStateChanged(auth, (isUser)=>{
-      (isUser) ? isLoggedIn(true) : isLoggedIn(false);
+      if(isUser){
+        isLoggedIn(true);
+        isUserDisplayName(isUser.displayName);
+      } else{
+        isLoggedIn(false);
+      }
     });
     if(isLogIn){
       console.log("Signed In");
+      const isUserFullName = userDisplayName.split(' ');
+      const displayUserName = (isUserFullName.length < 2)?isUserFullName[0]:
+       (isUserFullName.length == 2)?isUserFullName[0]+" "+ isUserFullName[1]:isUserFullName[0]+" "+isUserFullName[1].charAt(0).concat('. ')+isUserFullName[isUserFullName.length - 1];
+      isUserCredential(displayUserName);
       window.onclick = function(event){
         if(!event.target.matches('.userDropDown')){
           var dropdowns = document.getElementsByClassName("getDropDown");
@@ -54,7 +65,7 @@ export default () => {
           <a className="nav-link" href="/shopping-list">Shopping List</a>
           {isLogIn ? (
             <div className="isUser">
-              <button className="userDropDown" type="button" id="getUser" onClick={getToggle}>User</button>
+              <button className="userDropDown" type="button" id="getUser" onClick={getToggle}>{userCredential}</button>
               <div className="getDropDown" id="isDropDown">
                 <a href="/">Home</a>
                 <a href="/">Profile</a>
