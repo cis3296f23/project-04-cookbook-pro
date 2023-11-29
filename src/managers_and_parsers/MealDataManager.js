@@ -17,6 +17,8 @@ class MealDataManager {
       process.env.REACT_APP_SPOONACULAR_API_KEY_2,
       process.env.REACT_APP_SPOONACULAR_API_KEY_3,
     ];
+    // Find valid API Key in constructor
+    this.readyApiKey = this.getValidAPIKey(this.spoonacularApiKeys);      
   }
 
   /**
@@ -27,9 +29,8 @@ class MealDataManager {
    */
   async queryRecipeFromSpoonacular(query, offset) {
     // Get an accessable API key first
-    const readyApiKey = await this.getValidAPIKey(this.spoonacularApiKeys);
-
-    if (readyApiKey) {
+    const validKey = await this.readyApiKey;
+    if (validKey) {
       const searchQuery = new URLSearchParams();
       /*
         addRecipeInformation	boolean	false	If set to true, you get more information about the recipes returned.
@@ -37,7 +38,7 @@ class MealDataManager {
         number  	            number	10	    The number of expected results (between 1 and 100).
         fillIngredients	        boolean	false	Add information about the ingredients and whether they are used or missing in relation to the query.
         */
-      searchQuery.append("apiKey", readyApiKey);
+      searchQuery.append("apiKey", validKey);
       searchQuery.append("query", query); // Assuming query is a string, adjust accordingly
       searchQuery.append("addRecipeInformation", true);
       searchQuery.append("offset", offset); //use this offset for infinite scrolling
@@ -103,22 +104,24 @@ class MealDataManager {
 
   async getValidAPIKey(keys) {
     for (let key of keys) {
-      const testQuery = new URLSearchParams();
-      testQuery.append("apiKey", key);
-      testQuery.append("query", "A");
-      testQuery.append("addRecipeInformation", false);
-      testQuery.append("number", 1);
-      testQuery.append("fillIngredients", false);
-
-      const testUrl = `${
-        this.spoonacularURL
-      }/complexSearch?${testQuery.toString()}`;
-      const testResponse = await fetch(testUrl);
-      if (testResponse.status == 200) {
-        return key;
-      } else {
-        console.log(testResponse);
-        continue;
+      try {
+        const testQuery = new URLSearchParams();
+        testQuery.append("apiKey", key);
+        testQuery.append("query", "A");
+        testQuery.append("addRecipeInformation", false);
+        testQuery.append("number", 1);
+        testQuery.append("fillIngredients", false);
+  
+        const testUrl = `${this.spoonacularURL}/complexSearch?${testQuery.toString()}`;
+        const testResponse = await fetch(testUrl);
+  
+        if (testResponse.status === 200) {
+          return key;
+        } else {
+          console.log(testResponse);
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
   }
