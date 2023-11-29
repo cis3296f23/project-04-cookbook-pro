@@ -4,7 +4,7 @@ import MealCard from "../components/mealCard";
 import QuickOrder from "../components/quickOrder.js";
 import SavedMeals from "../components/savedMeals";
 import SearchBox from "../components/searchBox.js";
-import MealDataManager from "../managers_and_parsers/MealDataManager.js";
+import MealDataManager from "../managers_and_parsers/SpoonacularAdapter.js";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const SearchPage = () => {

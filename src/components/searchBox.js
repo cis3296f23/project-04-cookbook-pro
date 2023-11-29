@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MealDataManager from "../managers_and_parsers/MealDataManager.js";
+import MealDataManager from "../managers_and_parsers/SpoonacularAdapter.js";
 import {
   Dropdown,
   DropdownMenu,

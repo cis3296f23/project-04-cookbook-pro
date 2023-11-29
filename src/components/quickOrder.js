@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import getListener from "../firebase/setListener.js";
+import getListener from "../firebase/getObserver.js";
 import {
   ListGroup,
   ListGroupItem,

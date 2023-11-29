@@ -1,6 +1,6 @@
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { firebaseApp } from "./firebaseConfig.js";
-import FirebaseConverter from "../managers_and_parsers/FirebaseConverter.js";
+import FirebaseConverter from "../managers_and_parsers/FirebaseAdapter.js";
 
 const db = getFirestore(firebaseApp);
 
