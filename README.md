@@ -21,7 +21,7 @@ To use this app, you will need to obtain your own API key for the Spoonacular AP
 
 ### Configure Environment 
 
-1. Create an `.env` file in the root directory
+1. Create a `.env` file in the root directory
 2. Add the following variable, replacing `<your_api_key>` with your key:
 
 ```
