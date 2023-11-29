@@ -70,7 +70,7 @@ endMessage={
           </Col>
         }
       >
-        <Container className="d-flex col-12 flex-wrap">
+        <Container className="d-flex col-12 flex-wrap mt-3">
           {searchResults.map((meal, index) => (
             <MealCard key={index} meal={meal}/>
           ))}

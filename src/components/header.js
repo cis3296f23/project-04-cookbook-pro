@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, {useState, useEffect} from 'react';
 import {Navbar} from "reactstrap";
 import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
-import './header.css';
+import '../css/header.css';
 
 export default () => {
   const [isLogIn, isLoggedIn] = useState(false);
@@ -20,6 +20,7 @@ export default () => {
       }
     });
     if(isLogIn){
+      console.log("Signed In");
       const isUserFullName = userDisplayName.split(' ');
       const displayUserName = (isUserFullName.length < 2)?isUserFullName[0]:
        (isUserFullName.length == 2)?isUserFullName[0]+" "+ isUserFullName[1]:isUserFullName[0]+" "+isUserFullName[1].charAt(0).concat('. ')+isUserFullName[isUserFullName.length - 1];
@@ -56,7 +57,7 @@ export default () => {
     <div>
     <nav className="navbar fixed-top navbar-expand-lg bg-light">
       <div className="container-fluid justify-content-start" style={{ overflowWrap: "anywhere" }}>
-        <a className="navbar-brand" href="/">CookBook Pro</a>
+      <a className="navbar-brand cookbookPro" href="/">CookBook Pro</a>
         <div className="navbar-nav">
           <a className="nav-link" href="/meal-plans">Meal Plans</a>
           <a className="nav-link" href="/search">Search</a>

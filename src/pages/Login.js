@@ -1,40 +1,62 @@
-import React, {useState, useEffect} from 'react'
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
-import '../index.js'
-import './LoginSignUp.css';
+import React, { useState, useEffect } from 'react';
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import '../index.js';
+import "../css/LoginSignUp.css";
 import '../firebase/firebaseConfig.js';
-import './home.js'
-import './SignUp.js'
+import './home.js';
+import './SignUp.js';
 
 var Login=()=>{
   const[userEmail, isUserEmail] = useState("");
   const[userPassword, isUserPassword] = useState("");
   const [loginError, isLoginError] = useState("");
   const auth = getAuth();
-  useEffect(()=>{
+
+  useEffect(() => {
     document.title = 'CookBook-Pro: Login';
-    document.body.style.backgroundColor="#E0EAFC";
+    document.body.classList.add('loginPage');
+    document.body.style.backgroundColor = '#E0EAFC';
   }, []);
-  const checkInput=async(e)=>{
+
+  const checkInput = async (e) => {
     e.preventDefault();
-    await signInWithEmailAndPassword(auth, userEmail, userPassword)
-    .then((userCredential)=>{
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, userEmail, userPassword);
       const user = userCredential.user;
-      document.location.href = "/";
-    }) 
-    .catch((error)=>{
-      //const isError = document.getElementById("isInvalid");
-      //isError.innerHTML = "Invalid Email Or Password";
+      document.location.href = '/';
+    } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
       isLoginError("Invalid Email Or Password");
       console.log(errorCode,errorMessage);
-    });
-  }
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const userCredential = await signInWithPopup(auth, provider);
+      const user = userCredential.user;
+      isUserEmail(user.email);
   
-  return(
-    <div className = "LogIn">
-      <h1 className="Title">Log In</h1><br />
+      document.location.href = '/';
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      isLoginError("Invalid Credentials");
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  return (
+    <div className="LogIn">
+      <h1 className="Title">Log In</h1>
+      <br />
+        <center>
+          <button type="button" className="googleSignInButton" onClick={signInWithGoogle}>
+            Log In with Google
+          </button>
+        </center>
       <form>
         <label className="Email">Email<br></br></label>
         <input value={userEmail} onChange={e=>isUserEmail(e.target.value)} className = "getEmail" type="text" id="isEmail" name="isEmail"/><br/>
@@ -46,6 +68,7 @@ var Login=()=>{
       </form><br/>
       <p style={{textAlign:'center'}}><a href='/SignUp'>Dont Have An Account? Create Account</a></p>
     </div>
-  )
-}
+  );
+};
+
 export default Login;
