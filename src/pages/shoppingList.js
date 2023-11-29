@@ -19,6 +19,8 @@ const ShoppingList = () => {
     setEmail(e.target.value);
   };
 
+  const isEmailValid = email.trim() !== ""; // Check if there's some input in the email field
+
   return (
     <>
       <h1>Export a shopping list</h1>
@@ -32,7 +34,7 @@ const ShoppingList = () => {
           required
         />
         
-        <Button href={mailLink} className="mt-3">send an email to {email}</Button>
+        <Button href={mailLink} className={`mt-3 ${isEmailValid ? "btn-primary" : "btn-secondary"}`} disabled={!isEmailValid}> Send </Button>
       </Container>
     </>
   );

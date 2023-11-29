@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, {useState, useEffect} from 'react';
 import {Navbar} from "reactstrap";
 import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
-import './header.css';
+import '../css/header.css';
 
 export default () => {
   const [isLogIn, isLoggedIn] = useState(false);
@@ -62,7 +62,7 @@ export default () => {
               </div>
             </div>
             ):
-            <a className="isLogin" href="/Login"><input className="getLogin loginButton" type="button" id="isValid" value={"Log In"}/></a>}
+            <a className="isLogin" href="/Login"><input className="getLogin" type="button" id="isValid" value={"Log In"}/></a>}
         </div>
       </div>
     </nav>

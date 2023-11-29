@@ -4,7 +4,7 @@ import {getFirestore} from "firebase/firestore";
 import {collection, doc, getDoc, setDoc} from "firebase/firestore";
 import {firebaseApp} from '../firebase/firebaseConfig.js';
 import '../index.js'
-import './LoginSignUp.css';
+import "../css/LoginSignUp.css";
 import './home.js'
 
 var SignUp=()=>{

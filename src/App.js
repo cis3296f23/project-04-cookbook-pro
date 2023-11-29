@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { StrictMode } from "react";
-import "./styles.css";
+import "./css/styles.css"
 
 //single page application stuff
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

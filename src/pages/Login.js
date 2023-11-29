@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import '../index.js';
-import './LoginSignUp.css';
+import "../css/LoginSignUp.css";
 import '../firebase/firebaseConfig.js';
 import './home.js';
 import './SignUp.js';
