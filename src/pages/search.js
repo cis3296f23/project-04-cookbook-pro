@@ -11,20 +11,20 @@ const SearchPage = () => {
   const [searchResults, setSearchResults] = useState("initial page load");
   const [query, setQuery] = useState("");
   const [numResults, setNumResults] = useState(-1);
-  
+
   const handleSearchResults = (results) => {
     setSearchResults(results.resultsList);
     setNumResults(results.totalResults);
-      };
+  };
 
   const mealDataManager = new MealDataManager();
 
   const spinner = (
-      <Col className="d-flex m-5 p-0 justify-content-center">
-        <Spinner>Loading</Spinner>
-      </Col>
-    );
-    //for infinte scroll
+    <Col className="d-flex m-5 p-0 justify-content-center">
+      <Spinner>Loading</Spinner>
+    </Col>
+  );
+  //for infinte scroll
   const fetchMoreResults = async () => {
     try {
       //setMoreResults(true);
@@ -35,10 +35,17 @@ const SearchPage = () => {
           searchResults.length
         );
 
-      setSearchResults(searchResults.concat(spoonacularQueryResults.resultsList));
-//spoonacular caps results to 1000
+      setSearchResults(
+        searchResults.concat(spoonacularQueryResults.resultsList)
+      );
+      //spoonacular caps results to 1000
       if (searchResults.length >= numResults || searchResults.length >= 999) {
-        console.log("searchResults.length=" + searchResults.length+ " numResults="+numResults)
+        console.log(
+          "searchResults.length=" +
+            searchResults.length +
+            " numResults=" +
+            numResults
+        );
         setNumResults(false);
       }
     } catch (error) {
@@ -64,15 +71,17 @@ const SearchPage = () => {
         next={fetchMoreResults}
         hasMore={numResults}
         loader={spinner}
-endMessage={
+        endMessage={
           <Col className="d-flex m-5 p-0 justify-content-center">
-            <p className="text-secondary">Total {searchResults.length} results</p>
+            <p className="text-secondary">
+              Total {searchResults.length} results
+            </p>
           </Col>
         }
       >
         <Container className="d-flex col-12 flex-wrap">
           {searchResults.map((meal, index) => (
-            <MealCard key={index} meal={meal}/>
+            <MealCard key={index} meal={meal} />
           ))}
         </Container>
       </InfiniteScroll>
@@ -103,8 +112,7 @@ endMessage={
         <Container className="col-8">{results}</Container>
 
         <Col className="col-2">
-          <QuickOrder
-          />
+          <QuickOrder />
         </Col>
       </Row>
     </Container>
