@@ -2,7 +2,7 @@
 
 This is a web app for meal planning and finding recipes built using React, Bootstrap, and Firebase. 
 
-## Features
+## Features (Some in development)
 
 - Browse recipes by ingredient, cuisine type, dietary needs, etc
 - Save recipes to weekly meal plans
@@ -17,7 +17,7 @@ To use this app, you will need to obtain your own API key for the Spoonacular AP
 ### Obtain API Key
 
 1. Go to [spoonacular.com](https://spoonacular.com/) and sign up for an account
-2. Navigate to My Account > API Key and copy your personal API key
+2. Navigate to My Console > API Key and copy your personal API key
 
 ### Configure Environment 
 
