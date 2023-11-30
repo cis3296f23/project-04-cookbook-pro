@@ -25,8 +25,8 @@ const quickOrder = () => {
     if (savedRecipes != "") {
       let recipeList = "";
       const ingredientMap = new Map();
-      savedRecipes.forEach((recipe,index) => {
-        recipeList += `%0D%0A${index+1}: ${recipe.name}`;
+      savedRecipes.forEach((recipe, index) => {
+        recipeList += `%0D%0A${index + 1}: ${recipe.name}`;
         recipe.ingredients.forEach((ingredient) => {
           const newIngredient = new Ingredient(
             ingredient.amount,
@@ -45,7 +45,10 @@ const quickOrder = () => {
       });
       body += `This Week's Meals:${recipeList}%0D%0A`;
       body += `%0D%0AIngredients:%0D%0A`;
-      ingredientMap.forEach((ingredient) => body += `[  ] ${ingredient.amount} ${ingredient.unit} ${ingredient.name}\n%0D%0A`);
+      ingredientMap.forEach(
+        (ingredient) =>
+          (body += `[  ] ${ingredient.amount} ${ingredient.unit} ${ingredient.name}\n%0D%0A`)
+      );
       body += "%0D%0A";
     }
     return (
