@@ -10,6 +10,7 @@ import {
 
 import RecipeDetails from "./recipeDetails.js";
 import deleteRecipe from "../firebase/deleteRecipe.js";
+import { Ingredient } from "../CustomObjects/Ingredient.js";
 
 const quickOrder = () => {
   const [savedRecipes, setSavedRecipes] = useState([""]);
@@ -22,17 +23,30 @@ const quickOrder = () => {
   const mailLinkGenerator = () => {
     let body = "";
     if (savedRecipes != "") {
-      savedRecipes.forEach((recipe, index) => {
-        body = body + `${index + 1}. ${recipe.name}` + "%0D%0A";
+      let recipeList = "";
+      const ingredientMap = new Map();
+      savedRecipes.forEach((recipe,index) => {
+        recipeList += `%0D%0A${index+1}: ${recipe.name}`;
+        recipe.ingredients.forEach((ingredient) => {
+          const newIngredient = new Ingredient(
+            ingredient.amount,
+            ingredient.id,
+            ingredient.name,
+            ingredient.unit
+          );
 
-        //body += JSON.stringify(recipe.ingredients)
-
-        recipe.ingredients.forEach((recipe) => {
-          body += "-" + recipe.name + "%0D%0A";
+          if (ingredientMap.has(newIngredient.id)) {
+            const existingIngredient = ingredientMap.get(newIngredient.id);
+            existingIngredient.amount += newIngredient.amount;
+          } else {
+            ingredientMap.set(newIngredient.id, newIngredient);
+          }
         });
-
-        body += "%0D%0A";
       });
+      body += `This Week's Meals:${recipeList}%0D%0A`;
+      body += `%0D%0AIngredients:%0D%0A`;
+      ingredientMap.forEach((ingredient) => body += `[  ] ${ingredient.amount} ${ingredient.unit} ${ingredient.name}\n%0D%0A`);
+      body += "%0D%0A";
     }
     return (
       "https://mail.google.com/mail/?view=cm&fs=1&to=" +
@@ -116,59 +130,3 @@ const quickOrder = () => {
 };
 
 export default quickOrder;
-
-// import React, { useState } from 'react';
-// import {
-//   ListGroup,
-//   ListGroupItemHeading,
-//   ListGroupItem,
-//   Button,
-//   Input,
-// } from "reactstrap";
-
-// const QuickOrder = ({ recipes, clearOrder }) => {
-//   const [email, setEmail] = useState('');
-
-//   const collectEmail = (event) => {
-//     setEmail(event.target.value);
-//   };
-
-//   const generateOrder = (recipes) => {
-//     const listContents = recipes
-//       .map((recipe, index) => `${index + 1}. ${recipe.name}`)
-//       .join("\n");
-//     console.log(listContents);
-//   };
-
-//   const clearCurrentOrderList = () => {
-//     clearOrder();
-//   };
-
-//   return (
-//     <div>
-//       <ListGroup>
-//         <ListGroupItemHeading>Quick Order</ListGroupItemHeading>
-//         {/* Use Input component for email */}
-//         <Input
-//           type="email"
-//           value={email}
-//           onChange={collectEmail}
-//           placeholder="Email"
-//         />
-//         <Button
-//           onClick={() => {
-//             generateOrder(recipes);
-//             clearCurrentOrderList();
-//           }}
-//         >
-//           Print Order
-//         </Button>
-//         {recipes.map((recipe, index) => (
-//           <ListGroupItem key={index}>{recipe.name}</ListGroupItem>
-//         ))}
-//       </ListGroup>
-//     </div>
-//   );
-// };
-
-// export default QuickOrder;
