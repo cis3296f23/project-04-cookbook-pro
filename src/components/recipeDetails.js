@@ -13,7 +13,7 @@ import deleteRecipe from "../firebase/deleteRecipe.js";
 /**
  * the parent of this component creates the button options
  * @param {Recipe} meal
- * @returns
+ * @returns {JSX.Element} The rendered JSX for the recipe details.
  */
 function RecipeDetails({ meal, showDetails, toggle, buttonOptions }) {
 
