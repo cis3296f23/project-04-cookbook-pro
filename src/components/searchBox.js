@@ -1,3 +1,11 @@
+/**
+ * Renders a search box component with filtering options.
+ * @param {Object} props - React props containing search-related data and functions.
+ * @param {Function} props.onSearch - Function to trigger the search based on query and filters.
+ * @param {string} props.query - The current search query.
+ * @param {Function} props.setQuery - Function to update the search query.
+ * @returns {JSX.Element} - Returns a search box component with filtering options.
+ */
 import React, { useState } from "react";
 import MealDataManager from "../managers_and_parsers/MealDataManager.js";
 import {

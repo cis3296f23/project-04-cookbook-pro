@@ -1,3 +1,9 @@
+/**
+ * Renders a card component displaying meal details and options.
+ * @param {Object} props - React props containing meal data.
+ * @param {Object} props.meal - Object containing meal details (name, image, summary, etc.).
+ * @returns {JSX.Element} - Returns a card component displaying meal information.
+ */
 import React, { useState } from "react";
 import {
   Container,
@@ -18,16 +24,18 @@ this should be done in objects.js i think
 
 const MealCard = ({ meal }) => {
   const [showDetails, setShowDetails] = useState(false);
+
+  /**
+   * Toggles the display of detailed information about the meal.
+   */
   const toggle = () => {
     setShowDetails(!showDetails);
   };
 
+  /**
+   * Saves the recipe into user's data and closes the modal.
+   */
   function saveData() {
-    /*
-        TODO: save recipe into user's data
-        TODO: also refactor to remove showDetails and replace the toggle function
-        they are extra and we can achive the same functionality by checking if meal is null or not
-        */
     const savedMeal = meal;
     savedMeal.isSaved = true;
     PutRecipe("savedRecipes", savedMeal);
@@ -35,11 +43,13 @@ const MealCard = ({ meal }) => {
   }
 
   const width = { width: "18rem" };
-  
+
+  // Styles for the card component
   const cardStyle = {
     border: "2px outset #FFA6A6",
   };
 
+  // Options for buttons within the card
   const buttonOptions = (
     <>
       <Button color="primary" onClick={saveData}>
@@ -56,7 +66,6 @@ const MealCard = ({ meal }) => {
       <CardTitle>
         <h5 className="text-truncate m-2 p-0">{meal.name}</h5>
       </CardTitle>
-      {/* <CardImg src={require(`${meal.mealImage}`)} alt={`${meal.mealName} image`} /> */}
       <CardImg
         className="m-0 border"
         src={meal.image}

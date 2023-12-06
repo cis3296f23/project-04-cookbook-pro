@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: CustomObjects/Recipe.js</title>
+    <title>JSDoc: Source: components/searchBoxFilter.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: CustomObjects/Recipe.js</h1>
+    <h1 class="page-title">Source: components/searchBoxFilter.js</h1>
 
     
 
@@ -27,64 +27,47 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Represents a recipe with various properties.
+ * Renders a search box filter component with checkboxes.
+ * @param {Object} props - React props containing filter-related data and functions.
+ * @param {Function} props.setfilterOptions - Function to update the filter options state.
+ * @param {Object} props.filterOptions - Object containing filter options and their states.
+ * @returns {JSX.Element} - Returns a component for managing search box filters with checkboxes.
  */
-class Recipe {
-  /**
-   * Create a Recipe object.
-   * @param {string} cuisine - The cuisine of the recipe.
-   * @param {string} dishType - The type of dish for the recipe.
-   * @param {number} id - The ID of the recipe.
-   * @param {string} image - The URL of the recipe image.
-   * @param {Array} ingredients - The list of ingredients for the recipe.
-   * @param {string} instructions - The cooking instructions for the recipe.
-   * @param {string} name - The name of the recipe.
-   * @param {number} servings - The number of servings for the recipe.
-   * @param {string} summary - The summary or description of the recipe.
-   */
-  constructor(
-    cuisine,
-    dishType,
-    id,
-    image,
-    ingredients,
-    instructions,
-    name,
-    servings,
-    summary,
-  ) {
-    this.cuisine = cuisine;
-    this.dishType = dishType;
-    this.id = id;
-    this.image = image;
-    this.ingredients = ingredients;
-    this.instructions = instructions;
-    this.name = name;
-    this.servings = servings;
-    this.summary = summary;
-    this.isSaved = false;
-  }
+import { Label, FormGroup, Form, Input } from "reactstrap";
 
+const SearchBox = ({ setfilterOptions, filterOptions }) => {
   /**
-   * Returns a string representation of the Recipe object.
-   * @returns {string} A string representation of the Recipe.
+   * Toggles the checkbox value and updates the filterOptions state.
+   * @param {string} key - The key representing the checkbox option.
    */
-  toString() {
-    return (
-      this.cuisine + ', ' +
-      this.dishType + ', ' +
-      this.id + ', '  +
-      this.image + ', ' +
-      this.ingredients + ', ' +
-      this.instructions + ', ' +
-      this.name + ', ' +
-      this.servings + ', ' +
-      this.summary
-    );
-  }
-}
+  const checkBoxChecked = (key) => {
+    // Toggle the value of the clicked checkbox
+    filterOptions[key] = !filterOptions[key];
+    // Update the filterOptions state using the provided setter function
+    setfilterOptions({ ...filterOptions });
+  };
 
-export { Recipe };
+  return (
+    &lt;Form>
+      {Object.entries(filterOptions).map(([key, value]) => {
+        return (
+          &lt;FormGroup key={key} check>
+            {/* Checkbox input */}
+            &lt;Input
+              type="checkbox"
+              checked={value}
+              onChange={() => checkBoxChecked(key)}
+            />
+            {/* Label for the checkbox */}
+            &lt;Label check>{key}&lt;/Label>
+          &lt;/FormGroup>
+        );
+      })}
+    &lt;/Form>
+  );
+};
+
+export default SearchBox;
 </code></pre>
         </article>
     </section>

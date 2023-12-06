@@ -1,3 +1,7 @@
+/**
+ * Renders a list group displaying the days of the week for a meal plan.
+ * @returns {JSX.Element} - Returns a list group containing days of the week for the meal plan.
+ */
 import React from "react";
 import { ListGroup, ListGroupItemHeading, ListGroupItem } from "reactstrap";
 

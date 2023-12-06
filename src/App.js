@@ -1,14 +1,14 @@
+/**
+ * Root component of the React application.
+ * Uses React Router for navigation and routing.
+ * @returns {JSX.Element} - Returns the root component of the React application.
+ */
 import "bootstrap/dist/css/bootstrap.css";
 import React, { StrictMode } from "react";
 import "./css/styles.css"
-
-//single page application stuff
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-//import my header navbar
 import Navbar from "./components/header.js";
-
-//pages
 import Home from "./pages/home.js";
 import Search from "./pages/search.js";
 import MealPlans from "./pages/mealPlans.js";
@@ -20,11 +20,15 @@ import HasNav from "./components/hasNav.js";
 
 function App() {
   return (
-    //a router watches the url for changes and will re-render the page
+    // React Router manages navigation and rendering of different components based on routes
     <Router>
+      {/* 
+        Navbar included with a HasNav wrapper for conditional rendering based on routes
+        */}
       <HasNav>
         <Navbar />
       </HasNav>
+      {/* Routes for different pages/components */}
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/search" exact element={<Search />} />

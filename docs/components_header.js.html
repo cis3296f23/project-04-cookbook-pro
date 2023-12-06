@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/header.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/header.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Functional component representing the application header with navigation and user authentication.
+ * @returns {JSX.Element} - Returns the header navigation bar JSX element.
+ */
+import "bootstrap/dist/css/bootstrap.min.css";
+import React, {useState, useEffect} from 'react';
+import {Navbar} from "reactstrap";
+import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
+import '../css/header.css';
+
+export default () => {
+  const [isLogIn, isLoggedIn] = useState(false);
+  const [userCredential, isUserCredential] = useState("");
+  const [userDisplayName, isUserDisplayName] = useState("");
+  const auth = getAuth();
+
+  /**
+   * Sets the document title and manages user authentication state.
+   * Updates user details and handles dropdown behavior when logged in.
+   * @param {boolean} isLogIn - Indicates if the user is logged in.
+   */
+  useEffect(() => {
+    document.title = 'Home';
+    onAuthStateChanged(auth, (isUser) => {
+      if (isUser) {
+        isLoggedIn(true);
+        isUserDisplayName(isUser.displayName);
+      } else {
+        isLoggedIn(false);
+      }
+    });
+
+    if (isLogIn) {
+      // Logic executed when the user is logged in
+      const isUserFullName = userDisplayName.split(' ');
+      const displayUserName =
+        isUserFullName.length &lt; 2
+          ? isUserFullName[0]
+          : isUserFullName.length === 2
+          ? isUserFullName[0] + " " + isUserFullName[1]
+          : isUserFullName[0] + " " + isUserFullName[1].charAt(0).concat('. ') + isUserFullName[isUserFullName.length - 1];
+
+      isUserCredential(displayUserName);
+
+      window.onclick = function (event) {
+        if (!event.target.matches('.userDropDown')) {
+          var dropdowns = document.getElementsByClassName("getDropDown");
+          var i;
+          for (i = 0; i &lt; dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      };
+    }
+  }, [isLogIn]);
+
+  /**
+   * Handles the user logout functionality.
+   */
+  const Logout = () => {
+    signOut(auth)
+      .then(() => {
+        document.location.href = "/";
+        console.log("Signed out successfully");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  };
+
+  /**
+   * Toggles the display of user dropdown on click.
+   */
+  function getToggle() {
+    document.getElementById("isDropDown").classList.toggle("show");
+  }
+
+  return (
+    &lt;div>
+      &lt;nav className="navbar fixed-top navbar-expand-lg bg-light">
+        &lt;div className="container-fluid justify-content-start" style={{ overflowWrap: "anywhere" }}>
+          &lt;a className="navbar-brand cookbookPro" href="/">CookBook Pro&lt;/a>
+          &lt;div className="navbar-nav">
+            &lt;a className="nav-link" href="/meal-plans">Meal Plans&lt;/a>
+            &lt;a className="nav-link" href="/search">Search&lt;/a>
+            &lt;a className="nav-link" href="/recipes">Recipes&lt;/a>
+            &lt;a className="nav-link" href="/shopping-list">Shopping List&lt;/a>
+            {isLogIn ? (
+              &lt;div className="isUser">
+                &lt;button className="userDropDown" type="button" id="getUser" onClick={getToggle}>{userCredential}&lt;/button>
+                &lt;div className="getDropDown" id="isDropDown">
+                  &lt;a href="/">Home&lt;/a>
+                  &lt;a href="/">Profile&lt;/a>
+                  &lt;a href="/" onClick={Logout}>Sign Out&lt;/a>
+                &lt;/div>
+              &lt;/div>
+            ) : (
+              &lt;a className="isLogin" href="/Login">&lt;input className="getLogin" type="button" id="isValid" value={"Log In"}/>&lt;/a>
+            )}
+          &lt;/div>
+        &lt;/div>
+      &lt;/nav>
+    &lt;/div>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="FirebaseConverter.html">FirebaseConverter</a></li><li><a href="Ingredient.html">Ingredient</a></li><li><a href="MealDataManager.html">MealDataManager</a></li><li><a href="Recipe.html">Recipe</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GetRecipes">GetRecipes</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#PutRecipe">PutRecipe</a></li><li><a href="global.html#RecipeDetails">RecipeDetails</a></li><li><a href="global.html#SearchPage">SearchPage</a></li><li><a href="global.html#deleteRecipe">deleteRecipe</a></li><li><a href="global.html#getListener">getListener</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Dec 06 2023 16:53:26 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

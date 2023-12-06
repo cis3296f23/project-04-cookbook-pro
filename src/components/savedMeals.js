@@ -1,3 +1,8 @@
+/**
+ * Renders a component displaying saved recipes.
+ * Allows users to view saved recipes and unsave them.
+ * @returns {JSX.Element} - Returns a component for managing saved recipes.
+ */
 import React, { useState, useEffect } from "react";
 import getListener from "../firebase/setListener.js";
 import {
@@ -18,19 +23,30 @@ const savedMeals = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [meal, setMeal] = useState();
 
+  /**
+   * Toggles the display of recipe details.
+   * @param {Object} recipe - The recipe object for which details are to be displayed.
+   */
   const toggle = (recipe) => {
     setMeal(recipe);
     setShowDetails(!showDetails);
   };
 
-  //important to only get 1 listener, so use this thingy
+  // Important to only get 1 listener, so use this effect
   useEffect(() => {
-    const unsubscibe = getListener("savedRecipes", setSavedRecipes);
+    const unsubscribe = getListener("savedRecipes", setSavedRecipes);
+    // Cleanup function if needed
+    return () => {
+      unsubscribe(); // Unsubscribe listener on unmount or re-render
+    };
   }, []);
 
+  /**
+   * Unsave a recipe by removing it from the saved recipes list.
+   */
   function unsaveRecipe() {
     meal.isSaved = false;
-    //close the modal and remove the recipe
+    // Close the modal and remove the recipe
     toggle();
     deleteRecipe("savedRecipes", String(meal.id));
   }

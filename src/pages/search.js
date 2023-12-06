@@ -1,3 +1,11 @@
+/**
+ * @typedef {Object} RecipeResult
+ * @property {string} title - The title of the recipe.
+ * @property {string} image - URL of the recipe image.
+ * @property {string} id - Unique ID of the recipe.
+ * Other properties specific to your `MealDataManager` can be added here.
+ */
+
 import React, { useState } from "react";
 import { Row, Col, Container, Spinner } from "reactstrap";
 import MealCard from "../components/mealCard";
@@ -7,11 +15,21 @@ import SearchBox from "../components/searchBox.js";
 import MealDataManager from "../managers_and_parsers/MealDataManager.js";
 import InfiniteScroll from "react-infinite-scroll-component";
 
+/**
+ * SearchPage component for displaying search results of recipes.
+ * @returns {JSX.Element} JSX element representing the SearchPage component.
+ */
 const SearchPage = () => {
   const [searchResults, setSearchResults] = useState("initial page load");
   const [query, setQuery] = useState("");
   const [numResults, setNumResults] = useState(-1);
 
+  /**
+   * Handles the search results.
+   * @param {Object} results - Object containing search results.
+   * @param {RecipeResult[]} results.resultsList - List of recipe search results.
+   * @param {number} results.totalResults - Total number of search results.
+   */
   const handleSearchResults = (results) => {
     setSearchResults(results.resultsList);
     setNumResults(results.totalResults);
@@ -24,11 +42,12 @@ const SearchPage = () => {
       <Spinner>Loading</Spinner>
     </Col>
   );
-  //for infinte scroll
+
+  /**
+   * Fetches more search results.
+   */
   const fetchMoreResults = async () => {
     try {
-      //setMoreResults(true);
-      // Wait for the query to complete and get the results
       const spoonacularQueryResults =
         await mealDataManager.queryRecipeFromSpoonacular(
           query,
@@ -38,32 +57,23 @@ const SearchPage = () => {
       setSearchResults(
         searchResults.concat(spoonacularQueryResults.resultsList)
       );
-      //spoonacular caps results to 1000
+
       if (searchResults.length >= numResults || searchResults.length >= 999) {
-        console.log(
-          "searchResults.length=" +
-            searchResults.length +
-            " numResults=" +
-            numResults
-        );
         setNumResults(false);
       }
     } catch (error) {
-      console.error("error: " + error); // Handle errors if the Promise is rejected
+      console.error("error: " + error);
     }
   };
 
-  //conditionally render the results
   let results;
 
-  //if page loaded
-  if (searchResults == "initial page load") {
+  if (searchResults === "initial page load") {
     results = (
       <Col className="d-flex m-5 p-0 justify-content-center">
-        <p className="text-secondary">search something</p>
+        <p className="text-secondary">Search something</p>
       </Col>
     );
-    //if there are results then put it into results varible to render
   } else if (Array.isArray(searchResults)) {
     results = (
       <InfiniteScroll
@@ -86,8 +96,6 @@ const SearchPage = () => {
         </Container>
       </InfiniteScroll>
     );
-
-    //if there are no results then we want to render a spinner :D
   } else if (!Array.isArray(searchResults)) {
     results = spinner;
   }

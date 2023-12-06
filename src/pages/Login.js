@@ -6,18 +6,27 @@ import '../firebase/firebaseConfig.js';
 import './home.js';
 import './SignUp.js';
 
-var Login=()=>{
-  const[userEmail, isUserEmail] = useState("");
+/**
+ * Renders a login page allowing users to log in via email/password or Google sign-in.
+ * @returns {JSX.Element} - Returns a login page component with input fields for email/password and Google sign-in option.
+ */
+var Login = () => {
+  // State variables for user email, password, login error, and authentication  const[userEmail, isUserEmail] = useState("");
   const[userPassword, isUserPassword] = useState("");
   const [loginError, isLoginError] = useState("");
   const auth = getAuth();
 
   useEffect(() => {
+    // Set document title and body styles
     document.title = 'CookBook-Pro: Login';
     document.body.classList.add('loginPage');
     document.body.style.backgroundColor = '#E0EAFC';
   }, []);
 
+  /**
+   * Handles email/password login.
+   * @param {Event} e - The event object.
+   */
   const checkInput = async (e) => {
     e.preventDefault();
     try {
@@ -28,17 +37,19 @@ var Login=()=>{
       const errorCode = error.code;
       const errorMessage = error.message;
       isLoginError("Invalid Email Or Password");
-      console.log(errorCode,errorMessage);
+      console.log(errorCode, errorMessage);
     }
   };
 
+  /**
+   * Handles sign-in with Google.
+   */
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
       const userCredential = await signInWithPopup(auth, provider);
       const user = userCredential.user;
       isUserEmail(user.email);
-  
       document.location.href = '/';
     } catch (error) {
       const errorCode = error.code;
@@ -48,6 +59,7 @@ var Login=()=>{
     }
   };
 
+  // JSX rendering login form with email/password inputs and Google sign-in button
   return (
     <div className="LogIn">
       <h1 className="Title">Log In</h1>

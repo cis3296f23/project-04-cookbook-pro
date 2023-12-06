@@ -6,6 +6,9 @@ import { Recipe } from "../CustomObjects/Recipe.js";
 import { Ingredient } from "../CustomObjects/Ingredient.js";
 import PutRecipe from "../firebase/putRecipe.js";
 
+/**
+ * Class handling meal data operations, including fetching data from Spoonacular API.
+ */
 class MealDataManager {
   constructor() {
     /**
