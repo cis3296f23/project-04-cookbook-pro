@@ -1,22 +1,31 @@
-// MealDataManager will handle generating meal data from two sources:
-// 1. The Spoonacular API
-// 2. The FirebaseDB
-// Ingredients as well as Meals will be handled by this manager (for now)
+/**
+ * MealDataManager handles generating meal data from Spoonacular API and FirebaseDB.
+ * Handles ingredients and meals.
+ */
 import { Recipe } from "../CustomObjects/Recipe.js";
 import { Ingredient } from "../CustomObjects/Ingredient.js";
 import PutRecipe from "../firebase/putRecipe.js";
+
 class MealDataManager {
   constructor() {
-    // https://spoonacular.com/food-api/console#Dashboard
+    /**
+     * Spoonacular API URL.
+     * @type {URL}
+     */
     this.spoonacularURL = new URL("https://api.spoonacular.com/recipes");
+
+    /**
+     * Spoonacular API key.
+     * @type {string}
+     */
     this.spoonacularApi = process.env.REACT_APP_SPOONACULAR_API_KEY;
   }
 
   /**
-   *
-   * @param {String} query what was entered in the search bar (food)
-   * @param {Number} offset used for infinite scroll
-   * @returns
+   * Queries recipe data from Spoonacular API.
+   * @param {string} query - The search query (food).
+   * @param {number} offset - Used for infinite scroll.
+   * @returns {Promise<{ resultsList: Recipe[], totalResults: number }>} An object containing the list of search results and the total number of results.
    */
   async queryRecipeFromSpoonacular(query, offset) {
     const searchQuery = new URLSearchParams();
@@ -45,9 +54,8 @@ class MealDataManager {
     try {
       
       const response = await fetch(fullUrl);
-      
       const data = await response.json();
-      console.log(data)
+
       const searchResultsList = data.results.map((recipe) => {
         // Parse each ingredient to fit out custom ingredient object
         const mappedIngredients = recipe.extendedIngredients.map(
@@ -79,7 +87,6 @@ class MealDataManager {
         return mappedResult;
       });
 
-      //i want the number of matching meals from spoonacular so infinite scroll knows when to stop
       return {
         resultsList: searchResultsList,
         totalResults: data.totalResults,

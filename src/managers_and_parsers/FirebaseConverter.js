@@ -1,7 +1,6 @@
 /**
- * convert to and from firebase and JSON recipe object
+ * Converts to and from Firebase and JSON recipe objects.
  */
-
 import { Recipe } from "../CustomObjects/Recipe.js";
 import { Ingredient } from "../CustomObjects/Ingredient.js";
 
@@ -10,6 +9,11 @@ class FirebaseConverter {
 
   // Firestore data converter for Ingredients
   ingredientsConverter = {
+    /**
+     * Convert an Ingredient object to a Firestore object.
+     * @param {Ingredient} ingredient - The Ingredient object to convert.
+     * @returns {object|null} The Firestore object representation of the Ingredient, or null if the input is undefined or null.
+     */
     toFirestore: (ingredient) => {
       if (!ingredient) {
         console.error("Ingredient is undefined or null");
@@ -23,6 +27,12 @@ class FirebaseConverter {
         unit: ingredient.unit,
       };
     },
+    /**
+     * Convert a Firestore snapshot to an Ingredient object.
+     * @param {object} snapshot - The Firestore snapshot data.
+     * @param {object} options - Options for the snapshot.
+     * @returns {Ingredient} The Ingredient object created from Firestore snapshot data.
+     */
     fromFirestore: (snapshot, options) => {
       const data = snapshot.data(options);
       return new Ingredient(
@@ -35,12 +45,14 @@ class FirebaseConverter {
   };
 
   /**
-   *
-   * Firestore data converter for CustomMeal
-   * @function toFirestore convert to firestore object
-   * @function fromFirestore convert to JSON
+   * Firestore data converter for CustomMeal.
    */
   recipeConverter = {
+    /**
+     * Convert a Recipe object to a Firestore object.
+     * @param {Recipe} recipe - The Recipe object to convert.
+     * @returns {object|null} The Firestore object representation of the Recipe, or null if the input is undefined or null.
+     */
     toFirestore: (recipe) => {
       if (!recipe) {
         console.error("Recipe is undefined or null");
@@ -59,7 +71,11 @@ class FirebaseConverter {
         isSaved: recipe.isSaved,
       };
     },
-
+    /**
+     * Convert a Firestore snapshot to a Recipe object.
+     * @param {object} snapshot - The Firestore snapshot data.
+     * @returns {Recipe} The Recipe object created from Firestore snapshot data.
+     */
     fromFirestore: (snapshot) => {
       const data = snapshot.data();
       return new Recipe(

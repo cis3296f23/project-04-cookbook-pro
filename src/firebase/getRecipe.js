@@ -8,13 +8,12 @@ const fb = new FirebaseConverter();
 const recipeConverter = fb.recipeConverter;
 
 /**
- * this function sucks ass cause it returns a promise
- * @param {String} recipeID
- * @returns promise
+ * Retrieves a specific recipe document from a Firestore collection.
+ * @param {string} collection - The collection where the recipe document exists.
+ * @param {string} recipeID - The ID of the recipe document to retrieve.
+ * @returns {Promise<object|null>} A Promise that resolves to the retrieved recipe data (object) or null if the document doesn't exist.
  */
 async function GetRecipes(collection, recipeID) {
-  //console.log("getting "+ recipeID + " from colleciton "+collection);
-
   const docRef = doc(db, collection, recipeID);
   const docSnap = await getDoc(docRef);
 
@@ -22,7 +21,6 @@ async function GetRecipes(collection, recipeID) {
     const data = recipeConverter.fromFirestore(docSnap);
     return data;
   } else {
-    // docSnap.data() will be undefined in this case
     console.log("No such document!");
     return null;
   }

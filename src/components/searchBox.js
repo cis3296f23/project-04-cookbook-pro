@@ -16,25 +16,19 @@ import SearchBoxFilter from "./searchBoxFilter.js";
 
 const mealDataManager = new MealDataManager();
 
-/**
- *
- * @param {function} param0
- * @param {function} param1
- * @returns
- */
 const SearchBox = ({ onSearch, query, setQuery }) => {
-  //state varibles
+  // State variables for dropdown
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  //state functions
+  // Toggle dropdown function
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
+  // Function to handle input change in the search box
   const handleInputChange = (e) => {
     setQuery(e.target.value);
   };
 
-  //true/false search parameters, we can add as many as we want
-  //https://spoonacular.com/food-api/docs#Diets
+  // State variables for different filters (diet, intolerance, meal types)
   const [dietFilterOptions, setDietFilterOptions] = useState({
     Vegan: false,
     Vegetarian: false,
@@ -44,9 +38,8 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
     Paleo: false,
   });
 
-  //https://spoonacular.com/food-api/docs#Intolerances
   const [intoleranceFilterOptions, setIntoleranceFilterOptions] = useState({
-    Diary: false,
+    Dairy: false,
     Egg: false,
     Gluten: false,
     Grain: false,
@@ -80,12 +73,11 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
 
   const handleSearch = async () => {
     try {
-      //clear search results
+      // Clear previous search results
       onSearch("yayspin! :D this string doesn't mean anything");
 
       // Wait for the query to complete and get the results
-      const spoonacularQueryResults =
-        await mealDataManager.queryRecipeFromSpoonacular(query, 0);
+      const spoonacularQueryResults = await mealDataManager.queryRecipeFromSpoonacular(query, 0);
 
       // Pass the search results to the parent component
       onSearch(spoonacularQueryResults);
@@ -96,9 +88,11 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
 
   return (
     <InputGroup className="w-50 min-width: 300px; shadow-lg" id="search-box">
+      {/* Dropdown for filters */}
       <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret>Filter </DropdownToggle>
+        <DropdownToggle caret>Filter</DropdownToggle>
         <DropdownMenu>
+          {/* Dropdown content with different filter options */}
           <Container className="m-2">
             <Row>
               <Col>
@@ -109,7 +103,7 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
                 />
               </Col>
               <Col>
-                <h6>Allergys</h6>
+                <h6>Allergies</h6>
                 <SearchBoxFilter
                   setfilterOptions={setIntoleranceFilterOptions}
                   filterOptions={intoleranceFilterOptions}
@@ -127,6 +121,7 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
         </DropdownMenu>
       </Dropdown>
 
+      {/* Input field for search query */}
       <Input
         type="text"
         placeholder="Enter your search"
@@ -135,6 +130,7 @@ const SearchBox = ({ onSearch, query, setQuery }) => {
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
 
+      {/* Button to trigger the search */}
       <Button color="primary" onClick={handleSearch}>
         Search🔍
       </Button>

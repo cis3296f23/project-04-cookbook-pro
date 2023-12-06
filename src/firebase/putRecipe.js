@@ -9,8 +9,9 @@ const recipeConverter = fb.recipeConverter;
 const ingredientsConverter = fb.ingredientsConverter;
 
 /**
- * @param {String} collection the collection to save into
- * @param {Recipe} recipe the recipe/meal you want to save
+ * Stores a recipe/meal object into a specified Firestore collection.
+ * @param {string} collection - The collection to save the recipe into.
+ * @param {Recipe} recipe - The recipe/meal object to save.
  */
 async function PutRecipe(collection, recipe) {
   const convertIngredient = (ingredient) => {
